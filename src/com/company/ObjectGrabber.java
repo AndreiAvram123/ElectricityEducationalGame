@@ -3,46 +3,32 @@ package com.company;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
-public class ObjectGrabber extends Observable {
+public class ObjectGrabber {
 
     private Canvas canvas;
-    private ArrayList<GameObject> objectsOnScreen;
     private GameObject currentlyDraggedObject;
+    private GridSystem gridSystem;
 
-    public ObjectGrabber(@NotNull Canvas canvas, @NotNull ArrayList<GameObject> objectsOnScreen) {
+
+    public ObjectGrabber(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
+        this.gridSystem = gridSystem;
         this.canvas = canvas;
-        this.objectsOnScreen = objectsOnScreen;
         attachListener();
     }
 
     private void attachListener() {
+        //listen to weather the mouse has been dragged or not
         canvas.setOnMouseDragged(event -> {
-            //reinitialize the currently dragged object
-            currentlyDraggedObject = null;
-            objectsOnScreen.forEach(gameObject -> {
-                if (isMouseOverObject(gameObject, event.getX(), event.getY())) {
-                    currentlyDraggedObject = gameObject;
-                    gameObject.setCenter(event.getX(), event.getY());
-                }
-            });
-        });
-        canvas.setOnMouseReleased(event -> {
+            //reset ethe currently dragged object and check weather
+            //an object is still dragged
+            currentlyDraggedObject = gridSystem.getObjectSelected(event.getX(), event.getY());
             if (currentlyDraggedObject != null) {
-                setChanged();
-                notifyObservers(currentlyDraggedObject);
+                currentlyDraggedObject.setCenter(event.getX(), event.getY());
             }
-            currentlyDraggedObject = null;
         });
+        canvas.setOnMouseDragReleased(event -> {
 
-
-    }
-
-    private boolean isMouseOverObject(GameObject gameObject, double mouseX, double mouseY) {
-        return gameObject.x < mouseX && gameObject.x + gameObject.width > mouseX
-                && gameObject.y < mouseY && gameObject.y + gameObject.height > mouseY;
+        });
     }
 
 

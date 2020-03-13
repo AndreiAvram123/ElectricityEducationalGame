@@ -14,42 +14,33 @@ import java.util.Observer;
  * Level class that stores all the necessary data for
  * the current level
  */
-public class Level implements Observer {
+public class Level {
     protected GraphicsContext graphicsContext;
     private Canvas canvas;
     protected ArrayList<GameObject> selectableObjects = new ArrayList<>();
     private Factory factory;
     private AnimationTimer animationTimer;
     private ObjectGrabber objectGrabber;
-
+    private GridSystem gridSystem;
 
     public Level(@NotNull Canvas canvas) {
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
         //get selectable objects should be made abstract in the super class
         this.factory = new Factory(graphicsContext);
-        selectableObjects.addAll(getSelectableObjects());
-    }
-
-    @NotNull
-    private ArrayList<GameObject> getSelectableObjects() {
-        ArrayList<GameObject> gameObjects = new ArrayList<>();
-        gameObjects.add(factory.createObject("bulb", 100, 525));
-        gameObjects.add(factory.createObject("bulb", 200, 525));
-
-        return gameObjects;
+        gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+        objectGrabber = new ObjectGrabber(canvas, gridSystem);
+        gridSystem.addObjectToGrid(factory.createObject("bulb", 50, canvas.getHeight() - 50));
+        gridSystem.addObjectToGrid(factory.createObject("bulb", 150, canvas.getHeight() - 50));
     }
 
 
     public void start() {
 
-        objectGrabber = new ObjectGrabber(canvas, selectableObjects);
-        objectGrabber.addObserver(this);
-
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                updateGame();
+                gridSystem.updateGrid();
             }
         };
         animationTimer.start();
@@ -64,21 +55,8 @@ public class Level implements Observer {
     private void drawObjectSelectorPanel() {
         this.graphicsContext.setFill(Color.GREY);
         this.graphicsContext.fillRect(0,
-                canvas.getHeight()-100, 800, 100);
+                canvas.getHeight() - 100, 800, 100);
     }
 
-    private void updateGame() {
-        drawBackground();
-        drawObjectSelectorPanel();
-        selectableObjects.forEach(GameObject::update);
-    }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        //find which observable  has triggered the notify method
-        if(o instanceof ObjectGrabber){
-            GameObject gameObject = (GameObject) arg;
-            System.out.println(gameObject.x);
-       }
-    }
 }
