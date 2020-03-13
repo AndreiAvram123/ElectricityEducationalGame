@@ -27,7 +27,6 @@ public class GridSystem {
     }
 
 
-
     private void drawGameScreen() {
         for (int indexWidth = 0; indexWidth <= levelWidth; indexWidth += 50) {
             for (int indexHeight = 0; indexHeight <= levelHeight - objectSelectorHeight; indexHeight += 50) {
@@ -39,9 +38,10 @@ public class GridSystem {
 
         }
     }
-    private void drawObjectSelectorPane(){
+
+    private void drawObjectSelectorPane() {
         graphicsContext.setFill(Color.PINK);
-        graphicsContext.fillRect(0,levelHeight-objectSelectorHeight,levelWidth,objectSelectorHeight);
+        graphicsContext.fillRect(0, levelHeight - objectSelectorHeight, levelWidth, objectSelectorHeight);
     }
 
     public void addObjectToGrid(@NotNull GameObject gameObject) {
@@ -66,4 +66,14 @@ public class GridSystem {
         objectsOnScreen.forEach(GameObject::update);
     }
 
+    public void snapOnGrid(@NotNull GameObject gameObject) {
+        //get the center of the object
+        double centerX = gameObject.x + gameObject.width / 2;
+        double centerY = gameObject.y + gameObject.width / 2;
+
+        double newX = ((int) (centerX / rectangleWidth)) * rectangleWidth;
+        double newY = ((int) (centerY / rectangleWidth)) * rectangleWidth;
+        gameObject.x = newX;
+        gameObject.y = newY;
+    }
 }

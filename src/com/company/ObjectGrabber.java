@@ -26,8 +26,10 @@ public class ObjectGrabber {
                 currentlyDraggedObject.setCenter(event.getX(), event.getY());
             }
         });
-        canvas.setOnMouseDragReleased(event -> {
-
+        canvas.setOnMouseReleased(event -> {
+          if(currentlyDraggedObject !=null){
+              gridSystem.snapOnGrid(currentlyDraggedObject);
+          }
         });
     }
 
