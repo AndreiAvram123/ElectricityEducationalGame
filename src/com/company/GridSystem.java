@@ -26,6 +26,9 @@ public class GridSystem {
         drawGameScreen();
     }
 
+    public ArrayList<GameObject> getObjectsOnScreen() {
+        return objectsOnScreen;
+    }
 
     private void drawGameScreen() {
         for (int indexWidth = 0; indexWidth <= levelWidth; indexWidth += 50) {

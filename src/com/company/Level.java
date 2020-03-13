@@ -4,11 +4,6 @@ import com.sun.istack.internal.NotNull;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Level class that stores all the necessary data for
@@ -17,11 +12,13 @@ import java.util.Observer;
 public class Level {
     protected GraphicsContext graphicsContext;
     private Canvas canvas;
-    protected ArrayList<GameObject> selectableObjects = new ArrayList<>();
     private Factory factory;
     private AnimationTimer animationTimer;
     private ObjectGrabber objectGrabber;
     private GridSystem gridSystem;
+    private CollisionDetector collisionDetector;
+    private CollisionHandler collisionHandler;
+    private Player player;
 
     public Level(@NotNull Canvas canvas) {
         this.canvas = canvas;
@@ -30,8 +27,26 @@ public class Level {
         this.factory = new Factory(graphicsContext);
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectGrabber = new ObjectGrabber(canvas, gridSystem);
+        player = Player.getInstance(300, 200, graphicsContext);
+        collisionDetector = new CollisionDetector(gridSystem.getObjectsOnScreen(), player);
+        collisionHandler = new CollisionHandler(player);
+
+        collisionDetector.addObserver(collisionHandler);
+        addObjectsToLevel(canvas);
+
+    }
+
+    private void addObjectsToLevel(@NotNull Canvas canvas) {
         gridSystem.addObjectToGrid(factory.createObject("bulb", 50, canvas.getHeight() - 50));
         gridSystem.addObjectToGrid(factory.createObject("bulb", 150, canvas.getHeight() - 50));
+        gridSystem.addObjectToGrid(factory.createObject("launcher", 250, canvas.getHeight() - 50));
+        gridSystem.addObjectToGrid(factory.createObject("rectangle", 150, 250));
+        gridSystem.addObjectToGrid(factory.createObject("rectangle", 200, 250));
+        gridSystem.addObjectToGrid(factory.createObject("rectangle", 250, 250));
+        gridSystem.addObjectToGrid(factory.createObject("triangle", 300, 250));
+        gridSystem.addObjectToGrid(factory.createObject("triangle", 350, 300));
+        gridSystem.addObjectToGrid(factory.createObject("triangle", 400, 350));
+        gridSystem.addObjectToGrid(factory.createObject("wind_turbine", 450, 400));
     }
 
 
@@ -40,22 +55,14 @@ public class Level {
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                collisionDetector.checkCollisionWithPlayer();
                 gridSystem.updateGrid();
+                player.update();
+
             }
         };
         animationTimer.start();
 
-    }
-
-    private void drawBackground() {
-        this.graphicsContext.setFill(Color.ALICEBLUE);
-        this.graphicsContext.fillRect(0, 0, 800, 600);
-    }
-
-    private void drawObjectSelectorPanel() {
-        this.graphicsContext.setFill(Color.GREY);
-        this.graphicsContext.fillRect(0,
-                canvas.getHeight() - 100, 800, 100);
     }
 
 
