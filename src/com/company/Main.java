@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        primaryStage.setResizable(false);
         GameManager gameManager = GameManager.getInstance(root);
         gameManager.startLevel(1);
 

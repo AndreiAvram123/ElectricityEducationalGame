@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class GameManager {
+public class GameManager implements Draggable {
 
     private static GameManager instance;
     private Pane root;
@@ -40,4 +40,8 @@ public class GameManager {
     }
 
 
+    @Override
+    public void setCenter(double x, double y) {
+
+    }
 }

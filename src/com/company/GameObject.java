@@ -26,10 +26,8 @@ public class GameObject implements Draggable {
 
 
     @Override
-    public void setCenter(double x,double y ) {
+    public void setCenter(double x, double y) {
         this.x = x - width / 2;
         this.y = y - height / 2;
-
     }
-
 }

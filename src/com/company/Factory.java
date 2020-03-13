@@ -15,6 +15,16 @@ public class Factory implements IFactory {
         switch (type) {
             case "bulb":
                 return new Bulb(x, y, graphicsContext);
+            case "launcher":
+                return new BallLauncher(x, y, graphicsContext);
+            case "rectangle":
+                return new Rectangle(x, y, graphicsContext);
+            case "triangle":
+                return new Triangle(x, y, graphicsContext);
+            case "ball":
+                return Player.getInstance(x, y, graphicsContext);
+            case "wind_turbine":
+                return new WindTurbine(x, y, graphicsContext);
         }
         return null;
     }
