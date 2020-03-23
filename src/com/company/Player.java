@@ -12,7 +12,7 @@ public class Player extends GameObject implements Movable {
     private double moveOnX;
     private double moveOnY;
 
-    public static Player getInstance(double x, double y, GraphicsContext gc) {
+    public static synchronized Player getInstance(double x, double y, GraphicsContext gc) {
         if (instance == null) {
             instance = new Player(x, y, gc);
         }

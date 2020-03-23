@@ -11,7 +11,6 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Level {
     protected GraphicsContext graphicsContext;
-    private Canvas canvas;
     private Factory factory;
     private AnimationTimer animationTimer;
     private ObjectGrabber objectGrabber;
@@ -21,7 +20,6 @@ public class Level {
     private Player player;
 
     public Level(@NotNull Canvas canvas) {
-        this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
         //get selectable objects should be made abstract in the super class
         this.factory = new Factory(graphicsContext);
