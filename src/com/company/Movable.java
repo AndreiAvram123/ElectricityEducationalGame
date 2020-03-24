@@ -1,5 +1,11 @@
 package com.company;
 
+/**
+ * Implement this interface in order to
+ * specify that a certain object can move
+ */
 public interface Movable {
-    void move(double x, double y);
+
+    void moveOnY(double y);
+    void moveOnX(double x);
 }

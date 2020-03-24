@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.models.ElectricitySource;
 import com.sun.istack.internal.NotNull;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
  * the current level
  */
 public class Level {
+
     protected GraphicsContext graphicsContext;
     private Factory factory;
     private AnimationTimer animationTimer;
@@ -18,6 +20,7 @@ public class Level {
     private CollisionDetector collisionDetector;
     private CollisionHandler collisionHandler;
     private Player player;
+    private ElectricityHandler electricityHandler;
 
     public Level(@NotNull Canvas canvas) {
         this.graphicsContext = canvas.getGraphicsContext2D();
@@ -25,10 +28,10 @@ public class Level {
         this.factory = new Factory(graphicsContext);
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectGrabber = new ObjectGrabber(canvas, gridSystem);
-        player = Player.getInstance(300, 200, graphicsContext);
+        player = Player.createInstance(200, 200, graphicsContext);
         collisionDetector = new CollisionDetector(gridSystem.getObjectsOnScreen(), player);
-        collisionHandler = new CollisionHandler(player);
-
+        collisionHandler = new CollisionHandler();
+        electricityHandler = new ElectricityHandler(gridSystem.getObjectsOnScreen());
         collisionDetector.addObserver(collisionHandler);
         addObjectsToLevel(canvas);
 
@@ -42,9 +45,11 @@ public class Level {
         gridSystem.addObjectToGrid(factory.createObject("rectangle", 200, 250));
         gridSystem.addObjectToGrid(factory.createObject("rectangle", 250, 250));
         gridSystem.addObjectToGrid(factory.createObject("triangle", 300, 250));
+        gridSystem.addObjectToGrid(factory.createObject("rectangle", 300, 300));
         gridSystem.addObjectToGrid(factory.createObject("triangle", 350, 300));
         gridSystem.addObjectToGrid(factory.createObject("triangle", 400, 350));
         gridSystem.addObjectToGrid(factory.createObject("wind_turbine", 450, 400));
+        gridSystem.addObjectToGrid(new ElectricitySource(500,500,graphicsContext));
     }
 
 
@@ -55,6 +60,7 @@ public class Level {
             public void handle(long now) {
                 collisionDetector.checkCollisionWithPlayer();
                 gridSystem.updateGrid();
+                electricityHandler.update();
                 player.update();
 
             }

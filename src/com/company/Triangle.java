@@ -1,9 +1,8 @@
 package com.company;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.Polygon;
 
-public class Triangle extends GameObject {
+public class Triangle extends ReactiveObject {
 
     public Triangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);

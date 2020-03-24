@@ -1,6 +1,5 @@
 package com.company;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ public class CollisionDetector extends Observable {
 
     private final Player player;
     private ArrayList<GameObject> objectsOnScreen;
-    private GameObject collider;
 
     public CollisionDetector(@NotNull ArrayList<GameObject> objectsOnScreen, @NotNull Player player) {
         this.objectsOnScreen = objectsOnScreen;
@@ -27,7 +25,6 @@ public class CollisionDetector extends Observable {
     }
 
     private void handleCollision(GameObject gameObject) {
-        collider = gameObject;
         setChanged();
         notifyObservers(gameObject);
     }

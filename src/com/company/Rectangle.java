@@ -3,12 +3,11 @@ package com.company;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Rectangle extends GameObject {
+public class Rectangle extends ReactiveObject {
     private Color color = Color.ALICEBLUE;
 
     public Rectangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-
     }
 
 

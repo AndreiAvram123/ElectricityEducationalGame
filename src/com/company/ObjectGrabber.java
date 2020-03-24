@@ -27,9 +27,9 @@ public class ObjectGrabber {
             }
         });
         canvas.setOnMouseReleased(event -> {
-          if(currentlyDraggedObject !=null){
-              gridSystem.snapOnGrid(currentlyDraggedObject);
-          }
+            if (currentlyDraggedObject != null) {
+                gridSystem.snapOnGrid(currentlyDraggedObject);
+            }
         });
     }
 

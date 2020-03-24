@@ -1,6 +1,5 @@
 package com.company;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Timer;
@@ -12,10 +11,14 @@ public class Player extends GameObject implements Movable {
     private double moveOnX;
     private double moveOnY;
 
-    public static synchronized Player getInstance(double x, double y, GraphicsContext gc) {
+    public static synchronized Player createInstance(double x, double y, GraphicsContext gc) {
         if (instance == null) {
             instance = new Player(x, y, gc);
         }
+        return instance;
+    }
+
+    public static Player getInstance() {
         return instance;
     }
 
@@ -53,7 +56,7 @@ public class Player extends GameObject implements Movable {
                 }
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 0, 50);
+        timer.scheduleAtFixedRate(timerTask, 0, 20);
     }
 
     @Override
@@ -61,14 +64,18 @@ public class Player extends GameObject implements Movable {
         gc.fillOval(x, y, 50, 50);
     }
 
-    @Override
-    public void move(double x, double y) {
-        this.moveOnX = x;
-        this.moveOnY = y;
-    }
-
 
     public boolean isInMovingState() {
         return inMovingState;
+    }
+
+    @Override
+    public void moveOnY(double y) {
+        this.moveOnY = y;
+    }
+
+    @Override
+    public void moveOnX(double x) {
+        this.moveOnX = x;
     }
 }
