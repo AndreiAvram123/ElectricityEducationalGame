@@ -13,6 +13,9 @@ public class ObjectGrabber {
     public ObjectGrabber(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
         this.gridSystem = gridSystem;
         this.canvas = canvas;
+    }
+
+    public void start() {
         attachListener();
     }
 

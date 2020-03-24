@@ -28,6 +28,7 @@ public class Level {
         this.factory = new Factory(graphicsContext);
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectGrabber = new ObjectGrabber(canvas, gridSystem);
+        objectGrabber.start();
         player = Player.createInstance(200, 200, graphicsContext);
         collisionDetector = new CollisionDetector(gridSystem.getObjectsOnScreen(), player);
         collisionHandler = new CollisionHandler();
