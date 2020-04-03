@@ -7,7 +7,6 @@ import java.util.TimerTask;
 
 public class Player extends GameObject implements Movable {
     private static Player instance;
-    private boolean inMovingState = false;
     private double moveOnX;
     private double moveOnY;
 
@@ -32,7 +31,6 @@ public class Player extends GameObject implements Movable {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                inMovingState = false;
 
                 if (moveOnX != 0) {
                     if (moveOnX < 0) {
@@ -42,7 +40,6 @@ public class Player extends GameObject implements Movable {
                         x += 1;
                         moveOnX--;
                     }
-                    inMovingState = true;
                 }
                 if (moveOnY != 0) {
                     if (moveOnY < 0) {
@@ -52,7 +49,6 @@ public class Player extends GameObject implements Movable {
                         y += 1;
                         moveOnY--;
                     }
-                    inMovingState = true;
                 }
             }
         };
@@ -62,11 +58,6 @@ public class Player extends GameObject implements Movable {
     @Override
     public void update() {
         gc.fillOval(x, y, 50, 50);
-    }
-
-
-    public boolean isInMovingState() {
-        return inMovingState;
     }
 
     @Override

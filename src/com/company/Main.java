@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         root = new Pane();
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 800, 650);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setResizable(false);

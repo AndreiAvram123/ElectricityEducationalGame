@@ -3,16 +3,16 @@ package com.company;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.media.AudioClip;
 
-public class GameManager implements Draggable {
+import java.util.Observable;
+import java.util.Observer;
+
+public class GameManager implements  Observer {
 
     private static GameManager instance;
-    private Pane root;
-    private GraphicsContext graphicsContext;
-    private Canvas canvas;
+    private final Pane root;
 
 
     public static GameManager getInstance(@NotNull Pane root) {
@@ -23,25 +23,31 @@ public class GameManager implements Draggable {
     }
 
     private GameManager(@NotNull Pane root) {
-        this.root = root;
-        this.canvas = new Canvas(800, 600);
-        this.root.getChildren().add(this.canvas);
-        this.graphicsContext = canvas.getGraphicsContext2D();
+      this.root = root;
     }
 
 
     public void startLevel(int levelNumber) {
         switch (levelNumber) {
             case 1:
-                Level level1 = new Level(canvas);
+                Level level1 = new Level(root);
+                level1.addObserver(this);
                 level1.start();
                 break;
         }
     }
 
 
-    @Override
-    public void setCenter(double x, double y) {
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Level) {
+            displayLevelFinished();
+        }
+    }
+
+    private void displayLevelFinished() {
+        AudioClip audioClip = new AudioClip(this.getClass().getResource("guta.mp3").toString());
+         audioClip.play();
     }
 }

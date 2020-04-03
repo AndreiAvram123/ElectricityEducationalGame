@@ -1,17 +1,22 @@
 package com.company;
 
-import com.company.models.ElectricitySource;
+import com.company.models.Finish;
 import com.sun.istack.internal.NotNull;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+
+import java.util.Observable;
 
 /**
  * Level class that stores all the necessary data for
  * the current level
  */
-public class Level {
+public class Level extends Observable {
 
+    private final Pane root;
     protected GraphicsContext graphicsContext;
     private GameObjectsFactory gameObjectsFactory;
     private AnimationTimer animationTimer;
@@ -21,8 +26,12 @@ public class Level {
     private CollisionHandler collisionHandler;
     private Player player;
     private ElectricityHandler electricityHandler;
+    private String levelTag = "1";
 
-    public Level(@NotNull Canvas canvas) {
+    public Level(@NotNull Pane root) {
+        Canvas canvas = new Canvas(800, 600);
+        this.root = root;
+        this.root.getChildren().add(canvas);
         this.graphicsContext = canvas.getGraphicsContext2D();
         //get selectable objects should be made abstract in the super class
         this.gameObjectsFactory = new GameObjectsFactory(graphicsContext);
@@ -32,7 +41,6 @@ public class Level {
         player = Player.createInstance(200, 200, graphicsContext);
         collisionDetector = new CollisionDetector(gridSystem.getObjectsOnScreen(), player);
         collisionHandler = new CollisionHandler();
-        electricityHandler = new ElectricityHandler(gridSystem.getObjectsOnScreen());
         collisionDetector.addObserver(collisionHandler);
         addObjectsToLevel();
 
@@ -50,7 +58,16 @@ public class Level {
         gridSystem.addObjectToGrid(gameObjectsFactory.createObject("triangle", 350, 300));
         gridSystem.addObjectToGrid(gameObjectsFactory.createObject("triangle", 400, 350));
         gridSystem.addObjectToGrid(gameObjectsFactory.createObject("wind_turbine", 450, 400));
+        gridSystem.addObjectToGrid(Finish.getInstance(550, 400, graphicsContext));
         gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 150, 550));
+
+        Button button = new Button();
+        button.setMinSize(100, 30);
+        button.setLayoutX(350);
+        button.setLayoutY(610);
+        button.setText("Start");
+        this.root.getChildren().add(button);
+        button.setOnMouseClicked(event -> electricityHandler = new ElectricityHandler(gridSystem.getObjectsOnScreen()));
     }
 
 
@@ -61,10 +78,15 @@ public class Level {
             public void handle(long now) {
                 collisionDetector.checkCollisionWithPlayer();
                 gridSystem.updateGrid();
-                electricityHandler.update();
+                if (electricityHandler != null) {
+                    electricityHandler.update();
+                }
                 player.update();
-                
-
+                if (collisionHandler.isLevelCompleted()) {
+                    animationTimer.stop();
+                    setChanged();
+                    notifyObservers(levelTag);
+                }
             }
         };
         animationTimer.start();

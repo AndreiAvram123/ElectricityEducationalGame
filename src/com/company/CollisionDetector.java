@@ -17,21 +17,24 @@ public class CollisionDetector extends Observable {
 
 
     public void checkCollisionWithPlayer() {
-        for (GameObject gameObject : objectsOnScreen) {
-            if (hasCollidedBottom(gameObject)) {
-                handleCollision(gameObject);
+        objectsOnScreen.forEach((gameObject -> {
+            Sides collisionSide = getCollisionSide(gameObject);
+            if (collisionSide != Sides.NONE) {
+                handleCollision(gameObject, collisionSide);
             }
-        }
+        }));
     }
 
-    private void handleCollision(GameObject gameObject) {
+    private void handleCollision(GameObject gameObject, Sides collisionSide) {
         setChanged();
         notifyObservers(gameObject);
     }
 
-    private boolean hasCollidedBottom(@NotNull GameObject gameObject) {
-        return gameObject.x == player.x && gameObject.y == player.y + player.height;
-
+    private Sides getCollisionSide(@NotNull GameObject gameObject) {
+        if (gameObject.x == player.x && gameObject.y == player.y + player.height) {
+            return Sides.BOTTOM;
+        }
+        return Sides.NONE;
     }
 
 }
