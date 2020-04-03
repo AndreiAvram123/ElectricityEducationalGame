@@ -63,6 +63,10 @@ public class GridSystem {
         return null;
     }
 
+    public boolean isObjectFromSelectorPane(@NotNull GameObject gameObject) {
+        return gameObject.y >= levelHeight - objectSelectorHeight;
+    }
+
     public void updateGrid() {
         drawGameScreen();
         drawObjectSelectorPane();

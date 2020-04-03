@@ -13,17 +13,10 @@ public class CollisionHandler implements Observer {
                 Triangle triangle = (Triangle) arg;
                 triangle.executeElectricityReaction();
             }
-            if(arg instanceof Rectangle){
-                Rectangle rectangle= (Rectangle) arg;
+            if (arg instanceof Rectangle) {
+                Rectangle rectangle = (Rectangle) arg;
                 rectangle.executeElectricityReaction();
             }
-//            if (arg instanceof WindTurbine) {
-//                if (!player.isInMovingState()) {
-//                    //todo
-//                    //add a property to the wind tubine
-//                    player.moveOnY(-300);
-//                }
-//            }
         }
     }
 }

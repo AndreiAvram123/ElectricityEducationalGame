@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.interfaces.IElectricityReaction;
+import com.company.interfaces.NoMovingReaction;
 import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,6 +11,7 @@ public class ReactiveObject extends GameObject {
 
     public ReactiveObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
+        electricityReaction = new NoMovingReaction();
     }
 
     public void setElectricityReaction(@NotNull IElectricityReaction electricityReaction) {
@@ -17,7 +19,7 @@ public class ReactiveObject extends GameObject {
     }
 
     public void executeElectricityReaction() {
-        if (this.electricityReaction != null && isUnderElectricity) {
+        if (isUnderElectricity) {
             this.electricityReaction.execute();
         }
     }

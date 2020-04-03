@@ -13,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Level {
 
     protected GraphicsContext graphicsContext;
-    private Factory factory;
+    private GameObjectsFactory gameObjectsFactory;
     private AnimationTimer animationTimer;
     private ObjectGrabber objectGrabber;
     private GridSystem gridSystem;
@@ -25,7 +25,7 @@ public class Level {
     public Level(@NotNull Canvas canvas) {
         this.graphicsContext = canvas.getGraphicsContext2D();
         //get selectable objects should be made abstract in the super class
-        this.factory = new Factory(graphicsContext);
+        this.gameObjectsFactory = new GameObjectsFactory(graphicsContext);
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectGrabber = new ObjectGrabber(canvas, gridSystem);
         objectGrabber.start();
@@ -34,23 +34,23 @@ public class Level {
         collisionHandler = new CollisionHandler();
         electricityHandler = new ElectricityHandler(gridSystem.getObjectsOnScreen());
         collisionDetector.addObserver(collisionHandler);
-        addObjectsToLevel(canvas);
+        addObjectsToLevel();
 
     }
 
-    private void addObjectsToLevel(@NotNull Canvas canvas) {
-        gridSystem.addObjectToGrid(factory.createObject("bulb", 50, canvas.getHeight() - 50));
-        gridSystem.addObjectToGrid(factory.createObject("bulb", 150, canvas.getHeight() - 50));
-        gridSystem.addObjectToGrid(factory.createObject("launcher", 250, canvas.getHeight() - 50));
-        gridSystem.addObjectToGrid(factory.createObject("rectangle", 150, 250));
-        gridSystem.addObjectToGrid(factory.createObject("rectangle", 200, 250));
-        gridSystem.addObjectToGrid(factory.createObject("rectangle", 250, 250));
-        gridSystem.addObjectToGrid(factory.createObject("triangle", 300, 250));
-        gridSystem.addObjectToGrid(factory.createObject("rectangle", 300, 300));
-        gridSystem.addObjectToGrid(factory.createObject("triangle", 350, 300));
-        gridSystem.addObjectToGrid(factory.createObject("triangle", 400, 350));
-        gridSystem.addObjectToGrid(factory.createObject("wind_turbine", 450, 400));
-        gridSystem.addObjectToGrid(new ElectricitySource(500,500,graphicsContext));
+    private void addObjectsToLevel() {
+
+
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 200, 250));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 200, 250));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 250, 250));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("triangle", 300, 250));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 300, 300));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 300, 300));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("triangle", 350, 300));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("triangle", 400, 350));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("wind_turbine", 450, 400));
+        gridSystem.addObjectToGrid(gameObjectsFactory.createObject("rectangle", 150, 550));
     }
 
 
@@ -63,6 +63,7 @@ public class Level {
                 gridSystem.updateGrid();
                 electricityHandler.update();
                 player.update();
+                
 
             }
         };

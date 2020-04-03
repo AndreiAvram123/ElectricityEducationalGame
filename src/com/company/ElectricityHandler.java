@@ -34,7 +34,6 @@ public class ElectricityHandler {
                     if (areObjectsNeighboursHorizontally(gameObject, loopObject)) {
                         reactiveObject.isUnderElectricity = true;
                         enableElectricityOnNeighbours(loopObject);
-
                     }
                 }
             }

@@ -1,30 +1,22 @@
 package com.company;
 
 import com.company.interfaces.MovePlayerDiagonallyDownRight;
-import com.company.interfaces.MovePlayerHorizontally;
-import com.company.models.BallLauncher;
-import com.company.models.Bulb;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Factory implements IFactory {
+public class GameObjectsFactory implements IFactory {
     private GraphicsContext graphicsContext;
 
-    public Factory(@NotNull GraphicsContext graphicsContext) {
+    public GameObjectsFactory(@NotNull GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
     }
 
     @Override
     public GameObject createObject(@NotNull String type, double x, double y) {
         switch (type) {
-            case "bulb":
-                return new Bulb(x, y, graphicsContext);
-            case "launcher":
-                return new BallLauncher(x, y, graphicsContext);
             case "rectangle": {
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
-                rectangle.setElectricityReaction(new MovePlayerHorizontally(Player.getInstance()));
                 return rectangle;
             }
             case "triangle":
