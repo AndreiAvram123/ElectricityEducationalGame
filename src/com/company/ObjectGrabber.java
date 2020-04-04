@@ -26,22 +26,24 @@ public class ObjectGrabber {
             //reset ethe currently dragged object and check weather
             //an object is still dragged
             currentlyDraggedObject = gridSystem.getObjectSelected(event.getX(), event.getY());
-
             if (currentlyDraggedObject != null) {
-                if (gridSystem.isObjectFromSelectorPane(currentlyDraggedObject)) {
+                if (gridSystem.isObjectOnSelectorPane(currentlyDraggedObject)) {
                     cachedPosition = new Point(currentlyDraggedObject.x, currentlyDraggedObject.y);
                 }
-                currentlyDraggedObject.setCenter(event.getX(), event.getY());
+                currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
             }
         });
+
         canvas.setOnMouseReleased(event -> {
             if (currentlyDraggedObject != null) {
-                gridSystem.snapOnGrid(currentlyDraggedObject);
-                if (cachedPosition != null && !gridSystem.isObjectFromSelectorPane(currentlyDraggedObject)) {
-                    if (currentlyDraggedObject instanceof Rectangle) {
-                        gridSystem.addObjectToGrid(new Rectangle(cachedPosition.getX(), cachedPosition.getY(), currentlyDraggedObject.gc));
-                    }
+                if (cachedPosition != null && gridSystem.isObjectOnSelectorPane(currentlyDraggedObject)) {
+                    currentlyDraggedObject.x = cachedPosition.getX();
+                    currentlyDraggedObject.y = cachedPosition.getY();
+                }else{
+                    gridSystem.addObjectToGameScreen(currentlyDraggedObject);
+
                 }
+                gridSystem.snapOnGrid(currentlyDraggedObject);
                 currentlyDraggedObject = null;
                 cachedPosition = null;
             }

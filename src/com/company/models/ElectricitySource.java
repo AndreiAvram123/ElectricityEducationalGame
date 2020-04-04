@@ -2,7 +2,6 @@ package com.company.models;
 
 import com.company.GameObject;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 public class ElectricitySource extends GameObject {
 

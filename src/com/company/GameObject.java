@@ -10,7 +10,7 @@ public class GameObject implements Draggable {
     protected GraphicsContext gc;
     protected double width = 50;
     protected double height = 50;
-
+    private boolean hasDragEnabled = false;
 
     public GameObject(double x, double y, GraphicsContext gc) {
         this.x = x;
@@ -26,8 +26,14 @@ public class GameObject implements Draggable {
 
 
     @Override
-    public void setCenter(double x, double y) {
-        this.x = x - width / 2;
-        this.y = y - height / 2;
+    public void setNewCenter(double x, double y) {
+        if (hasDragEnabled) {
+            this.x = x - width / 2;
+            this.y = y - height / 2;
+        }
+    }
+
+    public void enableDrag(){
+        hasDragEnabled = true;
     }
 }

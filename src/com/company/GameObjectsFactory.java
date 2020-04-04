@@ -21,7 +21,6 @@ public class GameObjectsFactory implements IFactory {
             }
             case "triangle":
                 Triangle triangle = new Triangle(x, y, graphicsContext);
-                triangle.setElectricityReaction(new MovePlayerDiagonallyDownRight(Player.getInstance()));
                 return triangle;
             case "ball":
                 return Player.createInstance(x, y, graphicsContext);
