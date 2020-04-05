@@ -2,7 +2,6 @@ package com.company;
 
 import com.company.models.Finish;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,31 +16,33 @@ public class LevelDataReader {
 
     private GameObjectsFactory factory;
     private GraphicsContext graphicsContext;
+    private JsonObject fileData;
 
     public LevelDataReader(@NotNull GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
         this.factory = new GameObjectsFactory(graphicsContext);
+        this.fileData = getFileData();
     }
 
-    private FileReader getLevelsDataFileReader() {
-        FileReader fileReader = null;
+    private JsonObject getFileData() {
+        JsonObject data = null;
         try {
+
             String path = new File("").getAbsolutePath();
             String newPath = path.concat("/src/res/levelsData.json");
-            fileReader = new FileReader(newPath);
-        } catch (FileNotFoundException e) {
+            FileReader fileReader = new FileReader(newPath);
+            data = JsonParser.parseReader(fileReader).getAsJsonObject();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return fileReader;
+        return data;
     }
 
 
-    public ArrayList<GameObject> getObjectsArrayFromJsonFile(String levelNumber,String arrayName) {
+    public ArrayList<GameObject> getObjectsArrayFromJsonFile(int levelNumber, String arrayName) {
         ArrayList<GameObject> dataToReturn = new ArrayList<>();
-        FileReader fileReader = getLevelsDataFileReader();
-        if (fileReader != null) {
-            JsonObject jsonObject = JsonParser.parseReader(fileReader).getAsJsonObject();
-            JsonObject levelData = jsonObject.getAsJsonObject(levelNumber);
+        if (fileData != null) {
+            JsonObject levelData = fileData.getAsJsonObject(Integer.toString(levelNumber));
             JsonArray objectsOnGameScreen = levelData.getAsJsonArray(arrayName);
             for (int i = 0; i < objectsOnGameScreen.size(); i++) {
                 dataToReturn.add(mapToGameObject(objectsOnGameScreen.get(i).getAsJsonObject()));
@@ -64,5 +65,11 @@ public class LevelDataReader {
             default:
                 return factory.createObject(className, x, y, hasDragEnabled);
         }
+    }
+
+    public String getHintBeforeStart(int levelNumber) {
+        JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
+        String hintBeforeStart = levelData.get("hintBefore").getAsString();
+        return hintBeforeStart;
     }
 }

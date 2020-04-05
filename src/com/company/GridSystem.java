@@ -80,8 +80,19 @@ public class GridSystem {
         return null;
     }
 
-    public boolean isObjectOnSelectorPane(@NotNull GameObject gameObject) {
-        return gameObject.y >= gridHeight - objectSelectorHeight;
+
+    public boolean isObjectOverAnother(@NotNull GameObject object) {
+        for (GameObject gameObject : gameScreenObjects) {
+            if (gameObject != object && gameObject.x == object.x && gameObject.y == object.y) {
+                return true;
+            }
+        }
+        for (GameObject gameObject : objectsInSelectorPane) {
+            if (gameObject != object && gameObject.x == object.x && gameObject.y == object.y) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

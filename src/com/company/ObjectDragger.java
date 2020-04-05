@@ -9,7 +9,7 @@ public class ObjectDragger {
     private Canvas canvas;
     private GameObject currentlyDraggedObject;
     private GridSystem gridSystem;
-    private Point objectPanePosition;
+    private Point lastObjectPosition;
 
     public ObjectDragger(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
         this.gridSystem = gridSystem;
@@ -28,25 +28,28 @@ public class ObjectDragger {
             }
 
             if (currentlyDraggedObject != null) {
-                if (gridSystem.isObjectOnSelectorPane(currentlyDraggedObject)) {
-                    objectPanePosition = new Point(currentlyDraggedObject.x, currentlyDraggedObject.y);
+                // if (gridSystem.isObjectOnSelectorPane(currentlyDraggedObject)) {
+                if (lastObjectPosition == null) {
+                    lastObjectPosition = new Point(currentlyDraggedObject.x, currentlyDraggedObject.y);
                 }
+                //}
                 currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
             }
         });
 
         canvas.setOnMouseReleased(event -> {
             if (currentlyDraggedObject != null) {
-                if (objectPanePosition != null && gridSystem.isObjectOnSelectorPane(currentlyDraggedObject)) {
-                    currentlyDraggedObject.x = objectPanePosition.getX();
-                    currentlyDraggedObject.y = objectPanePosition.getY();
+                gridSystem.snapOnGrid(currentlyDraggedObject);
+
+                if (gridSystem.isObjectOverAnother(currentlyDraggedObject)) {
+                    currentlyDraggedObject.x = lastObjectPosition.getX();
+                    currentlyDraggedObject.y = lastObjectPosition.getY();
                 } else {
                     gridSystem.addObjectToGameScreen(currentlyDraggedObject);
 
                 }
-                gridSystem.snapOnGrid(currentlyDraggedObject);
                 currentlyDraggedObject = null;
-                objectPanePosition = null;
+                lastObjectPosition = null;
             }
         });
     }

@@ -8,18 +8,25 @@ import java.util.ArrayList;
 public class ElectricityHandler {
 
     private ArrayList<GameObject> reactiveObjectsOnScreen;
+    private boolean isStarted = false;
 
     public ElectricityHandler(ArrayList<GameObject> reactiveObjectsOnScreen) {
         this.reactiveObjectsOnScreen = reactiveObjectsOnScreen;
     }
 
 
+    public void startElectricityHandler() {
+        isStarted = true;
+    }
+
     public void update() {
-        reactiveObjectsOnScreen.forEach((gameObject -> {
-            if (gameObject instanceof ElectricitySource) {
-                enableElectricityOnNeighbours(gameObject);
-            }
-        }));
+        if (isStarted) {
+            reactiveObjectsOnScreen.forEach(gameObject -> {
+                if (gameObject instanceof ElectricitySource && ((ElectricitySource) gameObject).isElectricityEnabled()) {
+                    enableElectricityOnNeighbours(gameObject);
+                }
+            });
+        }
     }
 
     private void enableElectricityOnNeighbours(GameObject gameObject) {

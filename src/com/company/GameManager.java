@@ -11,7 +11,7 @@ public class GameManager implements Observer {
 
     private static GameManager instance;
     private final Pane root;
-
+    private TextPanel textPanel;
 
     public static GameManager getInstance(@NotNull Pane root) {
         if (instance == null) {
@@ -22,14 +22,19 @@ public class GameManager implements Observer {
 
     private GameManager(@NotNull Pane root) {
         this.root = root;
+        textPanel = new TextPanel(root);
     }
 
 
     public void startLevel(int levelNumber) {
         Level level = new Level(root, levelNumber);
         level.addObserver(this);
-        level.showLevel();
-
+        textPanel.showPanel(level.getHintBeforeStart());
+        textPanel.getNextButton().setOnMouseClicked(event -> {
+            level.showLevel();
+            level.addObserver(this);
+            textPanel.hidePanel();
+        });
     }
 
 
@@ -41,7 +46,6 @@ public class GameManager implements Observer {
     }
 
     private void displayLevelFinished() {
-        AudioClip audioClip = new AudioClip(this.getClass().getResource("guta.mp3").toString());
-        audioClip.play();
+        AudioManager.getInstance().playLevelFinishedSound();
     }
 }

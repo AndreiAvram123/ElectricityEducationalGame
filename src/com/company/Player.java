@@ -11,6 +11,9 @@ public class Player extends GameObject implements Movable {
     private double moveOnX;
     private double moveOnY;
 
+    //todo
+    //refactor player
+    //the position depends on the level so it is not a singleton
     public static synchronized Player createInstance(double x, double y, GraphicsContext gc) {
         instance = new Player(x, y, gc);
         return instance;

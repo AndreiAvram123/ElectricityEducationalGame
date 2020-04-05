@@ -1,11 +1,11 @@
 package com.company;
 
-import com.sun.istack.internal.NotNull;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -16,10 +16,9 @@ import java.util.Observable;
  */
 public class Level extends Observable {
 
-    private final Pane root;
+    private final Pane layer;
     private final Canvas canvas;
     protected GraphicsContext graphicsContext;
-    private GameObjectsFactory gameObjectsFactory;
     private AnimationTimer animationTimer;
     private ObjectDragger objectDragger;
     private GridSystem gridSystem;
@@ -27,22 +26,31 @@ public class Level extends Observable {
     private CollisionHandler collisionHandler;
     private ElectricityHandler electricityHandler;
     private int levelNumber;
+    private String hintBeforeStart;
+    private String hintAfterFinish;
     private Player player;
+    private LevelDataReader levelDataReader;
 
 
     public Level(@NotNull Pane root, int levelNumber) {
         this.levelNumber = levelNumber;
-        this.canvas = new Canvas(800, 600);
-        this.root = root;
-        this.root.getChildren().add(canvas);
+        this.layer = new Pane();
+        this.layer.setPrefHeight(root.getHeight());
+        this.layer.setPrefWidth(root.getWidth());
+        this.layer.setVisible(false);
+        root.getChildren().add(layer);
+        this.canvas = new Canvas(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
+        this.layer.getChildren().add(canvas);
         this.graphicsContext = canvas.getGraphicsContext2D();
-        //get selectable objects should be made abstract in the super class
-        this.gameObjectsFactory = new GameObjectsFactory(graphicsContext);
-        initializeLevel(canvas);
-        initializeStartRestartButton();
+        levelDataReader = new LevelDataReader(graphicsContext);
+        this.hintBeforeStart = levelDataReader.getHintBeforeStart(levelNumber);
     }
 
-    private void initializeLevel(@NotNull Canvas canvas) {
+    public String getHintBeforeStart() {
+        return hintBeforeStart;
+    }
+
+    private void initializeLevel() {
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectDragger = new ObjectDragger(canvas, gridSystem);
         objectDragger.start();
@@ -51,14 +59,13 @@ public class Level extends Observable {
         collisionDetector = new CollisionDetector(gridSystem.getGameScreenObjects(), player);
         collisionHandler = new CollisionHandler();
         collisionDetector.addObserver(collisionHandler);
+        electricityHandler = new ElectricityHandler(gridSystem.getGameScreenObjects());
     }
 
 
     private void addObjectsToLevel() {
-        LevelDataReader levelDataReader = new LevelDataReader(graphicsContext);
-        String level = Integer.toString(levelNumber);
-        ArrayList<GameObject> gameScreenObjects = levelDataReader.getObjectsArrayFromJsonFile(level, "objectsOnScreen");
-        ArrayList<GameObject> gameObjectsSelectorPane = levelDataReader.getObjectsArrayFromJsonFile(level, "selectorPaneObjects");
+        ArrayList<GameObject> gameScreenObjects = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "objectsOnScreen");
+        ArrayList<GameObject> gameObjectsSelectorPane = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "selectorPaneObjects");
         gridSystem.addObjectsToGameScreen(gameScreenObjects);
         gridSystem.addObjectsToSelectorPane(gameObjectsSelectorPane);
     }
@@ -70,11 +77,11 @@ public class Level extends Observable {
         button.setLayoutX(350);
         button.setLayoutY(610);
         button.setText("Start");
-        this.root.getChildren().add(button);
+        this.layer.getChildren().add(button);
         button.setOnMouseClicked(event -> {
             if (button.getText().equals("Start")) {
                 button.setText("Restart");
-                electricityHandler = new ElectricityHandler(gridSystem.getGameScreenObjects());
+                electricityHandler.startElectricityHandler();
                 gridSystem.disableMovement();
                 gridSystem.setGridLinesEnabled(false);
             } else {
@@ -86,21 +93,25 @@ public class Level extends Observable {
     }
 
     private void restartLevel() {
-        initializeLevel(canvas);
-        showLevel();
+        initializeLevel();
+        start();
     }
 
 
-
     public void showLevel() {
+        initializeLevel();
+        initializeStartRestartButton();
+        start();
+    }
+
+    public void start() {
+          this.layer.setVisible(true);
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 collisionDetector.checkCollisionWithPlayer();
                 gridSystem.updateGrid();
-                if (electricityHandler != null) {
-                    electricityHandler.update();
-                }
+                electricityHandler.update();
                 player.update();
                 if (collisionHandler.isLevelCompleted()) {
                     animationTimer.stop();
