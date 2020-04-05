@@ -28,7 +28,7 @@ public class GameManager implements Observer {
     public void startLevel(int levelNumber) {
         Level level = new Level(root, levelNumber);
         level.addObserver(this);
-        level.start();
+        level.showLevel();
 
     }
 

@@ -18,6 +18,7 @@ import java.util.Observable;
 public class Level extends Observable {
 
     private final Pane root;
+    private final Canvas canvas;
     protected GraphicsContext graphicsContext;
     private GameObjectsFactory gameObjectsFactory;
     private AnimationTimer animationTimer;
@@ -29,39 +30,65 @@ public class Level extends Observable {
     private ElectricityHandler electricityHandler;
     private int levelNumber;
 
+
     public Level(@NotNull Pane root, int levelNumber) {
         this.levelNumber = levelNumber;
-        Canvas canvas = new Canvas(800, 600);
+        this.canvas = new Canvas(800, 600);
         this.root = root;
         this.root.getChildren().add(canvas);
         this.graphicsContext = canvas.getGraphicsContext2D();
         //get selectable objects should be made abstract in the super class
         this.gameObjectsFactory = new GameObjectsFactory(graphicsContext);
         player = Player.createInstance(200, 200, graphicsContext);
-        gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
-        addObjectsToLevel();
+        initializeLevel(canvas);
+        initializeStartRestartButton();
+    }
 
-        initializeStartButton();
+    private void initializeLevel(Canvas canvas) {
+        gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         objectGrabber = new ObjectGrabber(canvas, gridSystem);
         objectGrabber.start();
+        addObjectsToLevel();
+
         collisionDetector = new CollisionDetector(gridSystem.getGameScreenObjects(), player);
         collisionHandler = new CollisionHandler();
         collisionDetector.addObserver(collisionHandler);
     }
 
+
     private void addObjectsToLevel() {
         gridSystem.addObjectsToGameScreen(getStaticObjects());
         gridSystem.addObjectsToSelectorPane(getSelectorPaneObjects());
+
+
     }
 
-    private void initializeStartButton() {
+
+    private void initializeStartRestartButton() {
         Button button = new Button();
         button.setMinSize(100, 30);
         button.setLayoutX(350);
         button.setLayoutY(610);
         button.setText("Start");
         this.root.getChildren().add(button);
-        button.setOnMouseClicked(event -> electricityHandler = new ElectricityHandler(gridSystem.getGameScreenObjects()));
+        button.setOnMouseClicked(event -> {
+            if (button.getText().equals("Start")) {
+                button.setText("Restart");
+                electricityHandler = new ElectricityHandler(gridSystem.getGameScreenObjects());
+            } else {
+                restartLevel();
+                button.setText("Start");
+            }
+        });
+
+    }
+
+    private void restartLevel() {
+        player.x = 200;
+        player.y = 200;
+        player.moveOnX(0);
+        player.moveOnY(0);
+        initializeLevel(canvas);
 
     }
 
@@ -93,7 +120,7 @@ public class Level extends Observable {
     }
 
 
-    public void start() {
+    public void showLevel() {
 
         animationTimer = new AnimationTimer() {
             @Override
