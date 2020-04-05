@@ -1,0 +1,93 @@
+{
+  "1": {
+    "objectsOnScreen": [
+      {
+        "class": "player",
+        "x": 200,
+        "y": 200,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "finish",
+        "x": 550,
+        "y": 350,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 250,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 250,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 250,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "triangle",
+        "x": 350,
+        "y": 250,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "triangle",
+        "x": 400,
+        "y": 300,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 350,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 350,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 350,
+        "hasDragEnabled": false
+      }
+    ],
+    "selectorPaneObjects": [
+      {
+        "class" : "wind_turbine",
+        "x" : 400,
+        "y" : 550,
+        "hasDragEnabled" : true
+      },
+      {
+        "class": "rectangle",
+        "x" : 500,
+        "y" : 550,
+        "hasDragEnabled" : true
+      }
+
+    ]
+  }
+}

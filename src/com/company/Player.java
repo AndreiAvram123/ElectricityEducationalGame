@@ -1,6 +1,7 @@
 package com.company;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,9 +12,7 @@ public class Player extends GameObject implements Movable {
     private double moveOnY;
 
     public static synchronized Player createInstance(double x, double y, GraphicsContext gc) {
-        if (instance == null) {
-            instance = new Player(x, y, gc);
-        }
+        instance = new Player(x, y, gc);
         return instance;
     }
 
@@ -57,6 +56,7 @@ public class Player extends GameObject implements Movable {
 
     @Override
     public void update() {
+        gc.setFill(Color.WHITE);
         gc.fillOval(x, y, 50, 50);
     }
 

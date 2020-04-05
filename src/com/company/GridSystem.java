@@ -15,7 +15,7 @@ public class GridSystem {
     private double objectSelectorHeight = 100;
     private ArrayList<GameObject> gameScreenObjects = new ArrayList<>();
     private ArrayList<GameObject> objectsInSelectorPane = new ArrayList<>();
-
+    private boolean gridLinesEnabled = true;
 
     public GridSystem(@NotNull GraphicsContext graphicsContext, double gridWidth, double gridHeight) {
         this.graphicsContext = graphicsContext;
@@ -36,13 +36,15 @@ public class GridSystem {
 
         for (int indexWidth = 0; indexWidth <= gridWidth; indexWidth += 50) {
             for (int indexHeight = 0; indexHeight <= gridHeight - 100; indexHeight += 50) {
-                graphicsContext.setFill(Color.BLUE);
+                graphicsContext.setFill(Color.DARKBLUE);
                 graphicsContext.fillRect(indexWidth, indexHeight, rectangleWidth, rectangleWidth);
-                graphicsContext.setStroke(Color.BLACK);
-                graphicsContext.strokeRect(indexWidth, indexHeight, rectangleWidth, rectangleWidth);
+                if (gridLinesEnabled) {
+                    graphicsContext.setStroke(Color.BLACK);
+                    graphicsContext.strokeRect(indexWidth, indexHeight, rectangleWidth, rectangleWidth);
+                }
             }
         }
-        graphicsContext.setFill(Color.PINK);
+        graphicsContext.setFill(Color.LIGHTBLUE);
         graphicsContext.fillRect(0, gridHeight - 100, gridWidth, 100);
     }
 
@@ -75,9 +77,6 @@ public class GridSystem {
                 return gameObject;
             }
         }
-        ;
-        //todo
-        //maybe replace with null object design pattern
         return null;
     }
 
@@ -101,5 +100,14 @@ public class GridSystem {
         double newY = ((int) (centerY / rectangleWidth)) * rectangleWidth;
         gameObject.x = newX;
         gameObject.y = newY;
+    }
+
+    public void disableMovement() {
+        gameScreenObjects.forEach(gameObject -> gameObject.setHasDragEnabled(false));
+        objectsInSelectorPane.forEach(gameObject -> gameObject.setHasDragEnabled(false));
+    }
+
+    public void setGridLinesEnabled(boolean gridLinesEnabled) {
+        this.gridLinesEnabled = gridLinesEnabled;
     }
 }

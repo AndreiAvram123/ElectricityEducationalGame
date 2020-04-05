@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.models.ElectricitySource;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -22,17 +23,17 @@ public class ElectricityHandler {
     }
 
     private void enableElectricityOnNeighbours(GameObject gameObject) {
-        for(GameObject loopObject : reactiveObjectsOnScreen) {
+        for (GameObject loopObject : reactiveObjectsOnScreen) {
             if (loopObject instanceof ReactiveObject) {
                 ReactiveObject reactiveObject = (ReactiveObject) loopObject;
                 //no need to go to a node that is already traversed
-                if (!reactiveObject.isUnderElectricity) {
+                if (!reactiveObject.isUnderElectricity()) {
                     if (areObjectsNeighboursVertically(gameObject, loopObject)) {
-                        reactiveObject.isUnderElectricity = true;
+                        reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
                     if (areObjectsNeighboursHorizontally(gameObject, loopObject)) {
-                        reactiveObject.isUnderElectricity = true;
+                        reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
                 }

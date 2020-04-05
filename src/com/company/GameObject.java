@@ -33,7 +33,9 @@ public class GameObject implements Draggable {
         }
     }
 
-    public void enableDrag(){
-        hasDragEnabled = true;
+
+    public void setHasDragEnabled(boolean hasDragEnabled) {
+        this.hasDragEnabled = hasDragEnabled;
     }
+
 }

@@ -13,19 +13,25 @@ public class GameObjectsFactory implements IFactory {
     }
 
     @Override
-    public GameObject createObject(@NotNull String type, double x, double y) {
+    public GameObject createObject(@NotNull String type, double x, double y, boolean hasDragEnabled) {
         switch (type) {
             case "rectangle": {
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
+                rectangle.setHasDragEnabled(hasDragEnabled);
                 return rectangle;
             }
             case "triangle":
                 Triangle triangle = new Triangle(x, y, graphicsContext);
+                triangle.setHasDragEnabled(hasDragEnabled);
                 return triangle;
             case "ball":
-                return Player.createInstance(x, y, graphicsContext);
+                Player player = Player.createInstance(x, y, graphicsContext);
+                player.setHasDragEnabled(hasDragEnabled);
+                return player;
             case "wind_turbine":
-                return new WindTurbine(x, y, graphicsContext);
+                WindTurbine windTurbine = new WindTurbine(x, y, graphicsContext);
+                windTurbine.setHasDragEnabled(hasDragEnabled);
+                return windTurbine;
         }
         return null;
     }
