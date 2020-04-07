@@ -17,6 +17,7 @@ public class LevelDataReader {
     private GameObjectsFactory factory;
     private GraphicsContext graphicsContext;
     private JsonObject fileData;
+    private static final String RELATIVE_PATH_LEVELS_DATA = "/src/res/levelsData.json";
 
     public LevelDataReader(@NotNull GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
@@ -29,7 +30,7 @@ public class LevelDataReader {
         try {
 
             String path = new File("").getAbsolutePath();
-            String newPath = path.concat("/src/res/levelsData.json");
+            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
             FileReader fileReader = new FileReader(newPath);
             data = JsonParser.parseReader(fileReader).getAsJsonObject();
         } catch (Exception e) {
@@ -69,7 +70,34 @@ public class LevelDataReader {
 
     public String getHintBeforeStart(int levelNumber) {
         JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
-        String hintBeforeStart = levelData.get("hintBefore").getAsString();
-        return hintBeforeStart;
+        return levelData.get("hintBefore").getAsString();
+    }
+
+    public String getHintAfterFinish(int levelNumber) {
+        JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
+        return levelData.get("hintAfter").getAsString();
+
+    }
+
+    /**
+     * Static method that returns the number of available levels
+     * Method usually used in the GameManager class
+     *
+     * @return
+     */
+    public static int getNumberOfLevels() {
+        JsonObject data = null;
+        try {
+            String path = new File("").getAbsolutePath();
+            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
+            FileReader fileReader = new FileReader(newPath);
+            data = JsonParser.parseReader(fileReader).getAsJsonObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (data != null) {
+            return data.get("numberOfLevels").getAsInt();
+        }
+        return 0;
     }
 }

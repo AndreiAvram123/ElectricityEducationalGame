@@ -30,6 +30,7 @@ public class Level extends Observable {
     private String hintAfterFinish;
     private Player player;
     private LevelDataReader levelDataReader;
+    private boolean shouldNotifyObserver = true;
 
 
     public Level(@NotNull Pane root, int levelNumber) {
@@ -44,10 +45,15 @@ public class Level extends Observable {
         this.graphicsContext = canvas.getGraphicsContext2D();
         levelDataReader = new LevelDataReader(graphicsContext);
         this.hintBeforeStart = levelDataReader.getHintBeforeStart(levelNumber);
+        this.hintAfterFinish = levelDataReader.getHintAfterFinish(levelNumber);
     }
 
     public String getHintBeforeStart() {
         return hintBeforeStart;
+    }
+
+    public String getHintAfterFinish() {
+        return hintAfterFinish;
     }
 
     private void initializeLevel() {
@@ -105,20 +111,22 @@ public class Level extends Observable {
     }
 
     public void start() {
-          this.layer.setVisible(true);
+        this.layer.setVisible(true);
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                collisionDetector.checkCollisionWithPlayer();
-                gridSystem.updateGrid();
-                electricityHandler.update();
-                player.update();
-                if (collisionHandler.isLevelCompleted()) {
+                if (!collisionHandler.isLevelCompleted()) {
+                    collisionDetector.checkCollisionWithPlayer();
+                    gridSystem.updateGrid();
+                    electricityHandler.update();
+                    player.update();
+                }else{
                     animationTimer.stop();
-                    setChanged();
-                    notifyObservers(levelNumber);
+                    if(shouldNotifyObserver){
+                        setChanged();
+                        notifyObservers(levelNumber);
+                    }
                 }
-
             }
         };
         animationTimer.start();
@@ -126,4 +134,7 @@ public class Level extends Observable {
     }
 
 
+    public void hide() {
+        this.layer.setVisible(false);
+    }
 }

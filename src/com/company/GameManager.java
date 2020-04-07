@@ -2,7 +2,6 @@ package com.company;
 
 import com.sun.istack.internal.NotNull;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,6 +11,8 @@ public class GameManager implements Observer {
     private static GameManager instance;
     private final Pane root;
     private TextPanel textPanel;
+    private Level currentLevel;
+    private int numberOfLevels = LevelDataReader.getNumberOfLevels();
 
     public static GameManager getInstance(@NotNull Pane root) {
         if (instance == null) {
@@ -23,29 +24,35 @@ public class GameManager implements Observer {
     private GameManager(@NotNull Pane root) {
         this.root = root;
         textPanel = new TextPanel(root);
+        AudioManager.getInstance().playBackgroundMusic();
     }
 
 
     public void startLevel(int levelNumber) {
-        Level level = new Level(root, levelNumber);
-        level.addObserver(this);
-        textPanel.showPanel(level.getHintBeforeStart());
-        textPanel.getNextButton().setOnMouseClicked(event -> {
-            level.showLevel();
-            level.addObserver(this);
-            textPanel.hidePanel();
-        });
-    }
 
+        if (numberOfLevels >= levelNumber) {
+            currentLevel = new Level(root, levelNumber);
+            currentLevel.addObserver(this);
+            textPanel.showPanel(currentLevel.getHintBeforeStart());
+            textPanel.getNextButton().setOnMouseClicked(event -> {
+                currentLevel.showLevel();
+                currentLevel.addObserver(this);
+                textPanel.hidePanel();
+            });
+        }
+    }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Level) {
-            displayLevelFinished();
+            displayLevelFinishedHint();
+            AudioManager.getInstance().playLevelFinishedSound();
+
         }
     }
 
-    private void displayLevelFinished() {
-        AudioManager.getInstance().playLevelFinishedSound();
+    private void displayLevelFinishedHint() {
+        currentLevel.hide();
+        textPanel.showPanel(currentLevel.getHintAfterFinish());
     }
 }
