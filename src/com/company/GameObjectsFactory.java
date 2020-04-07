@@ -1,6 +1,9 @@
 package com.company;
 
-import com.company.interfaces.MovePlayerDiagonallyDownRight;
+import com.company.models.Player;
+import com.company.models.Rectangle;
+import com.company.models.Triangle;
+import com.company.models.WindTurbine;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
 

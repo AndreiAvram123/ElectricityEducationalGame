@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.models.Finish;
+import com.company.models.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -8,7 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class LevelDataReader {
         boolean hasDragEnabled = jsonElement.get("hasDragEnabled").getAsBoolean();
         switch (className) {
             case "finish":
-                return Finish.getInstance(x, y, graphicsContext);
+                return new Finish(x, y, graphicsContext);
             case "player":
                 return Player.createInstance(x, y, graphicsContext);
             default:

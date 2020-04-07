@@ -1,6 +1,6 @@
 package com.company.interfaces;
 
-import com.company.Player;
+import com.company.models.Player;
 
 public class MovePlayerDiagonallyDownRight implements IElectricityReaction{
 

@@ -1,6 +1,8 @@
 package com.company;
 
 import com.company.models.Finish;
+import com.company.models.Rectangle;
+import com.company.models.Triangle;
 
 import java.util.Observable;
 import java.util.Observer;

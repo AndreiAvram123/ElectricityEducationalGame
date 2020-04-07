@@ -1,15 +1,19 @@
-package com.company;
+package com.company.models;
 
+import com.company.GameObject;
+import com.company.Movable;
+import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Player extends GameObject implements Movable {
+public class Player extends GameObject implements Movable, HintOnHover {
     private static Player instance;
     private double moveOnX;
     private double moveOnY;
+    private static final String HINT = "This is the player dummy";
 
     //todo
     //refactor player
@@ -71,5 +75,10 @@ public class Player extends GameObject implements Movable {
     @Override
     public void moveOnX(double x) {
         this.moveOnX = x;
+    }
+
+    @Override
+    public String getHint() {
+        return HINT;
     }
 }

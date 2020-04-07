@@ -63,8 +63,12 @@ public class GridSystem {
         objectsInSelectorPane.addAll(gameObjects);
     }
 
+    public void removeGameScreenObject( GameObject gameObject) {
+        gameScreenObjects.remove(gameObject);
+    }
 
-    public GameObject getObjectSelected(double mouseX, double mouseY) {
+
+    public GameObject getObjectMouseOver(double mouseX, double mouseY) {
         for (GameObject gameObject : gameScreenObjects) {
             if (gameObject.x < mouseX && gameObject.x + gameObject.width > mouseX
                     && gameObject.y < mouseY && gameObject.y + gameObject.height > mouseY) {
@@ -113,10 +117,11 @@ public class GridSystem {
         gameObject.y = newY;
     }
 
-    public void disableMovement() {
+    public void disableObjectsDrag() {
         gameScreenObjects.forEach(gameObject -> gameObject.setHasDragEnabled(false));
         objectsInSelectorPane.forEach(gameObject -> gameObject.setHasDragEnabled(false));
     }
+
 
     public void setGridLinesEnabled(boolean gridLinesEnabled) {
         this.gridLinesEnabled = gridLinesEnabled;

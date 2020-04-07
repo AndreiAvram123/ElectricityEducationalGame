@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.models.Level;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.layout.Pane;
 

@@ -1,5 +1,7 @@
-package com.company;
+package com.company.models;
 
+import com.company.*;
+import com.company.models.Player;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +22,7 @@ public class Level extends Observable {
     private final Canvas canvas;
     protected GraphicsContext graphicsContext;
     private AnimationTimer animationTimer;
-    private ObjectDragger objectDragger;
+    private ObjectHandler objectHandler;
     private GridSystem gridSystem;
     private CollisionDetector collisionDetector;
     private CollisionHandler collisionHandler;
@@ -58,8 +60,9 @@ public class Level extends Observable {
 
     private void initializeLevel() {
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
-        objectDragger = new ObjectDragger(canvas, gridSystem);
-        objectDragger.start();
+        objectHandler = new ObjectHandler(canvas, gridSystem);
+        objectHandler.setHintWindow(new HintWindow(this.layer));
+        objectHandler.start();
         addObjectsToLevel();
         player = Player.getInstance();
         collisionDetector = new CollisionDetector(gridSystem.getGameScreenObjects(), player);
@@ -88,7 +91,7 @@ public class Level extends Observable {
             if (button.getText().equals("Start")) {
                 button.setText("Restart");
                 electricityHandler.startElectricityHandler();
-                gridSystem.disableMovement();
+                gridSystem.disableObjectsDrag();
                 gridSystem.setGridLinesEnabled(false);
             } else {
                 restartLevel();
