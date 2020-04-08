@@ -1,7 +1,6 @@
 package com.company.models;
 
 import com.company.*;
-import com.company.models.Player;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

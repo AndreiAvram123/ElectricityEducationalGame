@@ -1,4 +1,4 @@
-package com.company;
+package com.company.models;
 
 import com.company.interfaces.IElectricityReaction;
 import com.company.interfaces.NoMovingReaction;

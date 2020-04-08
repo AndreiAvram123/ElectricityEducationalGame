@@ -1,9 +1,7 @@
 package com.company.models;
 
-import com.company.ReactiveObject;
 import com.company.interfaces.HintOnHover;
 import com.company.interfaces.MovePlayerHorizontallyReaction;
-import com.company.models.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

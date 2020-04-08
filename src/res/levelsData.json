@@ -73,6 +73,18 @@
     ],
     "selectorPaneObjects": [
       {
+        "class": "sun",
+        "x": 300,
+        "y": 550,
+        "hasDragEnabled": true
+      },
+      {
+        "class": "solar_panel",
+        "x": 200,
+        "y": 550,
+        "hasDragEnabled": true
+      },
+      {
         "class": "wind_turbine",
         "x": 400,
         "y": 550,
@@ -81,6 +93,12 @@
       {
         "class": "rectangle",
         "x": 500,
+        "y": 550,
+        "hasDragEnabled": true
+      },
+      {
+        "class": "wind",
+        "x": 600,
         "y": 550,
         "hasDragEnabled": true
       }

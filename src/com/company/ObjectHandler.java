@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.interfaces.HintOnHover;
+import com.company.models.GameObject;
 import com.company.models.Point;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +37,7 @@ public class ObjectHandler {
                     if (gameObject instanceof HintOnHover) {
                         if (currentlyMouseOverObject != gameObject) {
                             currentlyMouseOverObject = gameObject;
-                            hintWindow.showHint(((HintOnHover) gameObject).getHint(), gameObject.x + 50, gameObject.y);
+                            hintWindow.showHint(((HintOnHover) gameObject).getHint(), gameObject.getX() + 50, gameObject.getY());
                         }
                     }
                 } else {
@@ -60,7 +61,7 @@ public class ObjectHandler {
 
             if (currentlyDraggedObject != null) {
                 if (lastObjectPosition == null) {
-                    lastObjectPosition = new Point(currentlyDraggedObject.x, currentlyDraggedObject.y);
+                    lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
                 }
                 currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
             }
@@ -74,8 +75,8 @@ public class ObjectHandler {
                 if (gridSystem.isObjectOverAnother(currentlyDraggedObject)) {
                     //reset position and put the object back into the last
                     //known position
-                    currentlyDraggedObject.x = lastObjectPosition.getX();
-                    currentlyDraggedObject.y = lastObjectPosition.getY();
+                    currentlyDraggedObject.setX(lastObjectPosition.getX());
+                    currentlyDraggedObject.setY(lastObjectPosition.getY());
                 } else {
                     gridSystem.addObjectToGameScreen(currentlyDraggedObject);
                 }

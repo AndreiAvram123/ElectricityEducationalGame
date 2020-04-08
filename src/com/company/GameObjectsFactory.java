@@ -1,9 +1,7 @@
 package com.company;
 
-import com.company.models.Player;
-import com.company.models.Rectangle;
-import com.company.models.Triangle;
-import com.company.models.WindTurbine;
+import com.company.interfaces.IFactory;
+import com.company.models.*;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -35,7 +33,21 @@ public class GameObjectsFactory implements IFactory {
                 WindTurbine windTurbine = new WindTurbine(x, y, graphicsContext);
                 windTurbine.setHasDragEnabled(hasDragEnabled);
                 return windTurbine;
+            case "wind":
+                Wind wind = new Wind(x, y, graphicsContext);
+                wind.setHasDragEnabled(hasDragEnabled);
+                return wind;
+            case "sun":
+                Sun sun = new Sun(x, y, graphicsContext);
+                sun.setHasDragEnabled(hasDragEnabled);
+                return sun;
+            case "solar_panel":
+                SolarPanel solarPanel = new SolarPanel(x, y, graphicsContext);
+                solarPanel.setHasDragEnabled(hasDragEnabled);
+                return solarPanel;
+            default:
+                return new NullObject(x, y, graphicsContext);
         }
-        return null;
+
     }
 }

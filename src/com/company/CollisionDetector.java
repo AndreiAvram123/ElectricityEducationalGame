@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.models.GameObject;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +33,7 @@ public class CollisionDetector extends Observable {
     }
 
     private Sides getCollisionSide(@NotNull GameObject gameObject) {
-        if (gameObject.x == player.x && gameObject.y == player.y + player.height) {
+        if (gameObject.getX() == player.getX() && gameObject.getY() == player.getY() + player.getHeight()) {
             return Sides.BOTTOM;
         }
         return Sides.NONE;

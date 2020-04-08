@@ -1,7 +1,6 @@
 package com.company.models;
 
-import com.company.GameObject;
-import com.company.Movable;
+import com.company.interfaces.Movable;
 import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

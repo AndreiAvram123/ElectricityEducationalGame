@@ -1,6 +1,5 @@
 package com.company.models;
 
-import com.company.GameObject;
 import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

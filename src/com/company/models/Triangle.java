@@ -1,6 +1,5 @@
 package com.company.models;
 
-import com.company.ReactiveObject;
 import com.company.interfaces.MovePlayerDiagonallyDownRight;
 import javafx.scene.canvas.GraphicsContext;
 

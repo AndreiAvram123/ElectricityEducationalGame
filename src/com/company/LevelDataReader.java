@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.models.Finish;
+import com.company.models.GameObject;
 import com.company.models.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
