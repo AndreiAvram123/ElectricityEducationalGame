@@ -125,6 +125,7 @@ public class Level extends Observable {
                 }else{
                     animationTimer.stop();
                     if(shouldNotifyObserver){
+                        shouldNotifyObserver = false;
                         setChanged();
                         notifyObservers(levelNumber);
                     }

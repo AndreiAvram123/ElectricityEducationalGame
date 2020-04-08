@@ -34,8 +34,8 @@ public class AudioManager {
 
 
     public void playLevelFinishedSound() {
-        AudioClip audioClip = new AudioClip(this.getClass().getResource("guta.mp3").toString());
-        audioClip.play();
+//        AudioClip audioClip = new AudioClip(this.getClass().getResource("guta.mp3").toString());
+//        audioClip.play();
     }
 
     public void playButtonHoveSound() {

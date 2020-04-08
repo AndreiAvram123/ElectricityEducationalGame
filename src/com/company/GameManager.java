@@ -15,45 +15,54 @@ public class GameManager implements Observer {
     private Level currentLevel;
     private int numberOfLevels = LevelDataReader.getNumberOfLevels();
 
-    public static GameManager getInstance(@NotNull Pane root) {
-        if (instance == null) {
-            instance = new GameManager(root);
-        }
-        return instance;
-    }
 
-    private GameManager(@NotNull Pane root) {
+    public GameManager(@NotNull Pane root) {
         this.root = root;
         textPanel = new TextPanel(root);
         AudioManager.getInstance().playBackgroundMusic();
+        attachListenerToPanel();
+    }
+
+    public void startFirstLevel() {
+        currentLevel = new Level(root, 1);
+        displayHintBeforeLevel();
     }
 
 
-    public void startLevel(int levelNumber) {
+    private void attachListenerToPanel() {
+        textPanel.getNextButton().setOnMouseClicked(event -> {
 
-        if (numberOfLevels >= levelNumber) {
-            currentLevel = new Level(root, levelNumber);
+            currentLevel.showLevel();
             currentLevel.addObserver(this);
-            textPanel.showPanel(currentLevel.getHintBeforeStart());
-            textPanel.getNextButton().setOnMouseClicked(event -> {
-                currentLevel.showLevel();
-                currentLevel.addObserver(this);
-                textPanel.hidePanel();
-            });
-        }
+            textPanel.hidePanel();
+        });
     }
+
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Level) {
-            displayLevelFinishedHint();
             AudioManager.getInstance().playLevelFinishedSound();
-
+            displayLevelFinishedHint();
+            if (numberOfLevels < (int) arg + 1) {
+                textPanel.getNextButton().setText("Restart");
+                currentLevel = new Level(root, 1);
+            } else {
+                //increase the level number
+                textPanel.getNextButton().setText("Next");
+                currentLevel = new Level(root, (int) arg + 1);
+            }
         }
+
     }
 
     private void displayLevelFinishedHint() {
         currentLevel.hide();
         textPanel.showPanel(currentLevel.getHintAfterFinish());
+    }
+
+    private void displayHintBeforeLevel() {
+
+        textPanel.showPanel(currentLevel.getHintBeforeStart());
     }
 }

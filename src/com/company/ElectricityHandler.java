@@ -37,11 +37,14 @@ public class ElectricityHandler {
 
             if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
                 ElectricitySource electricitySource = (ElectricitySource) gameObject;
+
                 startElectricitySource(electricityFuel, electricitySource);
             }
             if (gameObject instanceof SolarPanel && electricityFuel instanceof Sun) {
-                ElectricitySource electricitySource = (ElectricitySource) gameObject;
-                startElectricitySource(electricityFuel, electricitySource);
+                //check weather the sun is on top of the solar panel
+                if (isObject1NeighbourTopObject2(electricityFuel, gameObject)) {
+                    ((SolarPanel) gameObject).setElectricityEnabled(true);
+                }
             }
 
         }
@@ -52,9 +55,11 @@ public class ElectricityHandler {
             if (areObjectsNeighboursHorizontally(electricityFuel, electricitySource)) {
                 electricitySource.setElectricityEnabled(true);
             }
+            if (areObjectsNeighboursVertically(electricityFuel, electricitySource)) {
+                electricitySource.setElectricityEnabled(true);
+            }
         }
     }
-
 
     private void enableElectricityOnNeighbours(GameObject gameObject) {
         for (GameObject loopObject : objectsOnGameScreen) {
@@ -73,15 +78,24 @@ public class ElectricityHandler {
                 }
             }
         }
-
     }
 
+    private boolean isObject1NeighbourTopObject2(GameObject gameObject1, GameObject gameObject2) {
+        return gameObject1.getX() == gameObject2.getX() && gameObject1.getY() + gameObject1.getHeight() == gameObject2.getY();
+    }
+
+    //todo
+    //refactor
     private boolean areObjectsNeighboursVertically(GameObject gameObject, GameObject gameObject2) {
         return ((gameObject.getY() + gameObject.getHeight() == gameObject2.getY() || gameObject2.getY() + gameObject2.getHeight() == gameObject.getY()) && gameObject.getX() == gameObject2.getX());
 
     }
 
+    //todo
+    //refactor
     private boolean areObjectsNeighboursHorizontally(GameObject gameObject, GameObject gameObject2) {
         return ((gameObject.getX() + gameObject.getWidth() == gameObject2.getX() || gameObject2.getX() + gameObject2.getWidth() == gameObject.getX()) && gameObject.getY() == gameObject2.getY());
     }
+
+
 }

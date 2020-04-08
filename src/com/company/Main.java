@@ -20,8 +20,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setResizable(false);
-        GameManager gameManager = GameManager.getInstance(root);
-        gameManager.startLevel(1);
+        GameManager gameManager = new GameManager(root);
+        gameManager.startFirstLevel();
 
     }
 }
