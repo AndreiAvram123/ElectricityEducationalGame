@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Player extends GameObject implements Movable, HintOnHover {
+public class Player extends ObjectOnScreen implements Movable, HintOnHover {
     private static Player instance;
     private double moveOnX;
     private double moveOnY;

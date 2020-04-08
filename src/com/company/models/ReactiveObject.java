@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-public class ReactiveObject extends GameObject {
+public class ReactiveObject extends ObjectOnScreen {
     private IElectricityReaction electricityReaction;
     private boolean isUnderElectricity = false;
     protected Color color = Color.GREY;

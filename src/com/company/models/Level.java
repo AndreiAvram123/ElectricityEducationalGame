@@ -23,7 +23,7 @@ public class Level extends Observable {
     private AnimationTimer animationTimer;
     private ObjectHandler objectHandler;
     private GridSystem gridSystem;
-    private CollisionDetector collisionDetector;
+    private PlayerCollisionDetector playerCollisionDetector;
     private CollisionHandler collisionHandler;
     private ElectricityHandler electricityHandler;
     private int levelNumber;
@@ -64,16 +64,16 @@ public class Level extends Observable {
         objectHandler.start();
         addObjectsToLevel();
         player = Player.getInstance();
-        collisionDetector = new CollisionDetector(gridSystem.getGameScreenObjects(), player);
+        playerCollisionDetector = new PlayerCollisionDetector(gridSystem.getGameScreenObjects(), player);
         collisionHandler = new CollisionHandler();
-        collisionDetector.addObserver(collisionHandler);
+        playerCollisionDetector.addObserver(collisionHandler);
         electricityHandler = new ElectricityHandler(gridSystem.getGameScreenObjects());
     }
 
 
     private void addObjectsToLevel() {
-        ArrayList<GameObject> gameScreenObjects = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "objectsOnScreen");
-        ArrayList<GameObject> gameObjectsSelectorPane = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "selectorPaneObjects");
+        ArrayList<ObjectOnScreen> gameScreenObjects = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "objectsOnScreen");
+        ArrayList<ObjectOnScreen> gameObjectsSelectorPane = levelDataReader.getObjectsArrayFromJsonFile(levelNumber, "selectorPaneObjects");
         gridSystem.addObjectsToGameScreen(gameScreenObjects);
         gridSystem.addObjectsToSelectorPane(gameObjectsSelectorPane);
     }
@@ -118,7 +118,7 @@ public class Level extends Observable {
             @Override
             public void handle(long now) {
                 if (!collisionHandler.isLevelCompleted()) {
-                    collisionDetector.checkCollisionWithPlayer();
+                    playerCollisionDetector.checkCollisionWithPlayer();
                     gridSystem.updateGrid();
                     electricityHandler.update();
                     player.update();

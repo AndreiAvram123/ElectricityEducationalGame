@@ -12,7 +12,7 @@ public class CollisionHandler implements Observer {
 
     @Override
     public void update(Observable o, Object collider) {
-        if (o instanceof CollisionDetector) {
+        if (o instanceof PlayerCollisionDetector) {
             if (collider instanceof Triangle) {
                 Triangle triangle = (Triangle) collider;
                 triangle.executeElectricityReaction();

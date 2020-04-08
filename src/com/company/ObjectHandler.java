@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.interfaces.HintOnHover;
 import com.company.models.GameObject;
+import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
@@ -9,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class ObjectHandler {
 
     private Canvas canvas;
-    private GameObject currentlyDraggedObject;
-    private GameObject currentlyMouseOverObject;
+    private ObjectOnScreen currentlyDraggedObject;
+    private ObjectOnScreen currentlyMouseOverObject;
     private GridSystem gridSystem;
     private Point lastObjectPosition;
     private HintWindow hintWindow;
@@ -32,7 +33,7 @@ public class ObjectHandler {
     private void attachListenersOnCanvas() {
         canvas.setOnMouseMoved(event -> {
             if (shouldDisplayHint && hintWindow != null) {
-                GameObject gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
+                ObjectOnScreen gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
                 if (gameObject != null) {
                     if (gameObject instanceof HintOnHover) {
                         if (currentlyMouseOverObject != gameObject) {

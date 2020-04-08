@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.models.GameObject;
+import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,8 +14,8 @@ public class GridSystem {
     private GraphicsContext graphicsContext;
     private double gridHeight;
     private double gridWidth;
-    private ArrayList<GameObject> gameScreenObjects = new ArrayList<>();
-    private ArrayList<GameObject> objectsInSelectorPane = new ArrayList<>();
+    private ArrayList<ObjectOnScreen> gameScreenObjects = new ArrayList<>();
+    private ArrayList<ObjectOnScreen> objectsInSelectorPane = new ArrayList<>();
     private boolean gridLinesEnabled = true;
 
     public GridSystem(@NotNull GraphicsContext graphicsContext, double gridWidth, double gridHeight) {
@@ -24,7 +25,7 @@ public class GridSystem {
         drawGameScreen();
     }
 
-    public ArrayList<GameObject> getGameScreenObjects() {
+    public ArrayList<ObjectOnScreen> getGameScreenObjects() {
         return gameScreenObjects;
     }
 
@@ -48,37 +49,33 @@ public class GridSystem {
         graphicsContext.fillRect(0, gridHeight - 100, gridWidth, 100);
     }
 
-    public void addObjectToGameScreen(@NotNull GameObject gameObject) {
-        gameScreenObjects.add(gameObject);
-        if (objectsInSelectorPane.contains(gameObject)) {
-            objectsInSelectorPane.remove(gameObject);
+    public void addObjectToGameScreen(@NotNull ObjectOnScreen objectOnScreen) {
+        gameScreenObjects.add(objectOnScreen);
+        if (objectsInSelectorPane.contains(objectOnScreen)) {
+            objectsInSelectorPane.remove(objectOnScreen);
         }
     }
 
-    public void addObjectsToGameScreen(@NotNull ArrayList<GameObject> gameObjects) {
-        gameScreenObjects.addAll(gameObjects);
+    public void addObjectsToGameScreen(@NotNull ArrayList<ObjectOnScreen> objectOnScreens) {
+        gameScreenObjects.addAll(objectOnScreens);
     }
 
-    public void addObjectsToSelectorPane(@NotNull ArrayList<GameObject> gameObjects) {
-        objectsInSelectorPane.addAll(gameObjects);
-    }
-
-    public void removeGameScreenObject( GameObject gameObject) {
-        gameScreenObjects.remove(gameObject);
+    public void addObjectsToSelectorPane(@NotNull ArrayList<ObjectOnScreen> objectOnScreens) {
+        objectsInSelectorPane.addAll(objectOnScreens);
     }
 
 
-    public GameObject getObjectMouseOver(double mouseX, double mouseY) {
-        for (GameObject gameObject : gameScreenObjects) {
-            if (gameObject.getX() < mouseX && gameObject.getX() + gameObject.getWidth() > mouseX
-                    && gameObject.getY() < mouseY && gameObject.getY() + gameObject.getHeight() > mouseY) {
-                return gameObject;
+    public ObjectOnScreen getObjectMouseOver(double mouseX, double mouseY) {
+        for (ObjectOnScreen objectOnScreen : gameScreenObjects) {
+            if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
+                    && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
+                return objectOnScreen;
             }
         }
-        for (GameObject gameObject : objectsInSelectorPane) {
-            if (gameObject.getX() < mouseX && gameObject.getX() + gameObject.getWidth() > mouseX
-                    && gameObject.getY() < mouseY && gameObject.getY() + gameObject.getHeight() > mouseY) {
-                return gameObject;
+        for (ObjectOnScreen objectOnScreen : objectsInSelectorPane) {
+            if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
+                    && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
+                return objectOnScreen;
             }
         }
         return null;
@@ -108,8 +105,8 @@ public class GridSystem {
 
     public void snapOnGrid(@NotNull GameObject gameObject) {
         //get the center of the object
-        Point oldCenter = new Point(gameObject.getX() + gameObject.getWidth()/2,
-                                    gameObject.getY() + gameObject.getHeight()/2);
+        Point oldCenter = new Point(gameObject.getX() + gameObject.getWidth() / 2,
+                gameObject.getY() + gameObject.getHeight() / 2);
 
         double newX = ((int) (oldCenter.getX() / 50)) * 50;
         double newY = ((int) (oldCenter.getY() / 50)) * 50;

@@ -14,13 +14,16 @@ public class GameObjectsFactory implements IFactory {
     }
 
     @Override
-    public GameObject createObject(@NotNull String type, double x, double y, boolean hasDragEnabled) {
+    public ObjectOnScreen createObject(@NotNull String type, double x, double y, boolean hasDragEnabled) {
         switch (type) {
-            case "rectangle": {
+            case "finish":
+                return new Finish(x, y, graphicsContext);
+            case "player":
+                return Player.createInstance(x, y, graphicsContext);
+            case "rectangle":
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
                 rectangle.setHasDragEnabled(hasDragEnabled);
                 return rectangle;
-            }
             case "triangle":
                 Triangle triangle = new Triangle(x, y, graphicsContext);
                 triangle.setHasDragEnabled(hasDragEnabled);
@@ -45,6 +48,7 @@ public class GameObjectsFactory implements IFactory {
                 SolarPanel solarPanel = new SolarPanel(x, y, graphicsContext);
                 solarPanel.setHasDragEnabled(hasDragEnabled);
                 return solarPanel;
+
             default:
                 return new NullObject(x, y, graphicsContext);
         }

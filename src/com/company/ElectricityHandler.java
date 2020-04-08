@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class ElectricityHandler {
 
-    private ArrayList<GameObject> objectsOnGameScreen;
+    private ArrayList<ObjectOnScreen> objectsOnGameScreen;
     private boolean isStarted = false;
 
-    public ElectricityHandler(ArrayList<GameObject> objectsOnGameScreen) {
+    public ElectricityHandler(ArrayList<ObjectOnScreen> objectsOnGameScreen) {
         this.objectsOnGameScreen = objectsOnGameScreen;
     }
 
@@ -33,21 +33,25 @@ public class ElectricityHandler {
     }
 
     private void enableElectricitySources(ElectricityFuel electricityFuel) {
-        for (GameObject gameObject : objectsOnGameScreen) {
 
+        objectsOnGameScreen.forEach(gameObject -> {
             if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
                 ElectricitySource electricitySource = (ElectricitySource) gameObject;
 
                 startElectricitySource(electricityFuel, electricitySource);
             }
             if (gameObject instanceof SolarPanel && electricityFuel instanceof Sun) {
+                SolarPanel solarPanel = (SolarPanel) gameObject;
                 //check weather the sun is on top of the solar panel
-                if (isObject1NeighbourTopObject2(electricityFuel, gameObject)) {
-                    ((SolarPanel) gameObject).setElectricityEnabled(true);
-                }
-            }
 
-        }
+                if (solarPanel.isNeighbourBottom(electricityFuel)) {
+                    solarPanel.setElectricityEnabled(true);
+                }
+
+
+            }
+        });
+
     }
 
     private void startElectricitySource(ElectricityFuel electricityFuel, ElectricitySource electricitySource) {
@@ -61,17 +65,17 @@ public class ElectricityHandler {
         }
     }
 
-    private void enableElectricityOnNeighbours(GameObject gameObject) {
-        for (GameObject loopObject : objectsOnGameScreen) {
+    private void enableElectricityOnNeighbours(ObjectOnScreen object) {
+        for (ObjectOnScreen loopObject : objectsOnGameScreen) {
             if (loopObject instanceof ReactiveObject) {
                 ReactiveObject reactiveObject = (ReactiveObject) loopObject;
                 //no need to go to a node that is already traversed
                 if (!reactiveObject.isUnderElectricity()) {
-                    if (areObjectsNeighboursVertically(gameObject, loopObject)) {
+                    if (areObjectsNeighboursVertically(object, loopObject)) {
                         reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
-                    if (areObjectsNeighboursHorizontally(gameObject, loopObject)) {
+                    if (areObjectsNeighboursHorizontally(object, loopObject)) {
                         reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
@@ -80,21 +84,13 @@ public class ElectricityHandler {
         }
     }
 
-    private boolean isObject1NeighbourTopObject2(GameObject gameObject1, GameObject gameObject2) {
-        return gameObject1.getX() == gameObject2.getX() && gameObject1.getY() + gameObject1.getHeight() == gameObject2.getY();
+    private boolean areObjectsNeighboursVertically(ObjectOnScreen object1, ObjectOnScreen object2) {
+        return object1.isNeighbourTop(object2) || object1.isNeighbourBottom(object2);
     }
 
-    //todo
-    //refactor
-    private boolean areObjectsNeighboursVertically(GameObject gameObject, GameObject gameObject2) {
-        return ((gameObject.getY() + gameObject.getHeight() == gameObject2.getY() || gameObject2.getY() + gameObject2.getHeight() == gameObject.getY()) && gameObject.getX() == gameObject2.getX());
 
-    }
-
-    //todo
-    //refactor
-    private boolean areObjectsNeighboursHorizontally(GameObject gameObject, GameObject gameObject2) {
-        return ((gameObject.getX() + gameObject.getWidth() == gameObject2.getX() || gameObject2.getX() + gameObject2.getWidth() == gameObject.getX()) && gameObject.getY() == gameObject2.getY());
+    private boolean areObjectsNeighboursHorizontally(ObjectOnScreen object1, ObjectOnScreen object2) {
+        return object1.isNeighbourRight(object2) || object1.isNeighbourLeft(object2);
     }
 
 

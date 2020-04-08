@@ -2,7 +2,7 @@ package com.company.models;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class ElectricitySource extends GameObject {
+public class ElectricitySource extends ObjectOnScreen {
 
     private boolean isElectricityEnabled = false;
 

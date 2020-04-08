@@ -3,7 +3,7 @@ package com.company.models;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class NullObject extends GameObject {
+public class NullObject extends ObjectOnScreen {
 
     public NullObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);

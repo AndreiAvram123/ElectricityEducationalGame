@@ -1,7 +1,7 @@
-package com.company;
+package com.company.models;
 
+import com.company.ElectricityFuel;
 import com.company.interfaces.HintOnHover;
-import com.company.models.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

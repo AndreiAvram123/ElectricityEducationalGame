@@ -1,8 +1,7 @@
 package com.company;
 
-import com.company.models.Finish;
 import com.company.models.GameObject;
-import com.company.models.Player;
+import com.company.models.ObjectOnScreen;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -41,8 +40,8 @@ public class LevelDataReader {
     }
 
 
-    public ArrayList<GameObject> getObjectsArrayFromJsonFile(int levelNumber, String arrayName) {
-        ArrayList<GameObject> dataToReturn = new ArrayList<>();
+    public ArrayList<ObjectOnScreen> getObjectsArrayFromJsonFile(int levelNumber, String arrayName) {
+        ArrayList<ObjectOnScreen> dataToReturn = new ArrayList<>();
         if (fileData != null) {
             JsonObject levelData = fileData.getAsJsonObject(Integer.toString(levelNumber));
             JsonArray objectsOnGameScreen = levelData.getAsJsonArray(arrayName);
@@ -54,19 +53,12 @@ public class LevelDataReader {
     }
 
 
-    private GameObject mapToGameObject(JsonObject jsonElement) {
+    private ObjectOnScreen mapToGameObject(JsonObject jsonElement) {
         String className = jsonElement.get("class").getAsString();
         double x = jsonElement.get("x").getAsDouble();
         double y = jsonElement.get("y").getAsDouble();
         boolean hasDragEnabled = jsonElement.get("hasDragEnabled").getAsBoolean();
-        switch (className) {
-            case "finish":
-                return new Finish(x, y, graphicsContext);
-            case "player":
-                return Player.createInstance(x, y, graphicsContext);
-            default:
-                return factory.createObject(className, x, y, hasDragEnabled);
-        }
+        return factory.createObject(className, x, y, hasDragEnabled);
     }
 
     public String getHintBeforeStart(int levelNumber) {

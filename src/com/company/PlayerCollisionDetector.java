@@ -1,18 +1,19 @@
 package com.company;
 
 import com.company.models.GameObject;
+import com.company.models.ObjectOnScreen;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class CollisionDetector extends Observable {
+public class PlayerCollisionDetector extends Observable {
 
     private final Player player;
-    private ArrayList<GameObject> objectsOnScreen;
+    private ArrayList<ObjectOnScreen> objectsOnScreen;
 
-    public CollisionDetector(@NotNull ArrayList<GameObject> objectsOnScreen, @NotNull Player player) {
+    public PlayerCollisionDetector(@NotNull ArrayList<ObjectOnScreen> objectsOnScreen, @NotNull Player player) {
         this.objectsOnScreen = objectsOnScreen;
         this.player = player;
     }
@@ -32,8 +33,16 @@ public class CollisionDetector extends Observable {
         notifyObservers(gameObject);
     }
 
-    private Sides getCollisionSide(@NotNull GameObject gameObject) {
-        if (gameObject.getX() == player.getX() && gameObject.getY() == player.getY() + player.getHeight()) {
+    /**
+     * This method return the collision side on witch the player has collided
+     * if the player is on top of the game object then the method will return  Sides.Bottom
+     * if the player if left of the game object then the method will return Sides.Right
+     *
+     * @param gameObject
+     * @return
+     */
+    private Sides getCollisionSide(@NotNull ObjectOnScreen objectOnScreen) {
+        if (player.isNeighbourTop(objectOnScreen)) {
             return Sides.BOTTOM;
         }
         return Sides.NONE;
