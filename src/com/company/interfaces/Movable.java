@@ -1,4 +1,4 @@
-package com.company;
+package com.company.interfaces;
 
 /**
  * Implement this interface in order to

@@ -1,12 +1,20 @@
 package com.company.models;
 
-import com.company.GameObject;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
-public class ElectricitySource extends GameObject {
+public class ElectricitySource extends ObjectOnScreen {
+
+    private boolean isElectricityEnabled = false;
 
     public ElectricitySource(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
+    }
+
+    public void setElectricityEnabled(boolean electricityEnabled) {
+        isElectricityEnabled = electricityEnabled;
+    }
+
+    public boolean isElectricityEnabled() {
+        return isElectricityEnabled;
     }
 }

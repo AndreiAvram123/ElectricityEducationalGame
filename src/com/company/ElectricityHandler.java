@@ -1,52 +1,97 @@
 package com.company;
 
-import com.company.models.ElectricitySource;
+import com.company.models.*;
 
 import java.util.ArrayList;
 
 public class ElectricityHandler {
 
-    private ArrayList<GameObject> reactiveObjectsOnScreen;
+    private ArrayList<ObjectOnScreen> objectsOnGameScreen;
+    private boolean isStarted = false;
 
-    public ElectricityHandler(ArrayList<GameObject> reactiveObjectsOnScreen) {
-        this.reactiveObjectsOnScreen = reactiveObjectsOnScreen;
+    public ElectricityHandler(ArrayList<ObjectOnScreen> objectsOnGameScreen) {
+        this.objectsOnGameScreen = objectsOnGameScreen;
     }
 
+
+    public void startElectricityHandler() {
+        isStarted = true;
+    }
 
     public void update() {
-        reactiveObjectsOnScreen.forEach((gameObject -> {
-            if (gameObject instanceof ElectricitySource) {
-                enableElectricityOnNeighbours(gameObject);
-            }
-        }));
+        if (isStarted) {
+            objectsOnGameScreen.forEach(gameObject -> {
+                if (gameObject instanceof ElectricitySource && ((ElectricitySource) gameObject).isElectricityEnabled()) {
+                    enableElectricityOnNeighbours(gameObject);
+                }
+                if (gameObject instanceof ElectricityFuel) {
+                    enableElectricitySources((ElectricityFuel) gameObject);
+                }
+
+            });
+        }
     }
 
-    private void enableElectricityOnNeighbours(GameObject gameObject) {
-        for(GameObject loopObject : reactiveObjectsOnScreen) {
+    private void enableElectricitySources(ElectricityFuel electricityFuel) {
+
+        objectsOnGameScreen.forEach(gameObject -> {
+            if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
+                ElectricitySource electricitySource = (ElectricitySource) gameObject;
+
+                startElectricitySource(electricityFuel, electricitySource);
+            }
+            if (gameObject instanceof SolarPanel && electricityFuel instanceof Sun) {
+                SolarPanel solarPanel = (SolarPanel) gameObject;
+                //check weather the sun is on top of the solar panel
+
+                if (solarPanel.isNeighbourBottom(electricityFuel)) {
+                    solarPanel.setElectricityEnabled(true);
+                }
+
+
+            }
+        });
+
+    }
+
+    private void startElectricitySource(ElectricityFuel electricityFuel, ElectricitySource electricitySource) {
+        if (!electricitySource.isElectricityEnabled()) {
+            if (areObjectsNeighboursHorizontally(electricityFuel, electricitySource)) {
+                electricitySource.setElectricityEnabled(true);
+            }
+            if (areObjectsNeighboursVertically(electricityFuel, electricitySource)) {
+                electricitySource.setElectricityEnabled(true);
+            }
+        }
+    }
+
+    private void enableElectricityOnNeighbours(ObjectOnScreen object) {
+        for (ObjectOnScreen loopObject : objectsOnGameScreen) {
             if (loopObject instanceof ReactiveObject) {
                 ReactiveObject reactiveObject = (ReactiveObject) loopObject;
                 //no need to go to a node that is already traversed
-                if (!reactiveObject.isUnderElectricity) {
-                    if (areObjectsNeighboursVertically(gameObject, loopObject)) {
-                        reactiveObject.isUnderElectricity = true;
+                if (!reactiveObject.isUnderElectricity()) {
+                    if (areObjectsNeighboursVertically(object, loopObject)) {
+                        reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
-                    if (areObjectsNeighboursHorizontally(gameObject, loopObject)) {
-                        reactiveObject.isUnderElectricity = true;
+                    if (areObjectsNeighboursHorizontally(object, loopObject)) {
+                        reactiveObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
                 }
             }
         }
-
     }
 
-    private boolean areObjectsNeighboursVertically(GameObject gameObject, GameObject gameObject2) {
-        return ((gameObject.y + gameObject.height == gameObject2.y || gameObject2.y + gameObject2.height == gameObject.y) && gameObject.x == gameObject2.x);
-
+    private boolean areObjectsNeighboursVertically(ObjectOnScreen object1, ObjectOnScreen object2) {
+        return object1.isNeighbourTop(object2) || object1.isNeighbourBottom(object2);
     }
 
-    private boolean areObjectsNeighboursHorizontally(GameObject gameObject, GameObject gameObject2) {
-        return ((gameObject.x + gameObject.width == gameObject2.x || gameObject2.x + gameObject2.width == gameObject.x) && gameObject.y == gameObject2.y);
+
+    private boolean areObjectsNeighboursHorizontally(ObjectOnScreen object1, ObjectOnScreen object2) {
+        return object1.isNeighbourRight(object2) || object1.isNeighbourLeft(object2);
     }
+
+
 }

@@ -1,20 +1,24 @@
-package com.company;
+package com.company.models;
 
+import com.company.interfaces.Movable;
+import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Player extends GameObject implements Movable {
+public class Player extends ObjectOnScreen implements Movable, HintOnHover {
     private static Player instance;
-    private boolean inMovingState = false;
     private double moveOnX;
     private double moveOnY;
+    private static final String HINT = "This is the player dummy";
 
+    //todo
+    //refactor player
+    //the position depends on the level so it is not a singleton
     public static synchronized Player createInstance(double x, double y, GraphicsContext gc) {
-        if (instance == null) {
-            instance = new Player(x, y, gc);
-        }
+        instance = new Player(x, y, gc);
         return instance;
     }
 
@@ -32,7 +36,6 @@ public class Player extends GameObject implements Movable {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                inMovingState = false;
 
                 if (moveOnX != 0) {
                     if (moveOnX < 0) {
@@ -42,7 +45,6 @@ public class Player extends GameObject implements Movable {
                         x += 1;
                         moveOnX--;
                     }
-                    inMovingState = true;
                 }
                 if (moveOnY != 0) {
                     if (moveOnY < 0) {
@@ -52,7 +54,6 @@ public class Player extends GameObject implements Movable {
                         y += 1;
                         moveOnY--;
                     }
-                    inMovingState = true;
                 }
             }
         };
@@ -61,12 +62,8 @@ public class Player extends GameObject implements Movable {
 
     @Override
     public void update() {
+        gc.setFill(Color.WHITE);
         gc.fillOval(x, y, 50, 50);
-    }
-
-
-    public boolean isInMovingState() {
-        return inMovingState;
     }
 
     @Override
@@ -77,5 +74,10 @@ public class Player extends GameObject implements Movable {
     @Override
     public void moveOnX(double x) {
         this.moveOnX = x;
+    }
+
+    @Override
+    public String getHint() {
+        return HINT;
     }
 }

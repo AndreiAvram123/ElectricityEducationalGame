@@ -1,22 +1,33 @@
 package com.company;
 
+import com.company.models.Finish;
+import com.company.models.Rectangle;
+import com.company.models.Triangle;
+
 import java.util.Observable;
 import java.util.Observer;
 
 public class CollisionHandler implements Observer {
-
+    private boolean isLevelCompleted = false;
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof CollisionDetector) {
-            if (arg instanceof Triangle) {
-                Triangle triangle = (Triangle) arg;
+    public void update(Observable o, Object collider) {
+        if (o instanceof PlayerCollisionDetector) {
+            if (collider instanceof Triangle) {
+                Triangle triangle = (Triangle) collider;
                 triangle.executeElectricityReaction();
             }
-            if (arg instanceof Rectangle) {
-                Rectangle rectangle = (Rectangle) arg;
+            if (collider instanceof Rectangle) {
+                Rectangle rectangle = (Rectangle) collider;
                 rectangle.executeElectricityReaction();
             }
+            if(collider instanceof Finish){
+                isLevelCompleted = true;
+            }
         }
+    }
+
+    public boolean isLevelCompleted() {
+        return isLevelCompleted;
     }
 }

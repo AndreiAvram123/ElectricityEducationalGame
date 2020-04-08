@@ -16,12 +16,12 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         root = new Pane();
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setResizable(false);
-        GameManager gameManager = GameManager.getInstance(root);
-        gameManager.startLevel(1);
+        GameManager gameManager = new GameManager(root);
+        gameManager.startFirstLevel();
 
     }
 }

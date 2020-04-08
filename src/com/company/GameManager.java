@@ -1,47 +1,68 @@
 package com.company;
 
+import com.company.models.Level;
 import com.sun.istack.internal.NotNull;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
-public class GameManager implements Draggable {
+import java.util.Observable;
+import java.util.Observer;
+
+public class GameManager implements Observer {
 
     private static GameManager instance;
-    private Pane root;
-    private GraphicsContext graphicsContext;
-    private Canvas canvas;
+    private final Pane root;
+    private TextPanel textPanel;
+    private Level currentLevel;
+    private int numberOfLevels = LevelDataReader.getNumberOfLevels();
 
 
-    public static GameManager getInstance(@NotNull Pane root) {
-        if (instance == null) {
-            instance = new GameManager(root);
-        }
-        return instance;
-    }
-
-    private GameManager(@NotNull Pane root) {
+    public GameManager(@NotNull Pane root) {
         this.root = root;
-        this.canvas = new Canvas(800, 600);
-        this.root.getChildren().add(this.canvas);
-        this.graphicsContext = canvas.getGraphicsContext2D();
+        textPanel = new TextPanel(root);
+        AudioManager.getInstance().playBackgroundMusic();
+        attachListenerToPanel();
+    }
+
+    public void startFirstLevel() {
+        currentLevel = new Level(root, 1);
+        displayHintBeforeLevel();
     }
 
 
-    public void startLevel(int levelNumber) {
-        switch (levelNumber) {
-            case 1:
-                Level level1 = new Level(canvas);
-                level1.start();
-                break;
-        }
+    private void attachListenerToPanel() {
+        textPanel.getNextButton().setOnMouseClicked(event -> {
+
+            currentLevel.showLevel();
+            currentLevel.addObserver(this);
+            textPanel.hidePanel();
+        });
     }
 
 
     @Override
-    public void setCenter(double x, double y) {
+    public void update(Observable o, Object arg) {
+        if (o instanceof Level) {
+            AudioManager.getInstance().playLevelFinishedSound();
+            displayLevelFinishedHint();
+            if (numberOfLevels < (int) arg + 1) {
+                textPanel.getNextButton().setText("Restart");
+                currentLevel = new Level(root, 1);
+            } else {
+                //increase the level number
+                textPanel.getNextButton().setText("Next");
+                currentLevel = new Level(root, (int) arg + 1);
+            }
+        }
 
+    }
+
+    private void displayLevelFinishedHint() {
+        currentLevel.hide();
+        textPanel.showPanel(currentLevel.getHintAfterFinish());
+    }
+
+    private void displayHintBeforeLevel() {
+
+        textPanel.showPanel(currentLevel.getHintBeforeStart());
     }
 }

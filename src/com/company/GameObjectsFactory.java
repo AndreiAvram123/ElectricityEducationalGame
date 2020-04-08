@@ -1,6 +1,7 @@
 package com.company;
 
-import com.company.interfaces.MovePlayerDiagonallyDownRight;
+import com.company.interfaces.IFactory;
+import com.company.models.*;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -13,21 +14,44 @@ public class GameObjectsFactory implements IFactory {
     }
 
     @Override
-    public GameObject createObject(@NotNull String type, double x, double y) {
+    public ObjectOnScreen createObject(@NotNull String type, double x, double y, boolean hasDragEnabled) {
         switch (type) {
-            case "rectangle": {
+            case "finish":
+                return new Finish(x, y, graphicsContext);
+            case "player":
+                return Player.createInstance(x, y, graphicsContext);
+            case "rectangle":
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
+                rectangle.setHasDragEnabled(hasDragEnabled);
                 return rectangle;
-            }
             case "triangle":
                 Triangle triangle = new Triangle(x, y, graphicsContext);
-                triangle.setElectricityReaction(new MovePlayerDiagonallyDownRight(Player.getInstance()));
+                triangle.setHasDragEnabled(hasDragEnabled);
                 return triangle;
             case "ball":
-                return Player.createInstance(x, y, graphicsContext);
+                Player player = new Player(x, y, graphicsContext);
+                player.setHasDragEnabled(hasDragEnabled);
+                return player;
             case "wind_turbine":
-                return new WindTurbine(x, y, graphicsContext);
+                WindTurbine windTurbine = new WindTurbine(x, y, graphicsContext);
+                windTurbine.setHasDragEnabled(hasDragEnabled);
+                return windTurbine;
+            case "wind":
+                Wind wind = new Wind(x, y, graphicsContext);
+                wind.setHasDragEnabled(hasDragEnabled);
+                return wind;
+            case "sun":
+                Sun sun = new Sun(x, y, graphicsContext);
+                sun.setHasDragEnabled(hasDragEnabled);
+                return sun;
+            case "solar_panel":
+                SolarPanel solarPanel = new SolarPanel(x, y, graphicsContext);
+                solarPanel.setHasDragEnabled(hasDragEnabled);
+                return solarPanel;
+
+            default:
+                return new NullObject(x, y, graphicsContext);
         }
-        return null;
+
     }
 }
