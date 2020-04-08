@@ -59,7 +59,7 @@ public class Level extends Observable {
 
     private void initializeLevel() {
         gridSystem = new GridSystem(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
-        objectHandler = new ObjectHandler(canvas, gridSystem);
+        objectHandler = new ObjectHandler(canvas, layer, gridSystem);
         objectHandler.setHintWindow(new HintWindow(this.layer));
         objectHandler.start();
         addObjectsToLevel();
@@ -122,9 +122,9 @@ public class Level extends Observable {
                     gridSystem.updateGrid();
                     electricityHandler.update();
                     player.update();
-                }else{
+                } else {
                     animationTimer.stop();
-                    if(shouldNotifyObserver){
+                    if (shouldNotifyObserver) {
                         shouldNotifyObserver = false;
                         setChanged();
                         notifyObservers(levelNumber);

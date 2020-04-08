@@ -6,6 +6,30 @@
     "objectsOnScreen": [
       {
         "class": "player",
+        "x": 100,
+        "y": 150,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "triangle",
+        "x": 250,
+        "y": 200,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
+        "x": 150,
+        "y": 200,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "rectangle",
         "x": 200,
         "y": 200,
         "hasDragEnabled": false
@@ -72,6 +96,12 @@
       }
     ],
     "selectorPaneObjects": [
+      {
+        "class": "fan",
+        "x": 100,
+        "y": 550,
+        "hasDragEnabled": true
+      },
       {
         "class": "sun",
         "x": 300,
