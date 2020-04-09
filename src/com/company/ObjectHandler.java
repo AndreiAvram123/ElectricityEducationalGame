@@ -1,9 +1,10 @@
 package com.company;
 
 import com.company.interfaces.HintOnHover;
-import com.company.models.ObjectOnScreen;
-import com.company.models.Point;
-import com.company.models.Rotating;
+import com.company.interfaces.MovePlayerLeft;
+import com.company.interfaces.MovePlayerRight;
+import com.company.interfaces.MovePlayerUp;
+import com.company.models.*;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,22 +17,22 @@ public class ObjectHandler {
     private Point lastObjectPosition;
     private HintWindow hintWindow;
     private boolean shouldDisplayHint = true;
+    private boolean isDragStarted = false;
 
-    /**
-     * The pane is necessary in order to set a keyboard listener
-     */
-    public ObjectHandler(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
+    public ObjectHandler(@NotNull Canvas canvas, @NotNull GridSystem gridSystem, @NotNull HintWindow hintWindow) {
         this.canvas = canvas;
         this.gridSystem = gridSystem;
-    }
-
-
-    public void setHintWindow(@NotNull HintWindow hintWindow) {
         this.hintWindow = hintWindow;
+        attachListenersOnCanvas();
     }
+
 
     public void start() {
-        attachListenersOnCanvas();
+        isDragStarted = true;
+    }
+
+    public void stop() {
+        isDragStarted = false;
     }
 
     private void attachListenersOnCanvas() {
@@ -55,46 +56,70 @@ public class ObjectHandler {
 
         //listen to weather the mouse has been dragged or not
         canvas.setOnMouseDragged(event -> {
-            shouldDisplayHint = false;
-            if (hintWindow != null) {
-                hintWindow.hide();
-            }
-
-            if (currentlyDraggedObject == null) {
-                currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
-            }
-
-            if (currentlyDraggedObject != null) {
-                if (lastObjectPosition == null) {
-                    lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
+            if (isDragStarted) {
+                shouldDisplayHint = false;
+                if (hintWindow != null) {
+                    hintWindow.hide();
                 }
-                currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
+
+                if (currentlyDraggedObject == null) {
+                    currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
+                }
+
+                if (currentlyDraggedObject != null) {
+                    if (lastObjectPosition == null) {
+                        lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
+                    }
+                    currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
+                }
             }
         });
 
         canvas.setOnMouseReleased(event -> {
-            shouldDisplayHint = true;
-            if (currentlyDraggedObject != null) {
-                gridSystem.snapOnGrid(currentlyDraggedObject);
+            if (isDragStarted) {
+                shouldDisplayHint = true;
+                if (currentlyDraggedObject != null) {
+                    gridSystem.snapOnGrid(currentlyDraggedObject);
 
-                if (gridSystem.isObjectOverAnother(currentlyDraggedObject)) {
-                    //reset position and put the object back into the last
-                    //known position
-                    currentlyDraggedObject.setX(lastObjectPosition.getX());
-                    currentlyDraggedObject.setY(lastObjectPosition.getY());
-                } else {
-                    gridSystem.addObjectToGameScreen(currentlyDraggedObject);
+                    if (gridSystem.isObjectOverAnother(currentlyDraggedObject)) {
+                        //reset position and put the object back into the last
+                        //known position
+                        currentlyDraggedObject.setX(lastObjectPosition.getX());
+                        currentlyDraggedObject.setY(lastObjectPosition.getY());
+                    } else {
+                        gridSystem.addObjectToGameScreen(currentlyDraggedObject);
+                    }
+                    currentlyDraggedObject = null;
+                    lastObjectPosition = null;
                 }
-                currentlyDraggedObject = null;
-                lastObjectPosition = null;
             }
         });
     }
 
-    public void rotateObject() {
+    public void rotateObject(@NotNull Player player) {
         if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
             ((Rotating) currentlyDraggedObject).rotate();
+            updateStrategy(player, currentlyDraggedObject);
         }
+    }
+
+    private void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
+        if (objectOnScreen instanceof ReactiveObject) {
+            ReactiveObject reactiveObject = (ReactiveObject) objectOnScreen;
+            switch (reactiveObject.getPlayerCollisionSideForReaction()) {
+                case LEFT:
+                    reactiveObject.setElectricityReaction(new MovePlayerRight(player));
+                    break;
+                case RIGHT:
+                    reactiveObject.setElectricityReaction(new MovePlayerLeft(player));
+                    break;
+
+                case BOTTOM:
+                    reactiveObject.setElectricityReaction(new MovePlayerUp(player));
+                    break;
+            }
+        }
+
     }
 
 

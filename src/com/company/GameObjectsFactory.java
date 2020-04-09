@@ -19,7 +19,7 @@ public class GameObjectsFactory implements IFactory {
             case "finish":
                 return new Finish(x, y, graphicsContext);
             case "player":
-                return Player.createInstance(x, y, graphicsContext);
+                return new Player(x, y, graphicsContext);
             case "rectangle":
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
                 rectangle.setHasDragEnabled(hasDragEnabled);

@@ -6,21 +6,25 @@ import java.util.ArrayList;
 
 public class ElectricityHandler {
 
-    private ArrayList<ObjectOnScreen> objectsOnGameScreen;
+    private LevelModel levelModel;
     private boolean isStarted = false;
 
-    public ElectricityHandler(ArrayList<ObjectOnScreen> objectsOnGameScreen) {
-        this.objectsOnGameScreen = objectsOnGameScreen;
-    }
 
+    public void setLevelModel(LevelModel levelModel) {
+        this.levelModel = levelModel;
+    }
 
     public void startElectricityHandler() {
         isStarted = true;
     }
 
+    public void stopElectricityHandler() {
+        isStarted = false;
+    }
+
     public void update() {
-        if (isStarted) {
-            objectsOnGameScreen.forEach(gameObject -> {
+        if (isStarted && levelModel != null) {
+            levelModel.getObjectsOnGameScreen().forEach(gameObject -> {
                 if (gameObject instanceof ElectricitySource && ((ElectricitySource) gameObject).isElectricityEnabled()) {
                     enableElectricityOnNeighbours(gameObject);
                 }
@@ -34,7 +38,7 @@ public class ElectricityHandler {
 
     private void enableElectricitySources(ElectricityFuel electricityFuel) {
 
-        objectsOnGameScreen.forEach(gameObject -> {
+        levelModel.getObjectsOnGameScreen().forEach(gameObject -> {
             if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
                 ElectricitySource electricitySource = (ElectricitySource) gameObject;
 
@@ -66,7 +70,7 @@ public class ElectricityHandler {
     }
 
     private void enableElectricityOnNeighbours(ObjectOnScreen object) {
-        for (ObjectOnScreen loopObject : objectsOnGameScreen) {
+        for (ObjectOnScreen loopObject : levelModel.getObjectsOnGameScreen()) {
             if (loopObject instanceof ReactiveObject) {
                 ReactiveObject reactiveObject = (ReactiveObject) loopObject;
                 //no need to go to a node that is already traversed

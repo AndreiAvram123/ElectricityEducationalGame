@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.requestFocus();
 
         GameManager gameManager = new GameManager(root);
-        gameManager.startFirstLevel();
+        gameManager.startGame();
 
     }
 }

@@ -10,23 +10,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Player extends ObjectOnScreen implements Movable, HintOnHover, Gravity {
-    private static Player instance;
     private double moveOnX;
     private double moveOnY;
     private static final String HINT = "This is the player dummy";
     private boolean gravityEnabled = false;
-
-    //todo
-    //refactor player
-    //the position depends on the level so it is not a singleton
-    public static synchronized Player createInstance(double x, double y, GraphicsContext gc) {
-        instance = new Player(x, y, gc);
-        return instance;
-    }
-
-    public static Player getInstance() {
-        return instance;
-    }
 
     public Player(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
@@ -103,5 +90,11 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover, Grav
     public boolean isMoving() {
 
         return moveOnX != 0 || moveOnY != 0;
+
     }
+
+    public GraphicsContext getGc() {
+        return gc;
+    }
+
 }

@@ -8,44 +8,17 @@ import java.util.Observer;
 
 public class GameManager implements Observer {
     private TextPanel textPanel;
-    private final int numberOfLevels;
     private LevelController levelController;
-    private LevelView levelView;
-    private LevelDataReader levelDataReader;
-    private LevelModel levelModel;
 
     public GameManager(@NotNull Pane root) {
         textPanel = new TextPanel(root);
         AudioManager.getInstance().playBackgroundMusic();
+          levelController = new LevelController(new LevelView(root));
         attachListenerToPanel();
-
-        levelView = new LevelView(root);
-        levelDataReader = new LevelDataReader(levelView.getGraphicsContext());
-        this.numberOfLevels = levelDataReader.getNumberOfLevels();
-        startFirstLevel();
     }
 
-    /**
-     * This method is used to start the first level
-     * and display the hint before start on the screen
-     */
-    public void startFirstLevel() {
-        getLevelModel(1);
-        levelView.setLevelModel(levelModel);
-        levelController = new LevelController(levelView, levelModel);
+    public void startGame() {
         displayHintBeforeLevel();
-    }
-
-
-    private void getLevelModel(int level) {
-        levelModel = new LevelModel(
-                levelDataReader.getObjectsArrayFromJsonFile(level, "objectsOnScreen"),
-                levelDataReader.getObjectsArrayFromJsonFile(level, "selectorPaneObjects"),
-                levelDataReader.getHintAfterFinish(level),
-                levelDataReader.getHintBeforeStart(level),
-                level
-        );
-        levelModel.createInitialState();
     }
 
 
@@ -64,15 +37,13 @@ public class GameManager implements Observer {
             AudioManager.getInstance().playLevelFinishedSound();
             displayLevelFinishedHint();
             int nextLevel = (int) arg + 1;
-            if (numberOfLevels < nextLevel) {
+            if (levelController.getNumberOfLevels() < nextLevel) {
                 textPanel.getNextButton().setText("Play again");
 
             } else {
                 //increase the level number
                 textPanel.getNextButton().setText("Next");
-                getLevelModel((int) arg + 1);
-                levelController.setLevelModel(levelModel);
-                levelView.setLevelModel(levelModel);
+                levelController.startNextLevel();
             }
         }
 
@@ -80,10 +51,10 @@ public class GameManager implements Observer {
 
     private void displayLevelFinishedHint() {
         levelController.hideLevel();
-        textPanel.showPanel(levelModel.getHintAfterFinish());
+        textPanel.showPanel(levelController.getControllerLevelModel().getHintAfterFinish());
     }
 
     private void displayHintBeforeLevel() {
-        textPanel.showPanel(levelModel.getHintBeforeStart());
+        textPanel.showPanel(levelController.getControllerLevelModel().getHintBeforeStart());
     }
 }

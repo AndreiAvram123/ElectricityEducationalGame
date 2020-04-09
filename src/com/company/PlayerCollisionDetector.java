@@ -9,14 +9,14 @@ import java.util.Observable;
 
 public class PlayerCollisionDetector extends Observable {
 
-    private final Player player;
-    private ArrayList<ObjectOnScreen> objectsOnScreen;
 
-    public PlayerCollisionDetector(@NotNull ArrayList<ObjectOnScreen> objectsOnScreen, @NotNull Player player) {
-        this.objectsOnScreen = objectsOnScreen;
-        this.player = player;
+    private LevelModel levelModel;
+    private Player player;
+
+    public void setLevelModel(@NotNull LevelModel levelModel) {
+        this.levelModel = levelModel;
+        player = levelModel.getPlayer();
     }
-
 
     public void checkCollisionWithPlayer() {
         //we should not check collision while the player is in the moving state
@@ -24,7 +24,7 @@ public class PlayerCollisionDetector extends Observable {
             //we enable gravity only if the player has not collided with an
             //object at the bottom
             boolean enableGravity = true;
-            for (ObjectOnScreen objectOnScreen : objectsOnScreen) {
+            for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
                 Sides collisionSide = getCollisionSide(objectOnScreen);
                 if (collisionSide != Sides.NONE) {
                     handleCollision(objectOnScreen, collisionSide);

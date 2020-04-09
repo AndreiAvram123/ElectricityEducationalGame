@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.models.NullObject;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,19 +12,19 @@ import java.util.ArrayList;
 public class GridSystem {
 
     private GraphicsContext graphicsContext;
-    private double gridHeight;
-    private double gridWidth;
-    private ArrayList<ObjectOnScreen> gameScreenObjects = new ArrayList<>();
-    private ArrayList<ObjectOnScreen> objectsInSelectorPane = new ArrayList<>();
+    private final double gridHeight = AppConstants.SCREEN_HEIGHT;
+    private final double gridWidth = AppConstants.SCREEN_WIDTH;
     private boolean gridLinesEnabled = true;
+    private LevelModel levelModel;
 
-    public GridSystem(@NotNull GraphicsContext graphicsContext, double gridWidth, double gridHeight) {
+    public GridSystem(@NotNull GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
-        this.gridHeight = gridHeight;
-        this.gridWidth = gridWidth;
         drawGrid();
     }
 
+    public void setLevelModel(@NotNull LevelModel levelModel) {
+        this.levelModel = levelModel;
+    }
 
     /**
      * This method is used to draw all the rectangles that appear
@@ -49,22 +50,18 @@ public class GridSystem {
     }
 
     public void addObjectToGameScreen(@NotNull ObjectOnScreen objectOnScreen) {
-        gameScreenObjects.add(objectOnScreen);
-        if (objectsInSelectorPane.contains(objectOnScreen)) {
-            objectsInSelectorPane.remove(objectOnScreen);
-        }
+        levelModel.addObjectToGameScreen(objectOnScreen);
     }
 
 
-
     public ObjectOnScreen getObjectMouseOver(double mouseX, double mouseY) {
-        for (ObjectOnScreen objectOnScreen : gameScreenObjects) {
+        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
             if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
                     && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
                 return objectOnScreen;
             }
         }
-        for (ObjectOnScreen objectOnScreen : objectsInSelectorPane) {
+        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnSelectorPane()) {
             if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
                     && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
                 return objectOnScreen;
@@ -75,12 +72,12 @@ public class GridSystem {
 
 
     public boolean isObjectOverAnother(@NotNull ObjectOnScreen object) {
-        for (ObjectOnScreen objectOnScreen : gameScreenObjects) {
+        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
             if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && object.getY() == objectOnScreen.getY()) {
                 return true;
             }
         }
-        for (ObjectOnScreen objectOnScreen : objectsInSelectorPane) {
+        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnSelectorPane()) {
             if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && objectOnScreen.getY() == object.getY()) {
                 return true;
             }
@@ -104,12 +101,6 @@ public class GridSystem {
         double newY = ((int) (oldCenter.getY() / 50)) * 50;
         objectOnScreen.setX(newX);
         objectOnScreen.setY(newY);
-    }
-//todo
-    //refactor
-    public void disableObjectsDrag() {
-        gameScreenObjects.forEach(gameObject -> gameObject.setHasDragEnabled(false));
-        objectsInSelectorPane.forEach(gameObject -> gameObject.setHasDragEnabled(false));
     }
 
 

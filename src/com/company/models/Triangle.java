@@ -7,8 +7,6 @@ public class Triangle extends ReactiveObject {
 
     public Triangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        setElectricityReaction(new MovePlayerDiagonallyDownRight(Player.getInstance()));
-
     }
 
     @Override

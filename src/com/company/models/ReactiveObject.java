@@ -36,5 +36,7 @@ public class ReactiveObject extends ObjectOnScreen {
         }
     }
 
-
+    public Sides getPlayerCollisionSideForReaction() {
+        return playerCollisionSideForReaction;
+    }
 }

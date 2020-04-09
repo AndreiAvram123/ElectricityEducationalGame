@@ -1,11 +1,10 @@
 package com.company;
 
-import com.company.models.GameObject;
 import com.company.models.ObjectOnScreen;
+import com.company.models.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -18,9 +17,9 @@ public class LevelDataReader {
     private JsonObject fileData;
     private static final String RELATIVE_PATH_LEVELS_DATA = "/src/res/levelsData.json";
 
-    public LevelDataReader(@NotNull GraphicsContext graphicsContext) {
-        this.factory = new GameObjectsFactory(graphicsContext);
+    public LevelDataReader(@NotNull GameObjectsFactory factory) {
         this.fileData = getFileData();
+        this.factory = factory;
     }
 
     private JsonObject getFileData() {
@@ -90,5 +89,10 @@ public class LevelDataReader {
             return data.get("numberOfLevels").getAsInt();
         }
         return 0;
+    }
+
+    public Player getPlayerFromJsonFile(int levelNumber) {
+        JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
+        return (Player) mapToGameObject(levelData.get("player").getAsJsonObject());
     }
 }

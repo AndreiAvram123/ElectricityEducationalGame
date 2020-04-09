@@ -14,11 +14,11 @@ public class LevelModel {
     private String hintAfterFinish;
     private int levelNumber;
     private Player player;
-    private LevelModel initialState;
 
 
     public LevelModel(@NotNull ArrayList<ObjectOnScreen> objectOnScreens,
                       @NotNull ArrayList<ObjectOnScreen> objectsOnSelectorPane,
+                      @NotNull Player player,
                       @NotNull String hintAfterFinish,
                       @NotNull String hintBeforeStart,
                       int levelNumber) {
@@ -27,23 +27,9 @@ public class LevelModel {
         this.hintAfterFinish = hintAfterFinish;
         this.hintBeforeStart = hintBeforeStart;
         this.levelNumber = levelNumber;
-        this.player = Player.getInstance();
+        this.player = player;
     }
 
-    public void createInitialState() {
-        this.initialState = new LevelModel(
-                objectsOnGameScreen,
-                objectsOnSelectorPane,
-                hintAfterFinish,
-                hintBeforeStart,
-                levelNumber
-        );
-    }
-
-    public void restoreInitialState() {
-        this.objectsOnGameScreen = initialState.objectsOnGameScreen;
-        this.objectsOnSelectorPane = initialState.objectsOnSelectorPane;
-    }
 
     public void setPlayer(@NotNull Player player) {
         this.player = player;
@@ -65,8 +51,15 @@ public class LevelModel {
         return player;
     }
 
-    public void addObject(@NotNull ObjectOnScreen object) {
+    public void addObjectToGameScreen(@NotNull ObjectOnScreen object) {
         objectsOnGameScreen.add(object);
+        //remove the object from the selector pane after adding
+        //it to the game screen objects
+        //it is unnecessary to check whether the objectsOnSelectorPane
+        //arraylist contains the added object because
+        //the method remove() can accept objects that are not in the array
+        //if the object is not in the array it simply ignores it
+        objectsOnSelectorPane.remove(object);
     }
 
     public ArrayList<ObjectOnScreen> getObjectsOnGameScreen() {

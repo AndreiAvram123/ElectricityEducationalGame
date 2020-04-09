@@ -19,13 +19,13 @@ public class LevelView {
         this.currentLayer = new Pane();
         this.currentLayer.setPrefHeight(root.getHeight());
         this.currentLayer.setPrefWidth(root.getWidth());
-        this.currentLayer.setVisible(false);
         this.canvas = new Canvas(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.hintWindow = new HintWindow(root);
         initializeStartRestartButton();
         currentLayer.getChildren().addAll(canvas, startButton);
         root.getChildren().add(currentLayer);
+        this.currentLayer.setVisible(false);
     }
 
 

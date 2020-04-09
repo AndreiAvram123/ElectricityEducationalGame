@@ -1,15 +1,15 @@
 {
   "numberOfLevels": 2,
   "1": {
+    "player": {
+      "class": "player",
+      "x": 100,
+      "y": 150,
+      "hasDragEnabled": false
+    },
     "hintBefore": "In order to win this game, you have to make the ball go to the finish point. For this level remember, electricity is conductive. Hint : A wind turbine is a green way of producing electricity",
     "hintAfter": "You nailed it ....",
     "objectsOnScreen": [
-      {
-        "class": "player",
-        "x": 100,
-        "y": 150,
-        "hasDragEnabled": false
-      },
       {
         "class": "triangle",
         "x": 250,

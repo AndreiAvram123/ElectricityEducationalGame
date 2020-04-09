@@ -6,17 +6,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class Rectangle extends ReactiveObject implements HintOnHover{
+public class Rectangle extends ReactiveObject implements HintOnHover {
     private String hintMessage = "this is a rectangle,treat it accordingly";
 
     public Rectangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        //todo
-        //maybe refactor this
-        //strategy means that you apply different behaviour depending
-        //on the context
-        setElectricityReaction(new MovePlayerRight(Player.getInstance()));
-
     }
 
 
