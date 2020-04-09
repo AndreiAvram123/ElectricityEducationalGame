@@ -82,14 +82,14 @@ public class GridSystem {
     }
 
 
-    public boolean isObjectOverAnother(@NotNull GameObject object) {
-        for (GameObject gameObject : gameScreenObjects) {
-            if (gameObject != object && gameObject.getX() == object.getX() && gameObject.getY() == object.getY()) {
+    public boolean isObjectOverAnother(@NotNull ObjectOnScreen object) {
+        for (ObjectOnScreen objectOnScreen : gameScreenObjects) {
+            if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && object.getY() == objectOnScreen.getY()) {
                 return true;
             }
         }
-        for (GameObject gameObject : objectsInSelectorPane) {
-            if (gameObject != object && gameObject.getX() == object.getX() && gameObject.getY() == object.getY()) {
+        for (ObjectOnScreen objectOnScreen : objectsInSelectorPane) {
+            if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && objectOnScreen.getY() == object.getY()) {
                 return true;
             }
         }
@@ -103,15 +103,16 @@ public class GridSystem {
         objectsInSelectorPane.forEach(gameObject -> gameObject.update());
     }
 
-    public void snapOnGrid(@NotNull GameObject gameObject) {
+    public void snapOnGrid(@NotNull ObjectOnScreen objectOnScreen) {
         //get the center of the object
-        Point oldCenter = new Point(gameObject.getX() + gameObject.getWidth() / 2,
-                gameObject.getY() + gameObject.getHeight() / 2);
+        Point oldCenter = new Point(objectOnScreen.getX() + objectOnScreen.getWidth() / 2,
+                objectOnScreen.getY() + objectOnScreen.getHeight() / 2);
+
 
         double newX = ((int) (oldCenter.getX() / 50)) * 50;
         double newY = ((int) (oldCenter.getY() / 50)) * 50;
-        gameObject.setX(newX);
-        gameObject.setY(newY);
+        objectOnScreen.setX(newX);
+        objectOnScreen.setY(newY);
     }
 
     public void disableObjectsDrag() {

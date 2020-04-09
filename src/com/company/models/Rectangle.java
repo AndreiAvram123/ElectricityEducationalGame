@@ -1,13 +1,13 @@
 package com.company.models;
 
 import com.company.interfaces.HintOnHover;
-import com.company.interfaces.MovePlayerHorizontallyReaction;
+import com.company.interfaces.MovePlayerRight;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Rectangle extends ReactiveObject implements HintOnHover{
-    private String hintMessage = "this is a rectangle,\ntreat it accordingly";
+    private String hintMessage = "this is a rectangle,treat it accordingly";
 
     public Rectangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
@@ -15,7 +15,7 @@ public class Rectangle extends ReactiveObject implements HintOnHover{
         //maybe refactor this
         //strategy means that you apply different behaviour depending
         //on the context
-        setElectricityReaction(new MovePlayerHorizontallyReaction(Player.getInstance()));
+        setElectricityReaction(new MovePlayerRight(Player.getInstance()));
 
     }
 

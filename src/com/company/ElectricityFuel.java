@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.models.GameObject;
 import com.company.models.ObjectOnScreen;
 import javafx.scene.canvas.GraphicsContext;
 

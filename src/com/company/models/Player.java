@@ -8,11 +8,12 @@ import javafx.scene.paint.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Player extends ObjectOnScreen implements Movable, HintOnHover {
+public class Player extends ObjectOnScreen implements Movable, HintOnHover, Gravity {
     private static Player instance;
     private double moveOnX;
     private double moveOnY;
     private static final String HINT = "This is the player dummy";
+    private boolean gravityEnabled = false;
 
     //todo
     //refactor player
@@ -32,30 +33,34 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover {
     }
 
     private void initializeMovingAnimation() {
+
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+                applyGravity();
 
-                if (moveOnX != 0) {
-                    if (moveOnX < 0) {
-                        x -= 1;
-                        moveOnX++;
-                    } else {
-                        x += 1;
+                if (moveOnX < 0) {
+                    x--;
+                    moveOnX++;
+                } else {
+                    if (moveOnX > 0) {
+                        x++;
                         moveOnX--;
                     }
                 }
-                if (moveOnY != 0) {
-                    if (moveOnY < 0) {
-                        y -= 1;
-                        moveOnY++;
-                    } else {
-                        y += 1;
+
+                if (moveOnY < 0) {
+                    y--;
+                    moveOnY++;
+                } else {
+                    if (moveOnY > 0) {
+                        y++;
                         moveOnY--;
                     }
                 }
             }
+
         };
         timer.scheduleAtFixedRate(timerTask, 0, 20);
     }
@@ -79,5 +84,23 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover {
     @Override
     public String getHint() {
         return HINT;
+    }
+
+
+    @Override
+    public void setGravityEnabled(boolean enabled) {
+        gravityEnabled = enabled;
+    }
+
+    @Override
+    public void applyGravity() {
+        if (moveOnY == 0 && moveOnX == 0 && gravityEnabled) {
+            moveOnY++;
+        }
+    }
+
+    public boolean isMoving() {
+
+        return moveOnX != 0 || moveOnY != 0;
     }
 }

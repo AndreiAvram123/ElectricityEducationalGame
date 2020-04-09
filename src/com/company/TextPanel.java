@@ -20,6 +20,7 @@ public class TextPanel {
         this.layer.setPrefHeight(root.getHeight());
         initializePanel();
         root.getChildren().add(this.layer);
+        
     }
 
     private void initializePanel() {

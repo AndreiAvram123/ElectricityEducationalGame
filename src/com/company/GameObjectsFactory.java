@@ -48,6 +48,10 @@ public class GameObjectsFactory implements IFactory {
                 SolarPanel solarPanel = new SolarPanel(x, y, graphicsContext);
                 solarPanel.setHasDragEnabled(hasDragEnabled);
                 return solarPanel;
+            case "fan":
+                Fan fan = new Fan(x, y, graphicsContext);
+                fan.setHasDragEnabled(hasDragEnabled);
+                return fan;
 
             default:
                 return new NullObject(x, y, graphicsContext);

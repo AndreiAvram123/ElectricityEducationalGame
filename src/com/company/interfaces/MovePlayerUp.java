@@ -3,16 +3,19 @@ package com.company.interfaces;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class MovePlayerHorizontallyReaction implements IElectricityReaction {
+public class MovePlayerUp implements IElectricityReaction {
 
     private Player player;
+    private double distance = 100;
 
-    public MovePlayerHorizontallyReaction(@NotNull Player player) {
+
+    public MovePlayerUp(@NotNull Player player) {
         this.player = player;
     }
 
+
     @Override
     public void execute() {
-        player.moveOnX(50);
+        player.moveOnY(-distance);
     }
 }

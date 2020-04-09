@@ -1,15 +1,18 @@
 package com.company;
 
 import com.company.interfaces.HintOnHover;
-import com.company.models.GameObject;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
+import com.company.models.Rotating;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
 public class ObjectHandler {
 
     private Canvas canvas;
+    private Pane root;
     private ObjectOnScreen currentlyDraggedObject;
     private ObjectOnScreen currentlyMouseOverObject;
     private GridSystem gridSystem;
@@ -17,10 +20,18 @@ public class ObjectHandler {
     private HintWindow hintWindow;
     private boolean shouldDisplayHint = true;
 
-    public ObjectHandler(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
+    /**
+     * The pane is necessary in order to set a keyboard listener
+     *
+     * @param canvas
+     * @param root
+     */
+    public ObjectHandler(@NotNull Canvas canvas, @NotNull Pane root, @NotNull GridSystem gridSystem) {
         this.gridSystem = gridSystem;
         this.canvas = canvas;
+        this.root = root;
     }
+
 
     public void setHintWindow(@NotNull HintWindow hintWindow) {
         this.hintWindow = hintWindow;
@@ -31,6 +42,8 @@ public class ObjectHandler {
     }
 
     private void attachListenersOnCanvas() {
+        attachKeyboardListener();
+
         canvas.setOnMouseMoved(event -> {
             if (shouldDisplayHint && hintWindow != null) {
                 ObjectOnScreen gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
@@ -83,6 +96,16 @@ public class ObjectHandler {
                 }
                 currentlyDraggedObject = null;
                 lastObjectPosition = null;
+            }
+        });
+    }
+
+    private void attachKeyboardListener() {
+        root.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.A) {
+                if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
+                    ((Rotating) currentlyDraggedObject).rotate();
+                }
             }
         });
     }
