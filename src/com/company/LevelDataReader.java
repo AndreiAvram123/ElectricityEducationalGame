@@ -76,7 +76,7 @@ public class LevelDataReader {
      *
      * @return
      */
-    public static int getNumberOfLevels() {
+    public int getNumberOfLevels() {
         JsonObject data = null;
         try {
             String path = new File("").getAbsolutePath();

@@ -1,5 +1,6 @@
 package com.company.models;
 
+import com.company.interfaces.Gravity;
 import com.company.interfaces.Movable;
 import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;

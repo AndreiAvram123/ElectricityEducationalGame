@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.models.GameObject;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,18 +21,15 @@ public class GridSystem {
         this.graphicsContext = graphicsContext;
         this.gridHeight = gridHeight;
         this.gridWidth = gridWidth;
-        drawGameScreen();
+        drawGrid();
     }
 
-    public ArrayList<ObjectOnScreen> getGameScreenObjects() {
-        return gameScreenObjects;
-    }
 
     /**
      * This method is used to draw all the rectangles that appear
      * on the screen
      */
-    private void drawGameScreen() {
+    private void drawGrid() {
 
         for (int indexWidth = 0; indexWidth <= gridWidth; indexWidth += 50) {
             for (int indexHeight = 0; indexHeight <= gridHeight - 100; indexHeight += 50) {
@@ -45,6 +41,9 @@ public class GridSystem {
                 }
             }
         }
+    }
+
+    private void drawSelectorPane() {
         graphicsContext.setFill(Color.LIGHTBLUE);
         graphicsContext.fillRect(0, gridHeight - 100, gridWidth, 100);
     }
@@ -56,13 +55,6 @@ public class GridSystem {
         }
     }
 
-    public void addObjectsToGameScreen(@NotNull ArrayList<ObjectOnScreen> objectOnScreens) {
-        gameScreenObjects.addAll(objectOnScreens);
-    }
-
-    public void addObjectsToSelectorPane(@NotNull ArrayList<ObjectOnScreen> objectOnScreens) {
-        objectsInSelectorPane.addAll(objectOnScreens);
-    }
 
 
     public ObjectOnScreen getObjectMouseOver(double mouseX, double mouseY) {
@@ -98,9 +90,8 @@ public class GridSystem {
 
 
     public void updateGrid() {
-        drawGameScreen();
-        gameScreenObjects.forEach(gameObject -> gameObject.update());
-        objectsInSelectorPane.forEach(gameObject -> gameObject.update());
+        drawGrid();
+        drawSelectorPane();
     }
 
     public void snapOnGrid(@NotNull ObjectOnScreen objectOnScreen) {
@@ -114,7 +105,8 @@ public class GridSystem {
         objectOnScreen.setX(newX);
         objectOnScreen.setY(newY);
     }
-
+//todo
+    //refactor
     public void disableObjectsDrag() {
         gameScreenObjects.forEach(gameObject -> gameObject.setHasDragEnabled(false));
         objectsInSelectorPane.forEach(gameObject -> gameObject.setHasDragEnabled(false));

@@ -5,14 +5,11 @@ import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import com.company.models.Rotating;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
 public class ObjectHandler {
 
     private Canvas canvas;
-    private Pane root;
     private ObjectOnScreen currentlyDraggedObject;
     private ObjectOnScreen currentlyMouseOverObject;
     private GridSystem gridSystem;
@@ -22,14 +19,10 @@ public class ObjectHandler {
 
     /**
      * The pane is necessary in order to set a keyboard listener
-     *
-     * @param canvas
-     * @param root
      */
-    public ObjectHandler(@NotNull Canvas canvas, @NotNull Pane root, @NotNull GridSystem gridSystem) {
-        this.gridSystem = gridSystem;
+    public ObjectHandler(@NotNull Canvas canvas, @NotNull GridSystem gridSystem) {
         this.canvas = canvas;
-        this.root = root;
+        this.gridSystem = gridSystem;
     }
 
 
@@ -42,8 +35,6 @@ public class ObjectHandler {
     }
 
     private void attachListenersOnCanvas() {
-        attachKeyboardListener();
-
         canvas.setOnMouseMoved(event -> {
             if (shouldDisplayHint && hintWindow != null) {
                 ObjectOnScreen gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
@@ -100,14 +91,10 @@ public class ObjectHandler {
         });
     }
 
-    private void attachKeyboardListener() {
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.A) {
-                if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
-                    ((Rotating) currentlyDraggedObject).rotate();
-                }
-            }
-        });
+    public void rotateObject() {
+        if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
+            ((Rotating) currentlyDraggedObject).rotate();
+        }
     }
 
 

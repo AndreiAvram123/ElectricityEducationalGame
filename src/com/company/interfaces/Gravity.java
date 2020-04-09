@@ -1,4 +1,4 @@
-package com.company.models;
+package com.company.interfaces;
 
 public interface Gravity {
     void setGravityEnabled(boolean enabled);

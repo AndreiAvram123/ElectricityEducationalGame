@@ -13,10 +13,10 @@ public class HintWindow {
     private Text hintView;
     private TextFlow layout;
 
-    public HintWindow(Pane pane) {
+    public HintWindow(@NotNull Pane layer) {
         initializeLayout();
         addTextView();
-        pane.getChildren().add(layout);
+        layer.getChildren().add(layout);
 
     }
 
@@ -38,8 +38,7 @@ public class HintWindow {
     }
 
 
-
-    public void showHint(@NotNull String hintMessage,double x, double y) {
+    public void showHint(@NotNull String hintMessage, double x, double y) {
         hintView.setText(hintMessage);
         layout.setLayoutX(x);
         layout.setLayoutY(y);
@@ -49,7 +48,7 @@ public class HintWindow {
     }
 
     public void hide() {
-       layout.setVisible(false);
+        layout.setVisible(false);
     }
 
 }

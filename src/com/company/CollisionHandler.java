@@ -12,7 +12,6 @@ public class CollisionHandler implements Observer {
     public void update(Observable o, Object collisionParam) {
         Collision collision = (Collision) collisionParam;
         if (o instanceof PlayerCollisionDetector) {
-            System.out.println(collision.getCollisionSidePlayer().toString());
             ObjectOnScreen objectCollided = collision.getObjectCollided();
 
             if (objectCollided instanceof Finish && ((Finish) objectCollided).getFinishPlayerSide()
@@ -28,6 +27,13 @@ public class CollisionHandler implements Observer {
 
     }
 
+
+    /**
+     * Returns true weather the level is completed
+     * A level is completed once the player collided with the finish point
+     *
+     * @return
+     */
     public boolean isLevelCompleted() {
         return isLevelCompleted;
     }

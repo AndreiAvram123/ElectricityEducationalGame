@@ -23,6 +23,7 @@ public class Main extends Application {
         primaryStage.show();
         primaryStage.setResizable(false);
         primaryStage.requestFocus();
+
         GameManager gameManager = new GameManager(root);
         gameManager.startFirstLevel();
 
