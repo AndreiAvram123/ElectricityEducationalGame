@@ -7,25 +7,26 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class GameManager implements Observer {
-    private TextPanel textPanel;
-    private LevelController levelController;
+    private final TextPanel textPanel;
+    private final LevelController levelController;
+
 
     public GameManager(@NotNull Pane root) {
         textPanel = new TextPanel(root);
         AudioManager.getInstance().playBackgroundMusic();
-          levelController = new LevelController(new LevelView(root));
+        levelController = new LevelController(new LevelView(root));
+        levelController.addObserver(this);
         attachListenerToPanel();
+
     }
 
-    public void startGame() {
+    public void start(){
         displayHintBeforeLevel();
     }
-
 
     private void attachListenerToPanel() {
         textPanel.getNextButton().setOnMouseClicked(event -> {
             levelController.startLevel();
-            levelController.addObserver(this);
             textPanel.hidePanel();
         });
     }
@@ -43,7 +44,7 @@ public class GameManager implements Observer {
             } else {
                 //increase the level number
                 textPanel.getNextButton().setText("Next");
-                levelController.startNextLevel();
+                levelController.getNextLevel();
             }
         }
 
@@ -54,7 +55,7 @@ public class GameManager implements Observer {
         textPanel.showPanel(levelController.getControllerLevelModel().getHintAfterFinish());
     }
 
-    private void displayHintBeforeLevel() {
+    public void displayHintBeforeLevel() {
         textPanel.showPanel(levelController.getControllerLevelModel().getHintBeforeStart());
     }
 }

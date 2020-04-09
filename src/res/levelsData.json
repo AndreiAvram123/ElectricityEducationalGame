@@ -147,9 +147,21 @@
     ]
   },
   "2": {
+    "player": {
+      "class": "player",
+      "x": 100,
+      "y": 150,
+      "hasDragEnabled": false
+    },
     "hintBefore": "A solar power is really good when it comes to producing electricity. Did you know that the sun...",
     "hintAfter": "You won this game boy",
     "objectsOnScreen": [
+      {
+        "class": "triangle",
+        "x": 250,
+        "y": 200,
+        "hasDragEnabled": false
+      }
     ],
     "selectorPaneObjects": []
   }

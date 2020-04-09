@@ -37,14 +37,12 @@ public class ObjectHandler {
 
     private void attachListenersOnCanvas() {
         canvas.setOnMouseMoved(event -> {
-            if (shouldDisplayHint && hintWindow != null) {
+            if (shouldDisplayHint) {
                 ObjectOnScreen gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
-                if (gameObject != null) {
-                    if (gameObject instanceof HintOnHover) {
-                        if (currentlyMouseOverObject != gameObject) {
-                            currentlyMouseOverObject = gameObject;
-                            hintWindow.showHint(((HintOnHover) gameObject).getHint(), gameObject.getX() + 50, gameObject.getY());
-                        }
+                if (gameObject instanceof HintOnHover) {
+                    if (currentlyMouseOverObject != gameObject) {
+                        currentlyMouseOverObject = gameObject;
+                        hintWindow.showHint(((HintOnHover) gameObject).getHint(), gameObject.getX() + 50, gameObject.getY());
                     }
                 } else {
                     hintWindow.hide();
@@ -58,22 +56,19 @@ public class ObjectHandler {
         canvas.setOnMouseDragged(event -> {
             if (isDragStarted) {
                 shouldDisplayHint = false;
-                if (hintWindow != null) {
-                    hintWindow.hide();
-                }
+                hintWindow.hide();
 
                 if (currentlyDraggedObject == null) {
                     currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
-                }
-
-                if (currentlyDraggedObject != null) {
+                } else {
                     if (lastObjectPosition == null) {
                         lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
                     }
                     currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
+
                 }
-            }
-        });
+            }});
+
 
         canvas.setOnMouseReleased(event -> {
             if (isDragStarted) {

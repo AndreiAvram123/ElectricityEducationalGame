@@ -16,31 +16,27 @@ import java.util.Observable;
 
 public class LevelController extends Observable implements EventHandler {
 
-    private LevelView levelView;
+    private final LevelView levelView;
     private LevelModel levelModel;
-    private AnimationTimer animationTimer;
-    private ObjectHandler objectHandler;
-    private GridSystem gridSystem;
-    private CollisionHandler collisionHandler;
-    private ElectricityHandler electricityHandler;
-    private PlayerCollisionDetector playerCollisionDetector;
+    private final ObjectHandler objectHandler;
+    private final GridSystem gridSystem;
+    private final ElectricityHandler electricityHandler;
+    private final PlayerCollisionDetector playerCollisionDetector;
     private boolean shouldNotifyObserverOnFinish = true;
     private final int numberOfLevels;
-    private int currentLevel = 1;
-    private LevelDataReader levelDataReader;
+    private final LevelDataReader levelDataReader;
 
     public LevelController(@NotNull LevelView levelView) {
         this.levelView = levelView;
         levelDataReader = new LevelDataReader(new GameObjectsFactory(levelView.getGraphicsContext()));
         gridSystem = new GridSystem(levelView.getGraphicsContext());
         objectHandler = new ObjectHandler(this.levelView.getCanvas(), gridSystem, levelView.getHintWindow());
-        collisionHandler = new CollisionHandler();
         playerCollisionDetector = new PlayerCollisionDetector();
-        playerCollisionDetector.addObserver(collisionHandler);
         electricityHandler = new ElectricityHandler();
-        animationTimer = getAnimationTimer();
+        AnimationTimer animationTimer = getAnimationTimer();
+        animationTimer.start();
         this.numberOfLevels = levelDataReader.getNumberOfLevels();
-        getLevelModel();
+        getNextLevelModel();
         attachEvents();
     }
 
@@ -55,17 +51,16 @@ public class LevelController extends Observable implements EventHandler {
         return new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (!collisionHandler.isLevelCompleted()) {
+                if (!playerCollisionDetector.hasCollidedWithFinish()) {
                     playerCollisionDetector.checkCollisionWithPlayer();
                     gridSystem.updateGrid();
                     electricityHandler.update();
                 } else {
-                    animationTimer.stop();
                     if (shouldNotifyObserverOnFinish) {
                         shouldNotifyObserverOnFinish = false;
                         //set changed method needs to be
                         //called before notifying
-                        //any observer
+                        //any observe
                         setChanged();
                         notifyObservers(levelModel.getLevelNumber());
                     }
@@ -99,7 +94,8 @@ public class LevelController extends Observable implements EventHandler {
     }
 
     private void restartLevel() {
-        getLevelModel();
+        getLevelModel(levelModel.getLevelNumber());
+        updateModelAfterFetch();
         objectHandler.start();
         electricityHandler.stopElectricityHandler();
     }
@@ -108,8 +104,6 @@ public class LevelController extends Observable implements EventHandler {
     public void startLevel() {
         this.levelView.getCurrentLayer().setVisible(true);
         shouldNotifyObserverOnFinish = true;
-        gridSystem.setGridLinesEnabled(true);
-        animationTimer.start();
         objectHandler.start();
     }
 
@@ -118,6 +112,7 @@ public class LevelController extends Observable implements EventHandler {
         playerCollisionDetector.setLevelModel(levelModel);
         electricityHandler.setLevelModel(levelModel);
         levelView.setLevelModel(levelModel);
+        gridSystem.reset();
     }
 
     public void hideLevel() {
@@ -125,7 +120,23 @@ public class LevelController extends Observable implements EventHandler {
     }
 
 
-    private void getLevelModel() {
+    private void getNextLevelModel() {
+        int currentLevel = 1;
+        if (levelModel != null) {
+            currentLevel = levelModel.getLevelNumber() + 1;
+        }
+        getLevelModel(currentLevel);
+        updateModelAfterFetch();
+    }
+
+    private void updateModelAfterFetch() {
+        updateObjectsStrategies(levelModel.getObjectsOnGameScreen());
+        updateObjectsStrategies(levelModel.getObjectsOnSelectorPane());
+        updateDependentComponents();
+
+    }
+
+    private void getLevelModel(int currentLevel) {
         levelModel = new LevelModel(
                 levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "objectsOnScreen"),
                 levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "selectorPaneObjects"),
@@ -134,9 +145,6 @@ public class LevelController extends Observable implements EventHandler {
                 levelDataReader.getHintBeforeStart(currentLevel),
                 currentLevel
         );
-        updateObjectsStrategies(levelModel.getObjectsOnGameScreen());
-        updateObjectsStrategies(levelModel.getObjectsOnSelectorPane());
-        updateDependentComponents();
     }
 
     private void updateObjectsStrategies(@NotNull ArrayList<ObjectOnScreen> objects) {
@@ -153,10 +161,8 @@ public class LevelController extends Observable implements EventHandler {
         });
     }
 
-    public void startNextLevel() {
-        currentLevel++;
-        getLevelModel();
-        startLevel();
+    public void getNextLevel() {
+        getNextLevelModel();
     }
 
     public int getNumberOfLevels() {

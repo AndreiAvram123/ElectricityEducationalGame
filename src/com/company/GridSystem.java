@@ -107,4 +107,8 @@ public class GridSystem {
     public void setGridLinesEnabled(boolean gridLinesEnabled) {
         this.gridLinesEnabled = gridLinesEnabled;
     }
+
+    public void reset() {
+        gridLinesEnabled = true;
+    }
 }

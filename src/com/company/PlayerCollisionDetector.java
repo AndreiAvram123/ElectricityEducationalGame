@@ -4,43 +4,40 @@ import com.company.models.ObjectOnScreen;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
-public class PlayerCollisionDetector extends Observable {
+public class PlayerCollisionDetector {
 
 
     private LevelModel levelModel;
     private Player player;
+    private PlayerCollisionHandler playerCollisionHandler = new PlayerCollisionHandler();
+
 
     public void setLevelModel(@NotNull LevelModel levelModel) {
         this.levelModel = levelModel;
         player = levelModel.getPlayer();
+        playerCollisionHandler.reset();
     }
 
     public void checkCollisionWithPlayer() {
-        //we should not check collision while the player is in the moving state
-        if (!player.isMoving()) {
-            //we enable gravity only if the player has not collided with an
-            //object at the bottom
-            boolean enableGravity = true;
-            for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
-                Sides collisionSide = getCollisionSide(objectOnScreen);
-                if (collisionSide != Sides.NONE) {
-                    handleCollision(objectOnScreen, collisionSide);
+        if (levelModel != null) {
+            //we should not check collision while the player is in the moving state
+            if (!player.isMoving()) {
+                //we enable gravity only if the player has not collided with an
+                //object at the bottom
+                boolean enableGravity = true;
+                for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
+                    Sides collisionSide = getCollisionSide(objectOnScreen);
+                    if (collisionSide == Sides.BOTTOM) {
+                        enableGravity = false;
+                    }
+                    Collision collision = new Collision(objectOnScreen, player, collisionSide);
+                    playerCollisionHandler.handleCollision(collision);
                 }
-                if (collisionSide == Sides.BOTTOM) {
-                    enableGravity = false;
-                }
+                player.setGravityEnabled(enableGravity);
             }
-            player.setGravityEnabled(enableGravity);
         }
     }
 
-    private void handleCollision(ObjectOnScreen collider, Sides collisionSide) {
-        setChanged();
-        notifyObservers(new Collision(collider, player, collisionSide));
-    }
 
     /**
      * This method return the collision side on witch the player has collided
@@ -65,4 +62,7 @@ public class PlayerCollisionDetector extends Observable {
         return Sides.NONE;
     }
 
+    public boolean hasCollidedWithFinish() {
+        return playerCollisionHandler.hasCollidedWithFinish();
+    }
 }
