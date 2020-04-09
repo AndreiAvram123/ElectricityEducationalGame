@@ -16,7 +16,8 @@ import java.util.Observable;
  * the current level
  */
 public class Level extends Observable {
-
+//todo
+    //too many things in here
     private final Pane layer;
     private final Canvas canvas;
     protected GraphicsContext graphicsContext;

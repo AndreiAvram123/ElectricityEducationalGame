@@ -23,7 +23,7 @@ public class ObjectOnScreen extends GameObject implements Draggable {
     }
 
     public boolean isNeighbourRight(@NotNull ObjectOnScreen object) {
-        return object.getY() == object.getY() && object.getX() + object.getWidth() == this.getX();
+        return object.getY() == this.getY() && object.getX() + object.getWidth() == this.getX();
     }
 
     public boolean isNeighbourLeft(@NotNull ObjectOnScreen object) {

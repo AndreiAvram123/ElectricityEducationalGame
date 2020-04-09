@@ -12,23 +12,17 @@ public class CollisionHandler implements Observer {
     public void update(Observable o, Object collisionParam) {
         Collision collision = (Collision) collisionParam;
         if (o instanceof PlayerCollisionDetector) {
-
+            System.out.println(collision.getCollisionSidePlayer().toString());
             ObjectOnScreen objectCollided = collision.getObjectCollided();
 
-            if (objectCollided instanceof Finish) {
+            if (objectCollided instanceof Finish && ((Finish) objectCollided).getFinishPlayerSide()
+                    == collision.getCollisionSidePlayer()) {
                 isLevelCompleted = true;
             }
 
             if (objectCollided instanceof ReactiveObject) {
-                if (objectCollided instanceof Rotating) {
-                    if (((Rotating) objectCollided).getPlayerCollisionSideForReaction() == collision.getCollisionSidePlayer()) {
-                        ((ReactiveObject) objectCollided).executeElectricityReaction();
-                    }
-                } else {
-                    if (collision.getCollisionSidePlayer() == Sides.BOTTOM) {
-                        ((ReactiveObject) objectCollided).executeElectricityReaction();
-                    }
-                }
+
+                ((ReactiveObject) objectCollided).executeElectricityReaction(collision.getCollisionSidePlayer());
             }
         }
 

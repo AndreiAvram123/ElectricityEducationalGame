@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.models.GameObject;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +27,10 @@ public class PlayerCollisionDetector extends Observable {
             for (ObjectOnScreen objectOnScreen : objectsOnScreen) {
                 Sides collisionSide = getCollisionSide(objectOnScreen);
                 if (collisionSide != Sides.NONE) {
-                    enableGravity = false;
                     handleCollision(objectOnScreen, collisionSide);
+                }
+                if (collisionSide == Sides.BOTTOM) {
+                    enableGravity = false;
                 }
             }
             player.setGravityEnabled(enableGravity);
@@ -52,15 +53,15 @@ public class PlayerCollisionDetector extends Observable {
         if (player.isNeighbourTop(objectOnScreen)) {
             return Sides.BOTTOM;
         }
-//        if (player.isNeighbourBottom(objectOnScreen)) {
-//            return Sides.TOP;
-//        }
-//        if (player.isNeighbourLeft(objectOnScreen)) {
-//            return Sides.RIGHT;
-//        }
-//        if (player.isNeighbourRight(objectOnScreen)) {
-//            return Sides.LEFT;
-//        }
+        if (player.isNeighbourBottom(objectOnScreen)) {
+            return Sides.TOP;
+        }
+        if (player.isNeighbourLeft(objectOnScreen)) {
+            return Sides.RIGHT;
+        }
+        if (player.isNeighbourRight(objectOnScreen)) {
+            return Sides.LEFT;
+        }
         return Sides.NONE;
     }
 

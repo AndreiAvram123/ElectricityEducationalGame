@@ -42,16 +42,16 @@ public class GameManager implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Level) {
-            AudioManager.getInstance().playLevelFinishedSound();
-            displayLevelFinishedHint();
-            if (numberOfLevels < (int) arg + 1) {
-                textPanel.getNextButton().setText("Restart");
-                currentLevel = new Level(root, 1);
-            } else {
-                //increase the level number
-                textPanel.getNextButton().setText("Next");
-                currentLevel = new Level(root, (int) arg + 1);
-            }
+//            AudioManager.getInstance().playLevelFinishedSound();
+//            displayLevelFinishedHint();
+//            if (numberOfLevels < (int) arg + 1) {
+//                textPanel.getNextButton().setText("Restart");
+//                currentLevel = new Level(root, 1);
+//            } else {
+//                //increase the level number
+//                textPanel.getNextButton().setText("Next");
+//                currentLevel = new Level(root, (int) arg + 1);
+//            }
         }
 
     }

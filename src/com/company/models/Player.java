@@ -100,6 +100,7 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover, Grav
     }
 
     public boolean isMoving() {
+
         return moveOnX != 0 || moveOnY != 0;
     }
 }

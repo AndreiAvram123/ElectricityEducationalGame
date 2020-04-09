@@ -15,12 +15,10 @@ import java.util.ArrayList;
 public class LevelDataReader {
 
     private GameObjectsFactory factory;
-    private GraphicsContext graphicsContext;
     private JsonObject fileData;
     private static final String RELATIVE_PATH_LEVELS_DATA = "/src/res/levelsData.json";
 
     public LevelDataReader(@NotNull GraphicsContext graphicsContext) {
-        this.graphicsContext = graphicsContext;
         this.factory = new GameObjectsFactory(graphicsContext);
         this.fileData = getFileData();
     }

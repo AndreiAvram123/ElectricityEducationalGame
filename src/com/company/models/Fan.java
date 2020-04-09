@@ -9,18 +9,13 @@ import javafx.scene.image.Image;
 
 public class Fan extends ReactiveObject implements Rotating {
     private int currentRotation = 0;
-    public Sides playerCollisionSideNeeded;
 
     public Fan(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
         img = new Image("fan_right.png");
         setElectricityReaction(new MovePlayerRight(Player.getInstance()));
-        playerCollisionSideNeeded = Sides.LEFT;
+        playerCollisionSideForReaction = Sides.LEFT;
 
-    }
-
-    public Sides getPlayerCollisionSideForReaction() {
-        return playerCollisionSideNeeded;
     }
 
     @Override
@@ -38,16 +33,16 @@ public class Fan extends ReactiveObject implements Rotating {
             case 0:
                 img = new Image("res/fan_right.png");
                 setElectricityReaction(new MovePlayerRight(Player.getInstance()));
-                playerCollisionSideNeeded = Sides.LEFT;
+                playerCollisionSideForReaction = Sides.LEFT;
                 break;
             case 90:
                 setElectricityReaction(new MovePlayerUp(Player.getInstance()));
                 img = new Image("res/fan_up.png");
-                playerCollisionSideNeeded = Sides.BOTTOM;
+                playerCollisionSideForReaction = Sides.BOTTOM;
                 break;
             case 180:
                 setElectricityReaction(new MovePlayerLeft(Player.getInstance()));
-                playerCollisionSideNeeded = Sides.RIGHT;
+                playerCollisionSideForReaction = Sides.RIGHT;
                 img = new Image("res/fan_left.png");
                 break;
         }
