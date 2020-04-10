@@ -1,18 +1,15 @@
 package com.company;
 
-import com.company.models.NullObject;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
 public class GridSystem {
 
     private GraphicsContext graphicsContext;
-    private final double gridHeight = AppConstants.SCREEN_HEIGHT;
+    private final double gridHeight = AppConstants.GRID_SYSTEM_HEIGHT;
     private final double gridWidth = AppConstants.SCREEN_WIDTH;
     private boolean gridLinesEnabled = true;
     private LevelModel levelModel;

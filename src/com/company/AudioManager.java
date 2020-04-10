@@ -38,7 +38,7 @@ public class AudioManager {
 //        audioClip.play();
     }
 
-    public void playButtonHoveSound() {
+    public void playButtonHoverSound() {
         mouseHoverSound.play();
     }
 }

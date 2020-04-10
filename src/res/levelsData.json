@@ -7,9 +7,15 @@
       "y": 150,
       "hasDragEnabled": false
     },
-    "hintBefore": "In order to win this game, you have to make the ball go to the finish point. For this level remember, electricity is conductive. Hint : A wind turbine is a green way of producing electricity",
+    "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. For this level remember, electricity is conductive. Hint : A wind turbine is a green way of producing electricity",
     "hintAfter": "You nailed it ....",
     "objectsOnScreen": [
+      {
+        "class": "finish",
+        "x": 750,
+        "y": 600,
+        "hasDragEnabled": false
+      },
       {
         "class": "triangle",
         "x": 250,
@@ -32,18 +38,6 @@
         "class": "rectangle",
         "x": 200,
         "y": 200,
-        "hasDragEnabled": false
-      },
-      {
-        "class": "finish",
-        "x": 550,
-        "y": 350,
-        "hasDragEnabled": false
-      },
-      {
-        "class": "rectangle",
-        "x": 200,
-        "y": 250,
         "hasDragEnabled": false
       },
       {
@@ -93,6 +87,37 @@
         "x": 450,
         "y": 350,
         "hasDragEnabled": false
+      }, {
+        "class": "rectangle",
+        "x": 500,
+        "y": 350,
+        "hasDragEnabled": false
+      }, {
+        "class": "rectangle",
+        "x": 550,
+        "y": 350,
+        "hasDragEnabled": false
+      },{
+        "class": "rectangle",
+        "x": 600,
+        "y": 450,
+        "hasDragEnabled": false
+      },{
+        "class": "triangle",
+        "x": 650,
+        "y": 500,
+        "hasDragEnabled": false
+      },{
+        "class": "rectangle",
+        "x": 650,
+        "y": 550,
+        "hasDragEnabled": false
+      },
+      {
+        "class": "triangle",
+        "x": 700,
+        "y": 550,
+        "hasDragEnabled": false
       }
     ],
     "selectorPaneObjects": [
@@ -135,12 +160,6 @@
       {
         "class": "wind",
         "x": 600,
-        "y": 550,
-        "hasDragEnabled": true
-      },
-      {
-        "class": "rectangle",
-        "x": 700,
         "y": 550,
         "hasDragEnabled": true
       }

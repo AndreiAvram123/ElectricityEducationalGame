@@ -43,6 +43,7 @@ public class LevelController extends Observable implements EventHandler {
     private void attachEvents() {
         this.levelView.getStartButton().setOnMouseClicked(this);
         this.levelView.getCurrentLayer().setOnKeyPressed(this);
+        this.levelView.getStartButton().setOnMouseEntered(this);
     }
 
 
@@ -76,8 +77,8 @@ public class LevelController extends Observable implements EventHandler {
         if (event.getEventType() == KeyEvent.KEY_PRESSED && ((KeyEvent) event).getCode() == KeyCode.A) {
             objectHandler.rotateObject(levelModel.getPlayer());
         }
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            if (event.getSource() == this.levelView.getStartButton()) {
+        if (event.getSource() == this.levelView.getStartButton()) {
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
                 if (this.levelView.getStartButton().getText().equals("Start")) {
                     this.levelView.getStartButton().setText("Restart");
                     electricityHandler.startElectricityHandler();
@@ -89,6 +90,9 @@ public class LevelController extends Observable implements EventHandler {
 
                 }
             }
+        }
+        if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+            AudioManager.getInstance().playButtonHoverSound();
         }
 
     }

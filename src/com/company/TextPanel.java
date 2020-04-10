@@ -12,19 +12,20 @@ public class TextPanel {
     private Pane layer;
     private Button nextButton;
     private Text text;
+    private TextFlow textFlow;
 
-    public TextPanel(Pane root) {
+    public TextPanel(@NotNull Pane root) {
         this.layer = new Pane();
         this.layer.setVisible(false);
         this.layer.setMinWidth(root.getWidth());
         this.layer.setPrefHeight(root.getHeight());
         initializePanel();
         root.getChildren().add(this.layer);
-        
+
     }
 
     private void initializePanel() {
-        TextFlow textFlow = getTextFlow();
+        textFlow = getTextFlow();
         text = getTextNode();
         textFlow.getChildren().add(text);
         layer.getChildren().add(textFlow);
@@ -40,27 +41,31 @@ public class TextPanel {
 
     private void attachOnHoveEffectOnButton() {
         nextButton.setOnMouseEntered(event -> {
-            AudioManager.getInstance().playButtonHoveSound();
+            AudioManager.getInstance().playButtonHoverSound();
         });
     }
 
     @NotNull
     private TextFlow getTextFlow() {
+        double verticalPadding = 100;
+        double horizontalPadding = 200;
         TextFlow textFlow = new TextFlow();
-        textFlow.setLayoutX(200);
-        textFlow.setLayoutY(100);
-        textFlow.setMaxHeight(400);
-        textFlow.setMaxWidth(400);
+        textFlow.setLayoutX(verticalPadding);
+        textFlow.setLayoutY(horizontalPadding);
+        textFlow.setMaxHeight(AppConstants.SCREEN_HEIGHT - horizontalPadding * 2);
+        textFlow.setMaxWidth(AppConstants.SCREEN_WIDTH - verticalPadding * 2);
         textFlow.setTextAlignment(TextAlignment.CENTER);
         return textFlow;
     }
 
     private Button initializeButton() {
+        double width = 300;
         nextButton = new Button();
-        nextButton.setText("OK");
-        nextButton.setLayoutY(500);
-        nextButton.setLayoutX(300);
-        nextButton.setPrefWidth(300);
+        nextButton.setText("Alright");
+        //position the button in the middle
+        nextButton.setLayoutY(textFlow.getLayoutY() + textFlow.getMaxHeight());
+        nextButton.setLayoutX(AppConstants.SCREEN_WIDTH / 2 - width / 2);
+        nextButton.setPrefWidth(width);
         return nextButton;
     }
 

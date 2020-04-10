@@ -9,7 +9,6 @@ public class PlayerCollisionHandler {
     private boolean isLevelCompleted = false;
 
 
-
     public void handleCollision(Collision collision) {
 
         ObjectOnScreen objectCollided = collision.getObjectCollided();
@@ -23,6 +22,7 @@ public class PlayerCollisionHandler {
 
             ((ReactiveObject) objectCollided).executeElectricityReaction(collision.getCollisionSidePlayer());
         }
+
 
     }
 
