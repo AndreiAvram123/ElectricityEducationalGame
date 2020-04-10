@@ -156,8 +156,8 @@ public class LevelController extends Observable implements EventHandler {
             if (gameObject instanceof Rectangle) {
                 ((Rectangle) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));
             }
-            if (gameObject instanceof Triangle) {
-                ((Triangle) gameObject).setElectricityReaction(new MovePlayerDiagonallyDownRight(levelModel.getPlayer()));
+            if (gameObject instanceof Slope) {
+                ((Slope) gameObject).setElectricityReaction(new MovePlayerDiagonallyDownRight(levelModel.getPlayer()));
             }
             if (gameObject instanceof Fan) {
                 ((Fan) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));

@@ -25,9 +25,9 @@ public class GameObjectsFactory implements IFactory {
                 rectangle.setHasDragEnabled(hasDragEnabled);
                 return rectangle;
             case "triangle":
-                Triangle triangle = new Triangle(x, y, graphicsContext);
-                triangle.setHasDragEnabled(hasDragEnabled);
-                return triangle;
+                Slope slope = new Slope(x, y, graphicsContext);
+                slope.setHasDragEnabled(hasDragEnabled);
+                return slope;
             case "ball":
                 Player player = new Player(x, y, graphicsContext);
                 player.setHasDragEnabled(hasDragEnabled);

@@ -41,7 +41,6 @@ public class ElectricityHandler {
         levelModel.getObjectsOnGameScreen().forEach(gameObject -> {
             if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
                 ElectricitySource electricitySource = (ElectricitySource) gameObject;
-
                 startElectricitySource(electricityFuel, electricitySource);
             }
             if (gameObject instanceof SolarPanel && electricityFuel instanceof Sun) {

@@ -2,13 +2,14 @@ package com.company.models;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+//todo
+//triangle should be a slope
+public class Slope extends ReactiveObject {
 
-public class Triangle extends ReactiveObject {
-
-    public Triangle(double x, double y, GraphicsContext gc) {
+    public Slope(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
         setUnderElectricity(true);
-     }
+    }
 
     @Override
     public void update() {
