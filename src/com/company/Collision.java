@@ -21,4 +21,8 @@ public class Collision {
     public Sides getCollisionSidePlayer() {
         return collisionSidePlayer;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

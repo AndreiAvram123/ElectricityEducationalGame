@@ -26,7 +26,7 @@ public class GameManager implements Observer {
 
     private void attachListenerToPanel() {
         textPanel.getNextButton().setOnMouseClicked(event -> {
-            levelController.startLevel();
+            levelController.showLevel();
             textPanel.hidePanel();
         });
     }

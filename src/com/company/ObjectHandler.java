@@ -99,18 +99,18 @@ public class ObjectHandler {
     }
 
     private void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
-        if (objectOnScreen instanceof ReactiveObject) {
-            ReactiveObject reactiveObject = (ReactiveObject) objectOnScreen;
-            switch (reactiveObject.getPlayerCollisionSideForReaction()) {
+        if (objectOnScreen instanceof ElectricObject) {
+            ElectricObject electricObject = (ElectricObject) objectOnScreen;
+            switch (electricObject.getPlayerCollisionSideForReaction()) {
                 case LEFT:
-                    reactiveObject.setElectricityReaction(new MovePlayerRight(player));
+                    electricObject.setElectricityReaction(new MovePlayerRight(player));
                     break;
                 case RIGHT:
-                    reactiveObject.setElectricityReaction(new MovePlayerLeft(player));
+                    electricObject.setElectricityReaction(new MovePlayerLeft(player));
                     break;
 
                 case BOTTOM:
-                    reactiveObject.setElectricityReaction(new MovePlayerUp(player));
+                    electricObject.setElectricityReaction(new MovePlayerUp(player));
                     break;
             }
         }

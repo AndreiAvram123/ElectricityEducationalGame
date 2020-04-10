@@ -5,5 +5,5 @@ import com.company.models.ObjectOnScreen;
 
 public interface IFactory {
 
-  ObjectOnScreen createObject(String type, double x, double y, boolean hasDragEnabled);
+  ObjectOnScreen createObject(String type, double x, double y);
 }

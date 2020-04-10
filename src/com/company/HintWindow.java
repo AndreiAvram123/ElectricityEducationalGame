@@ -8,16 +8,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class HintWindow {
 
-    private double width = 150;
-    private double height = 150;
     private Text hintView;
     private TextFlow layout;
 
-    public HintWindow(@NotNull Pane layer) {
+    public HintWindow(@NotNull Pane root) {
         initializeLayout();
         addTextView();
-        layer.getChildren().add(layout);
 
+    }
+
+    public TextFlow getLayout() {
+        return layout;
     }
 
     private void addTextView() {
@@ -29,9 +30,9 @@ public class HintWindow {
     private void initializeLayout() {
         layout = new TextFlow();
         layout.setStyle("-fx-background-color: brown;");
-        layout.setLayoutX(200);
-        layout.setLayoutY(100);
+        double height = 150;
         layout.setMaxHeight(height);
+        double width = 150;
         layout.setMaxWidth(width);
         layout.setTextAlignment(TextAlignment.CENTER);
         layout.setVisible(false);

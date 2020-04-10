@@ -55,7 +55,9 @@ public class LevelController extends Observable implements EventHandler {
                 if (!playerCollisionDetector.hasCollidedWithFinish()) {
                     playerCollisionDetector.checkCollisionWithPlayer();
                     gridSystem.updateGrid();
-                    electricityHandler.update();
+                    if (levelView.getStartButton().getText().equals("Start")) {
+                        electricityHandler.update();
+                    }
                 } else {
                     if (shouldNotifyObserverOnFinish) {
                         shouldNotifyObserverOnFinish = false;
@@ -81,9 +83,7 @@ public class LevelController extends Observable implements EventHandler {
             if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
                 if (this.levelView.getStartButton().getText().equals("Start")) {
                     this.levelView.getStartButton().setText("Restart");
-                    electricityHandler.startElectricityHandler();
-                    objectHandler.stop();
-                    gridSystem.setGridLinesEnabled(false);
+                    startLevel();
                 } else {
                     this.levelView.getStartButton().setText("Start");
                     restartLevel();
@@ -91,25 +91,32 @@ public class LevelController extends Observable implements EventHandler {
                 }
             }
         }
-        if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+        if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             AudioManager.getInstance().playButtonHoverSound();
         }
 
+    }
+
+    public void showLevel() {
+        this.levelView.getCurrentLayer().setVisible(true);
+        shouldNotifyObserverOnFinish = true;
+        objectHandler.start();
+
+    }
+
+    public void startLevel() {
+        playerCollisionDetector.start();
+        objectHandler.stop();
+        gridSystem.setGridLinesEnabled(false);
     }
 
     private void restartLevel() {
         getLevelModel(levelModel.getLevelNumber());
         updateModelAfterFetch();
         objectHandler.start();
-        electricityHandler.stopElectricityHandler();
+        playerCollisionDetector.stop();
     }
 
-
-    public void startLevel() {
-        this.levelView.getCurrentLayer().setVisible(true);
-        shouldNotifyObserverOnFinish = true;
-        objectHandler.start();
-    }
 
     private void updateDependentComponents() {
         gridSystem.setLevelModel(levelModel);
@@ -141,9 +148,15 @@ public class LevelController extends Observable implements EventHandler {
     }
 
     private void getLevelModel(int currentLevel) {
+        ArrayList<ObjectOnScreen> objectsOnGameScreen =
+                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "objectsOnGameScreen");
+        ArrayList<ObjectOnScreen> selectorPaneObjects =
+                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "selectorPaneObjects");
+        selectorPaneObjects.forEach(objectOnScreen -> objectOnScreen.setHasDragEnabled(true));
+
         levelModel = new LevelModel(
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "objectsOnScreen"),
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "selectorPaneObjects"),
+                objectsOnGameScreen,
+                selectorPaneObjects,
                 levelDataReader.getPlayerFromJsonFile(currentLevel),
                 levelDataReader.getHintAfterFinish(currentLevel),
                 levelDataReader.getHintBeforeStart(currentLevel),
@@ -156,9 +169,7 @@ public class LevelController extends Observable implements EventHandler {
             if (gameObject instanceof Rectangle) {
                 ((Rectangle) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));
             }
-            if (gameObject instanceof Slope) {
-                ((Slope) gameObject).setElectricityReaction(new MovePlayerDiagonallyDownRight(levelModel.getPlayer()));
-            }
+
             if (gameObject instanceof Fan) {
                 ((Fan) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));
             }

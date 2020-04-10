@@ -54,8 +54,7 @@ public class LevelDataReader {
         String className = jsonElement.get("class").getAsString();
         double x = jsonElement.get("x").getAsDouble();
         double y = jsonElement.get("y").getAsDouble();
-        boolean hasDragEnabled = jsonElement.get("hasDragEnabled").getAsBoolean();
-        return factory.createObject(className, x, y, hasDragEnabled);
+        return factory.createObject(className, x, y);
     }
 
     public String getHintBeforeStart(int levelNumber) {

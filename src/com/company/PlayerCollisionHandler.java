@@ -2,15 +2,12 @@ package com.company;
 
 import com.company.models.*;
 
-import java.util.Observable;
-import java.util.Observer;
-
 public class PlayerCollisionHandler {
     private boolean isLevelCompleted = false;
 
 
     public void handleCollision(Collision collision) {
-
+        System.out.println();
         ObjectOnScreen objectCollided = collision.getObjectCollided();
 
         if (objectCollided instanceof Finish && ((Finish) objectCollided).getFinishPlayerSide()
@@ -18,9 +15,13 @@ public class PlayerCollisionHandler {
             isLevelCompleted = true;
         }
 
-        if (objectCollided instanceof ReactiveObject) {
+        if (objectCollided instanceof ElectricObject) {
 
-            ((ReactiveObject) objectCollided).executeElectricityReaction(collision.getCollisionSidePlayer());
+            ((ElectricObject) objectCollided).executeElectricityReaction(collision.getCollisionSidePlayer());
+        }
+        if (objectCollided instanceof Slope && collision.getCollisionSidePlayer() == Sides.BOTTOM) {
+            collision.getPlayer().moveOnX(50);
+            collision.getPlayer().moveOnY(50);
         }
 
 

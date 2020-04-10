@@ -3,7 +3,7 @@ package com.company.interfaces;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class MovePlayerUp implements IElectricityReaction {
+public class MovePlayerUp implements IPlayerReaction {
 
     private Player player;
     private double distance = 100;

@@ -24,7 +24,7 @@ public class LevelView {
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.hintWindow = new HintWindow(root);
         initializeStartRestartButton();
-        currentLayer.getChildren().addAll(canvas, startButton);
+        currentLayer.getChildren().addAll(canvas, startButton, hintWindow.getLayout());
         root.getChildren().add(currentLayer);
         this.currentLayer.setVisible(false);
     }

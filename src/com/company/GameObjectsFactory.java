@@ -14,7 +14,7 @@ public class GameObjectsFactory implements IFactory {
     }
 
     @Override
-    public ObjectOnScreen createObject(@NotNull String type, double x, double y, boolean hasDragEnabled) {
+    public ObjectOnScreen createObject(@NotNull String type, double x, double y) {
         switch (type) {
             case "finish":
                 return new Finish(x, y, graphicsContext);
@@ -22,35 +22,27 @@ public class GameObjectsFactory implements IFactory {
                 return new Player(x, y, graphicsContext);
             case "rectangle":
                 Rectangle rectangle = new Rectangle(x, y, graphicsContext);
-                rectangle.setHasDragEnabled(hasDragEnabled);
                 return rectangle;
             case "triangle":
                 Slope slope = new Slope(x, y, graphicsContext);
-                slope.setHasDragEnabled(hasDragEnabled);
                 return slope;
             case "ball":
                 Player player = new Player(x, y, graphicsContext);
-                player.setHasDragEnabled(hasDragEnabled);
                 return player;
             case "wind_turbine":
                 WindTurbine windTurbine = new WindTurbine(x, y, graphicsContext);
-                windTurbine.setHasDragEnabled(hasDragEnabled);
                 return windTurbine;
             case "wind":
                 Wind wind = new Wind(x, y, graphicsContext);
-                wind.setHasDragEnabled(hasDragEnabled);
                 return wind;
             case "sun":
                 Sun sun = new Sun(x, y, graphicsContext);
-                sun.setHasDragEnabled(hasDragEnabled);
                 return sun;
             case "solar_panel":
                 SolarPanel solarPanel = new SolarPanel(x, y, graphicsContext);
-                solarPanel.setHasDragEnabled(hasDragEnabled);
                 return solarPanel;
             case "fan":
                 Fan fan = new Fan(x, y, graphicsContext);
-                fan.setHasDragEnabled(hasDragEnabled);
                 return fan;
 
             default:

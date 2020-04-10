@@ -4,163 +4,133 @@
     "player": {
       "class": "player",
       "x": 100,
-      "y": 150,
-      "hasDragEnabled": false
+      "y": 150
     },
     "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. Hover the mouse on different screen objects to see a hint",
     "hintAfter": "Did you know there is  enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
-    "objectsOnScreen": [
+    "objectsOnGameScreen": [
+
       {
         "class": "finish",
         "x": 750,
-        "y": 600,
-        "hasDragEnabled": false
+        "y": 600
+      },
+      {
+        "class" : "sun",
+        "x" : 50,
+        "y": 150
       },
       {
         "class": "triangle",
         "x": 250,
-        "y": 200,
-        "hasDragEnabled": false
+        "y": 200
       },
       {
         "class": "rectangle",
         "x": 100,
-        "y": 200,
-        "hasDragEnabled": false
+        "y": 200
       },
       {
         "class": "rectangle",
         "x": 150,
-        "y": 200,
-        "hasDragEnabled": false
+        "y": 200
       },
       {
         "class": "rectangle",
         "x": 200,
-        "y": 200,
-        "hasDragEnabled": false
+        "y": 200
       },
       {
         "class": "rectangle",
         "x": 200,
-        "y": 250,
-        "hasDragEnabled": false
+        "y": 250
       },
       {
         "class": "rectangle",
         "x": 300,
-        "y": 300,
-        "hasDragEnabled": false
+        "y": 300
       },
       {
         "class": "rectangle",
         "x": 250,
-        "y": 250,
-        "hasDragEnabled": false
+        "y": 250
       },
       {
         "class": "rectangle",
         "x": 300,
-        "y": 250,
-        "hasDragEnabled": false
+        "y": 250
       },
       {
         "class": "triangle",
         "x": 350,
-        "y": 250,
-        "hasDragEnabled": false
+        "y": 250
       },
       {
         "class": "rectangle",
         "x": 350,
-        "y": 300,
-        "hasDragEnabled": false
+        "y": 300
       },
       {
         "class": "rectangle",
         "x": 350,
-        "y": 300,
-        "hasDragEnabled": false
+        "y": 300
       },
       {
         "class": "triangle",
         "x": 400,
-        "y": 300,
-        "hasDragEnabled": false
+        "y": 300
       },
       {
         "class": "rectangle",
         "x": 400,
-        "y": 350,
-        "hasDragEnabled": false
+        "y": 350
       },
       {
         "class": "rectangle",
         "x": 450,
-        "y": 350,
-        "hasDragEnabled": false
+        "y": 350
       },
       {
         "class": "rectangle",
         "x": 500,
-        "y": 350,
-        "hasDragEnabled": false
+        "y": 350
       },
       {
-        "class": "rectangle",
+        "class": "triangle",
         "x": 550,
-        "y": 350,
-        "hasDragEnabled": false
+        "y": 350
       },
       {
-        "class": "rectangle",
+        "class": "triangle",
         "x": 600,
-        "y": 450,
-        "hasDragEnabled": false
+        "y": 450
       },
       {
         "class": "triangle",
         "x": 650,
-        "y": 500,
-        "hasDragEnabled": false
+        "y": 500
       },
       {
         "class": "rectangle",
         "x": 650,
-        "y": 550,
-        "hasDragEnabled": false
+        "y": 550
       },
       {
         "class": "rectangle",
         "x": 350,
-        "y": 350,
-        "hasDragEnabled": false
+        "y": 350
       },
       {
         "class": "triangle",
         "x": 700,
-        "y": 550,
-        "hasDragEnabled": false
+        "y": 550
       }
     ],
     "selectorPaneObjects": [
       {
-        "class": "fan",
-        "x": 450,
-        "y": 750,
-        "hasDragEnabled": true
-      },
-      {
-        "class": "sun",
-        "x": 650,
-        "y": 750,
-        "hasDragEnabled": true
-      },
-      {
         "class": "solar_panel",
         "x": 550,
-        "y": 750,
-        "hasDragEnabled": true
+        "y": 750
       }
     ]
   },
@@ -168,17 +138,15 @@
     "player": {
       "class": "player",
       "x": 100,
-      "y": 150,
-      "hasDragEnabled": false
+      "y": 150
     },
     "hintBefore": "A solar power is really good when it comes to producing electricity. Did you know that the sun...",
     "hintAfter": "You won this game boy",
-    "objectsOnScreen": [
+    "objectsOnGameScreen": [
       {
         "class": "triangle",
         "x": 250,
-        "y": 200,
-        "hasDragEnabled": false
+        "y": 200
       }
     ],
     "selectorPaneObjects": []

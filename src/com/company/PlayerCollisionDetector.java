@@ -10,7 +10,7 @@ public class PlayerCollisionDetector {
     private LevelModel levelModel;
     private Player player;
     private PlayerCollisionHandler playerCollisionHandler = new PlayerCollisionHandler();
-
+    private boolean started = false;
 
     public void setLevelModel(@NotNull LevelModel levelModel) {
         this.levelModel = levelModel;
@@ -18,8 +18,15 @@ public class PlayerCollisionDetector {
         playerCollisionHandler.reset();
     }
 
+    public void start(){
+        started = true;
+    }
+    public void stop(){
+        started = false;
+    }
+
     public void checkCollisionWithPlayer() {
-        if (levelModel != null) {
+        if (started && levelModel != null) {
             //we should not check collision while the player is in the moving state
             if (!player.isMoving()) {
                 //we enable gravity only if the player has not collided with an

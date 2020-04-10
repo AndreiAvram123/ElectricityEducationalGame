@@ -18,6 +18,7 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover, Grav
     public Player(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
         initializeMovingAnimation();
+        setHasDragEnabled(false);
     }
 
     private void initializeMovingAnimation() {
