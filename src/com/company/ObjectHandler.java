@@ -1,21 +1,25 @@
 package com.company;
 
-import com.company.interfaces.HintOnHover;
-import com.company.interfaces.MovePlayerLeft;
-import com.company.interfaces.MovePlayerRight;
-import com.company.interfaces.MovePlayerUp;
+import com.company.UI.HintWindow;
+import com.company.interfaces.*;
 import com.company.models.*;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class used to handle interactions with objects on the
+ * screen (for example dragging ,clicking, hovering)
+ * This class is mainly used by the controller to delegate actions such
+ * as handling when the user hovers over an object or when an object is dragged
+ */
 public class ObjectHandler {
 
-    private Canvas canvas;
+    private final Canvas canvas;
     private ObjectOnScreen currentlyDraggedObject;
     private ObjectOnScreen currentlyMouseOverObject;
-    private GridSystem gridSystem;
+    private final GridSystem gridSystem;
     private Point lastObjectPosition;
-    private HintWindow hintWindow;
+    private final HintWindow hintWindow;
     private boolean shouldDisplayHint = true;
     private boolean isDragStarted = false;
 
@@ -57,7 +61,6 @@ public class ObjectHandler {
             if (isDragStarted) {
                 shouldDisplayHint = false;
                 hintWindow.hide();
-
                 if (currentlyDraggedObject == null) {
                     currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
                 } else {
@@ -67,7 +70,8 @@ public class ObjectHandler {
                     currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
 
                 }
-            }});
+            }
+        });
 
 
         canvas.setOnMouseReleased(event -> {
@@ -81,8 +85,6 @@ public class ObjectHandler {
                         //known position
                         currentlyDraggedObject.setX(lastObjectPosition.getX());
                         currentlyDraggedObject.setY(lastObjectPosition.getY());
-                    } else {
-                        gridSystem.addObjectToGameScreen(currentlyDraggedObject);
                     }
                     currentlyDraggedObject = null;
                     lastObjectPosition = null;
@@ -91,32 +93,36 @@ public class ObjectHandler {
         });
     }
 
-    public void rotateObject(@NotNull Player player) {
+    /**
+     * Method used to rotate an object and also to
+     * call the method updateStrategy in order to update the player reaction
+     * strategy of that object
+     */
+    public void rotateObjectCurrentlyDraggedObject(@NotNull Player player) {
         if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
             ((Rotating) currentlyDraggedObject).rotate();
             updateStrategy(player, currentlyDraggedObject);
         }
     }
 
-    private void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
+    public void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
         if (objectOnScreen instanceof ElectricObject) {
             ElectricObject electricObject = (ElectricObject) objectOnScreen;
             switch (electricObject.getPlayerCollisionSideForReaction()) {
                 case LEFT:
-                    electricObject.setElectricityReaction(new MovePlayerRight(player));
+                    electricObject.setPlayerReaction(new MovePlayerRight(player));
                     break;
                 case RIGHT:
-                    electricObject.setElectricityReaction(new MovePlayerLeft(player));
+                    electricObject.setPlayerReaction(new MovePlayerLeft(player));
                     break;
 
                 case BOTTOM:
-                    electricObject.setElectricityReaction(new MovePlayerUp(player));
+                    electricObject.setPlayerReaction(new MovePlayerUp(player));
                     break;
             }
         }
 
     }
-
 
 }
 

@@ -18,7 +18,7 @@ public class Rectangle extends ElectricObject implements HintOnHover {
         super.setUnderElectricity(underElectricity);
         if (underElectricity) {
             if (img == null) {
-                img = new Image("com/company/res/thunder.png");
+                img = new Image("com/company/res/images/thunder.png");
             }
         } else {
             img = null;

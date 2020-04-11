@@ -23,8 +23,8 @@ public class AudioManager {
     }
 
     private AudioManager() {
-        mouseHoverSound = new AudioClip(this.getClass().getResource("sound_button_hover.mp3").toString());
-        backgroundMusic = new Media(this.getClass().getResource("music.mp3").toString());
+        mouseHoverSound = new AudioClip(this.getClass().getResource("res/sounds/sound_button_hover.mp3").toExternalForm());
+        backgroundMusic = new Media(this.getClass().getResource("res/sounds/music.mp3").toString());
         mediaPlayer = new MediaPlayer(backgroundMusic);
     }
 
@@ -34,10 +34,6 @@ public class AudioManager {
     }
 
 
-    public void playLevelFinishedSound() {
-//        AudioClip audioClip = new AudioClip(this.getClass().getResource("guta.mp3").toString());
-//        audioClip.play();
-    }
 
     /**
      * Call this method to play a sound on button hover

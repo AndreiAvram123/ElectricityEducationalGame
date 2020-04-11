@@ -1,5 +1,7 @@
-package com.company;
+package com.company.UI;
 
+import com.company.AppConstants;
+import com.company.AudioManager;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -7,6 +9,10 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Panel used to display a message to the user
+ * usually before and after each level
+ */
 public class TextPanel {
 
     private Pane layer;

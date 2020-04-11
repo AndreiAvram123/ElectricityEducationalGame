@@ -1,9 +1,8 @@
 package com.company;
 
+import com.company.UI.StartScreen;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +16,22 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         Pane root = new Pane();
-        Scene scene = new Scene(root, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
-        primaryStage.setScene(scene);
+        Scene startScene = new Scene(root, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
+        primaryStage.setScene(startScene);
         primaryStage.show();
         primaryStage.setResizable(false);
-        GameManager gameManager = new GameManager(root);
-        gameManager.start();
 
+        StartScreen startScreen = new StartScreen(root);
+        startScreen.getStartButton().setOnMouseClicked(event -> {
+            Pane gameSceneRoot = new Pane();
+            Scene gameScene = new Scene(gameSceneRoot, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
+            primaryStage.setScene(gameScene);
+            primaryStage.show();
+            GameManager gameManager = new GameManager(gameSceneRoot);
+            gameManager.startGame();
+        });
+
+
+        primaryStage.setOnCloseRequest(t -> System.exit(0));
     }
 }

@@ -1,17 +1,19 @@
-package com.company;
+package com.company.UI;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A small window that is used to display a hint to the screen
+ */
 public class HintWindow {
 
     private Text hintView;
     private TextFlow layout;
 
-    public HintWindow(@NotNull Pane root) {
+    public HintWindow() {
         initializeLayout();
         addTextView();
 
@@ -27,6 +29,9 @@ public class HintWindow {
         layout.getChildren().add(hintView);
     }
 
+    /**
+     * Initialize the text flow layout used to wrap a text element
+     */
     private void initializeLayout() {
         layout = new TextFlow();
         layout.setStyle("-fx-background-color: brown;");
@@ -39,6 +44,14 @@ public class HintWindow {
     }
 
 
+    /**
+     * Public method used to display a hint window by providing
+     * the coordinates and the hint message
+     *
+     * @param hintMessage
+     * @param x
+     * @param y
+     */
     public void showHint(@NotNull String hintMessage, double x, double y) {
         hintView.setText(hintMessage);
         layout.setLayoutX(x);
@@ -48,6 +61,9 @@ public class HintWindow {
 
     }
 
+    /**
+     * Public method used to make the hint window invisible
+     */
     public void hide() {
         layout.setVisible(false);
     }

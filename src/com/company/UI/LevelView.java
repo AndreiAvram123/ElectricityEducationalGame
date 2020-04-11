@@ -1,5 +1,7 @@
-package com.company;
+package com.company.UI;
 
+import com.company.AppConstants;
+import com.company.models.LevelModel;
 import com.company.models.GameObject;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The class representing the view for the levels
+ */
 public class LevelView {
 
     private LevelModel levelModel;
@@ -22,7 +27,7 @@ public class LevelView {
         this.currentLayer.setMinWidth(root.getWidth());
         this.canvas = new Canvas(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         this.graphicsContext = canvas.getGraphicsContext2D();
-        this.hintWindow = new HintWindow(root);
+        this.hintWindow = new HintWindow();
         initializeStartRestartButton();
         currentLayer.getChildren().addAll(canvas, startButton, hintWindow.getLayout());
         root.getChildren().add(currentLayer);
@@ -44,10 +49,21 @@ public class LevelView {
 
     }
 
+    /**
+     * Convenient setter in order to update the underlying data of the view
+     *
+     * @param levelModel
+     */
+    public void setLevelModel(@NotNull LevelModel levelModel) {
+        this.levelModel = levelModel;
+    }
+
+    /**
+     * Method that needs to be called each frame to update the objects on the screen
+     */
     public void update() {
         if (levelModel != null) {
             this.levelModel.getObjectsOnGameScreen().forEach(GameObject::update);
-            this.levelModel.getObjectsOnSelectorPane().forEach(GameObject::update);
             this.levelModel.getPlayer().update();
         }
     }
@@ -74,7 +90,5 @@ public class LevelView {
         return currentLayer;
     }
 
-    public void setLevelModel(@NotNull LevelModel levelModel) {
-        this.levelModel = levelModel;
-    }
+
 }

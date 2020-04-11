@@ -1,10 +1,11 @@
-package com.company;
+package com.company.collision;
 
 /**
  * Class representing a collision between
  * the player an object on screen
  */
 
+import com.company.models.Sides;
 import com.company.models.ObjectOnScreen;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;

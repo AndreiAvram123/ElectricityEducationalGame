@@ -8,7 +8,7 @@
     },
     "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. Hover the mouse on different screen objects to see a hint",
     "hintAfter": "Did you know there is  enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
-    "objectsOnGameScreen": [
+    "staticObjects": [
 
       {
         "class": "finish",
@@ -126,7 +126,7 @@
         "y": 550
       }
     ],
-    "selectorPaneObjects": [
+    "draggableObjects": [
       {
         "class": "solar_panel",
         "x": 550,

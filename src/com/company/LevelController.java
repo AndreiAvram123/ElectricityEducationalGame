@@ -1,6 +1,7 @@
 package com.company;
 
-import com.company.interfaces.MovePlayerDiagonallyDownRight;
+import com.company.UI.LevelView;
+import com.company.collision.PlayerCollisionDetector;
 import com.company.interfaces.MovePlayerRight;
 import com.company.models.*;
 import javafx.animation.AnimationTimer;
@@ -14,7 +15,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class LevelController extends Observable implements EventHandler {
+/**
+ * Controller responsible for handling interactions inside the level
+ * It can be observed and notifies any relevant observers when the level is finished
+ */
+public class LevelController extends Observable implements EventHandler<Event> {
 
     private final LevelView levelView;
     private LevelModel levelModel;
@@ -25,6 +30,7 @@ public class LevelController extends Observable implements EventHandler {
     private boolean shouldNotifyObserverOnFinish = true;
     private final int numberOfLevels;
     private final LevelDataReader levelDataReader;
+    private State currentState = State.STOPPED;
 
     public LevelController(@NotNull LevelView levelView) {
         this.levelView = levelView;
@@ -33,11 +39,17 @@ public class LevelController extends Observable implements EventHandler {
         objectHandler = new ObjectHandler(this.levelView.getCanvas(), gridSystem, levelView.getHintWindow());
         playerCollisionDetector = new PlayerCollisionDetector();
         electricityHandler = new ElectricityHandler();
-        AnimationTimer animationTimer = getAnimationTimer();
-        animationTimer.start();
+        getAnimationTimer().start();
         this.numberOfLevels = levelDataReader.getNumberOfLevels();
         getNextLevelModel();
         attachEvents();
+    }
+
+    /**
+     * Enum class used to represent the state of the level
+     */
+    private enum State {
+        STARTED, STOPPED;
     }
 
     private void attachEvents() {
@@ -47,6 +59,10 @@ public class LevelController extends Observable implements EventHandler {
     }
 
 
+    /**
+     * @return An animation timer responsible for updating the UI each frame
+     * Inside the handle() method it makes relevant calls to objects such as grid system
+     */
     @NotNull
     private AnimationTimer getAnimationTimer() {
         return new AnimationTimer() {
@@ -55,7 +71,7 @@ public class LevelController extends Observable implements EventHandler {
                 if (!playerCollisionDetector.hasCollidedWithFinish()) {
                     playerCollisionDetector.checkCollisionWithPlayer();
                     gridSystem.updateGrid();
-                    if (levelView.getStartButton().getText().equals("Start")) {
+                    if (currentState == State.STOPPED) {
                         electricityHandler.update();
                     }
                 } else {
@@ -74,17 +90,26 @@ public class LevelController extends Observable implements EventHandler {
     }
 
 
+    /**
+     * Handle event used to process events that are happening on the screen
+     */
     @Override
     public void handle(Event event) {
+        //if the user pressed A then rotate the object
         if (event.getEventType() == KeyEvent.KEY_PRESSED && ((KeyEvent) event).getCode() == KeyCode.A) {
-            objectHandler.rotateObject(levelModel.getPlayer());
+            objectHandler.rotateObjectCurrentlyDraggedObject(levelModel.getPlayer());
         }
+        // if the user pressed the start button start the level
+        //or if the user pressed the restart button restart the level
+
         if (event.getSource() == this.levelView.getStartButton()) {
             if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                if (this.levelView.getStartButton().getText().equals("Start")) {
+                if (currentState == State.STOPPED) {
+                    currentState = State.STARTED;
                     this.levelView.getStartButton().setText("Restart");
                     startLevel();
                 } else {
+                    currentState = State.STOPPED;
                     this.levelView.getStartButton().setText("Start");
                     restartLevel();
 
@@ -94,9 +119,12 @@ public class LevelController extends Observable implements EventHandler {
         if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             AudioManager.getInstance().playButtonHoverSound();
         }
-
     }
 
+    /**
+     * Public method used to show the level to the
+     * user
+     */
     public void showLevel() {
         this.levelView.getCurrentLayer().setVisible(true);
         shouldNotifyObserverOnFinish = true;
@@ -104,7 +132,7 @@ public class LevelController extends Observable implements EventHandler {
 
     }
 
-    public void startLevel() {
+    private void startLevel() {
         playerCollisionDetector.start();
         objectHandler.stop();
         gridSystem.setGridLinesEnabled(false);
@@ -118,19 +146,30 @@ public class LevelController extends Observable implements EventHandler {
     }
 
 
+    /**
+     * This method needs to be called each time the level encountered any change in
+     * the level model in order to update components depending on the level model
+     */
     private void updateDependentComponents() {
         gridSystem.setLevelModel(levelModel);
         playerCollisionDetector.setLevelModel(levelModel);
         electricityHandler.setLevelModel(levelModel);
         levelView.setLevelModel(levelModel);
-        gridSystem.reset();
+        gridSystem.enableGridLines();
     }
 
+    /**
+     * This method is used to hide the level from the user
+     * The method is not affected by the current state of the level
+     */
     public void hideLevel() {
         this.levelView.getCurrentLayer().setVisible(false);
     }
 
 
+    /**
+     * Method used to fetch the next level model
+     */
     private void getNextLevelModel() {
         int currentLevel = 1;
         if (levelModel != null) {
@@ -142,21 +181,27 @@ public class LevelController extends Observable implements EventHandler {
 
     private void updateModelAfterFetch() {
         updateObjectsStrategies(levelModel.getObjectsOnGameScreen());
-        updateObjectsStrategies(levelModel.getObjectsOnSelectorPane());
+        //  updateObjectsStrategies(levelModel.getObjectsOnSelectorPane());
         updateDependentComponents();
 
     }
 
     private void getLevelModel(int currentLevel) {
-        ArrayList<ObjectOnScreen> objectsOnGameScreen =
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "objectsOnGameScreen");
-        ArrayList<ObjectOnScreen> selectorPaneObjects =
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "selectorPaneObjects");
-        selectorPaneObjects.forEach(objectOnScreen -> objectOnScreen.setHasDragEnabled(true));
+        if (currentLevel > numberOfLevels) {
+            currentLevel = 1;
+        }
+        ArrayList<ObjectOnScreen> staticObjects =
+                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "staticObjects");
+        ArrayList<ObjectOnScreen> draggableObjects =
+                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "draggableObjects");
+        draggableObjects.forEach(objectOnScreen -> objectOnScreen.setHasDragEnabled(true));
+        ArrayList<ObjectOnScreen> allObjects = new ArrayList<>();
+        allObjects.addAll(staticObjects);
+        allObjects.addAll(draggableObjects);
+
 
         levelModel = new LevelModel(
-                objectsOnGameScreen,
-                selectorPaneObjects,
+                allObjects,
                 levelDataReader.getPlayerFromJsonFile(currentLevel),
                 levelDataReader.getHintAfterFinish(currentLevel),
                 levelDataReader.getHintBeforeStart(currentLevel),
@@ -164,19 +209,24 @@ public class LevelController extends Observable implements EventHandler {
         );
     }
 
+    /**
+     * After fetching the data on each specific level, for certain objects,
+     * their player reaction needs to be updates
+     *
+     * @param objects
+     */
     private void updateObjectsStrategies(@NotNull ArrayList<ObjectOnScreen> objects) {
         objects.forEach(gameObject -> {
-            if (gameObject instanceof Rectangle) {
-                ((Rectangle) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));
-            }
-
-            if (gameObject instanceof Fan) {
-                ((Fan) gameObject).setElectricityReaction(new MovePlayerRight(levelModel.getPlayer()));
+            if (gameObject instanceof ElectricObject) {
+                ((Rectangle) gameObject).setPlayerReaction(new MovePlayerRight(levelModel.getPlayer()));
             }
         });
     }
 
-    public void getNextLevel() {
+    /**
+     * Public method that tells the controller to get the next level
+     */
+    public void goToNextLevel() {
         getNextLevelModel();
     }
 

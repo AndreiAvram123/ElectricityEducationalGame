@@ -10,7 +10,7 @@ public class WindTurbine extends ElectricitySource implements HintOnHover {
 
     public WindTurbine(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("com/company/res/wind_turbine.png");
+        img = new Image("res/images/wind_turbine.png");
     }
 
     @Override

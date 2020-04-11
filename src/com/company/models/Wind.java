@@ -10,7 +10,7 @@ public class Wind extends EnergyFactor implements HintOnHover {
 
     public Wind(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("com/company/res/wind.png");
+        img = new Image("res/images/wind.png");
     }
 
     @Override

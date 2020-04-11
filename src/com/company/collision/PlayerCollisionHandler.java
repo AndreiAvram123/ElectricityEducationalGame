@@ -1,5 +1,6 @@
-package com.company;
+package com.company.collision;
 
+import com.company.models.Sides;
 import com.company.models.*;
 
 public class PlayerCollisionHandler {

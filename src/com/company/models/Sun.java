@@ -9,7 +9,7 @@ public class Sun extends EnergyFactor implements HintOnHover {
 
     public Sun(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("com/company/res/sun.png");
+        img = new Image("com/company/res/images/sun.png");
     }
 
     @Override

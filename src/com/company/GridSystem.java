@@ -1,14 +1,19 @@
 package com.company;
 
+import com.company.models.LevelModel;
 import com.company.models.ObjectOnScreen;
-import com.company.models.Point;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+/**
+ * The grid system that appears on the screen
+ * The main role is to position the elements in theirs corresponding positions
+ */
 public class GridSystem {
 
-    private GraphicsContext graphicsContext;
+    private final GraphicsContext graphicsContext;
     private final double gridHeight = AppConstants.GRID_SYSTEM_HEIGHT;
     private final double gridWidth = AppConstants.SCREEN_WIDTH;
     private boolean gridLinesEnabled = true;
@@ -28,7 +33,6 @@ public class GridSystem {
      * on the screen
      */
     private void drawGrid() {
-
         for (int indexWidth = 0; indexWidth <= gridWidth; indexWidth += 50) {
             for (int indexHeight = 0; indexHeight <= gridHeight - 100; indexHeight += 50) {
                 graphicsContext.setFill(Color.DARKBLUE);
@@ -41,24 +45,28 @@ public class GridSystem {
         }
     }
 
+    /**
+     * The selector pane represent a small area at
+     * the bottom of the screen that stores draggable objects
+     * There is nothing special about this area expect that it
+     * has a lightBlue color
+     */
     private void drawSelectorPane() {
         graphicsContext.setFill(Color.LIGHTBLUE);
         graphicsContext.fillRect(0, gridHeight - 100, gridWidth, 100);
     }
 
-    public void addObjectToGameScreen(@NotNull ObjectOnScreen objectOnScreen) {
-        levelModel.addObjectToGameScreen(objectOnScreen);
-    }
 
-
+    /**
+     * Method used to return (if exists ) the currently object that has the
+     * mouse over
+     *
+     * @param mouseX - the mouse x position
+     * @param mouseY - the mouse y position
+     */
+    @Nullable
     public ObjectOnScreen getObjectMouseOver(double mouseX, double mouseY) {
         for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
-            if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
-                    && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
-                return objectOnScreen;
-            }
-        }
-        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnSelectorPane()) {
             if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
                     && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
                 return objectOnScreen;
@@ -67,15 +75,17 @@ public class GridSystem {
         return null;
     }
 
-
+    /**
+     * Determine if an object is on top of another
+     * Useful to determine whether the user wants to place an
+     * object on top of another
+     *
+     * @param object
+     * @return
+     */
     public boolean isObjectOverAnother(@NotNull ObjectOnScreen object) {
         for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
             if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && object.getY() == objectOnScreen.getY()) {
-                return true;
-            }
-        }
-        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnSelectorPane()) {
-            if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && objectOnScreen.getY() == object.getY()) {
                 return true;
             }
         }
@@ -83,19 +93,27 @@ public class GridSystem {
     }
 
 
+    /**
+     * Method that needs to called each frame to update the grid
+     */
     public void updateGrid() {
         drawGrid();
         drawSelectorPane();
     }
 
+    /**
+     * Method used in order to snap an object on the grid
+     *
+     * @param objectOnScreen
+     */
     public void snapOnGrid(@NotNull ObjectOnScreen objectOnScreen) {
         //get the center of the object
-        Point oldCenter = new Point(objectOnScreen.getX() + objectOnScreen.getWidth() / 2,
-                objectOnScreen.getY() + objectOnScreen.getHeight() / 2);
+        double oldCenterX = objectOnScreen.getX() + objectOnScreen.getWidth() / 2;
+        double oldCenterY = objectOnScreen.getY() + objectOnScreen.getHeight() / 2;
 
 
-        double newX = ((int) (oldCenter.getX() / 50)) * 50;
-        double newY = ((int) (oldCenter.getY() / 50)) * 50;
+        double newX = ((int) (oldCenterX / 50)) * 50;
+        double newY = ((int) (oldCenterY / 50)) * 50;
         objectOnScreen.setX(newX);
         objectOnScreen.setY(newY);
     }
@@ -105,7 +123,10 @@ public class GridSystem {
         this.gridLinesEnabled = gridLinesEnabled;
     }
 
-    public void reset() {
+    /**
+     * Enable the grid lines
+     */
+    public void enableGridLines() {
         gridLinesEnabled = true;
     }
 }
