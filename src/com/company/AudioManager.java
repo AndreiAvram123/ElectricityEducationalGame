@@ -7,6 +7,7 @@ import javafx.scene.media.MediaPlayer;
 /**
  * AudioManager class is a singleton that is responsible for
  * playing audio throughout the lifetime of the application
+ *
  */
 public class AudioManager {
     private static AudioManager instance;
@@ -38,6 +39,9 @@ public class AudioManager {
 //        audioClip.play();
     }
 
+    /**
+     * Call this method to play a sound on button hover
+     */
     public void playButtonHoverSound() {
         mouseHoverSound.play();
     }

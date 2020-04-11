@@ -1,21 +1,29 @@
 package com.company;
 
+/**
+ * Class representing a collision between
+ * the player an object on screen
+ */
+
 import com.company.models.ObjectOnScreen;
 import com.company.models.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class Collision {
-    private ObjectOnScreen objectCollided;
+    //the object with which the player collided
+    private ObjectOnScreen collisionObject;
     private Player player;
+    //the collision side of the player
     private Sides collisionSidePlayer;
 
-    public Collision(ObjectOnScreen objectCollided, Player player, Sides collisionSidePlayer) {
-        this.objectCollided = objectCollided;
+    public Collision(@NotNull ObjectOnScreen collisionObject, @NotNull Player player, @NotNull Sides collisionSidePlayer) {
+        this.collisionObject = collisionObject;
         this.player = player;
         this.collisionSidePlayer = collisionSidePlayer;
     }
 
-    public ObjectOnScreen getObjectCollided() {
-        return objectCollided;
+    public ObjectOnScreen getCollisionObject() {
+        return collisionObject;
     }
 
     public Sides getCollisionSidePlayer() {

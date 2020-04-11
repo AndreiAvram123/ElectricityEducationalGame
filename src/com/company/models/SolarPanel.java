@@ -13,6 +13,11 @@ public class SolarPanel extends ElectricitySource implements HintOnHover {
     }
 
     @Override
+    public boolean isPoweredBy(EnergyFactor energyFactor) {
+        return this.isNeighbourBottom(energyFactor);
+    }
+
+    @Override
     public String getHint() {
         return HINT;
     }
