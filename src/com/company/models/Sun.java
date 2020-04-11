@@ -10,7 +10,7 @@ public class Sun extends ElectricityFuel implements HintOnHover {
 
     public Sun(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/sun.png");
+        img = new Image("com/company/res/sun.png");
     }
 
     @Override

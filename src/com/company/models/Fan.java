@@ -29,16 +29,16 @@ public class Fan extends ElectricObject implements Rotating, HintOnHover {
          */
         switch (currentRotation) {
             case 0:
-                img = new Image("res/fan_right.png");
+                img = new Image("com/company/res/fan_right.png");
                 playerCollisionSideForReaction = Sides.LEFT;
                 break;
             case 90:
-                img = new Image("res/fan_up.png");
+                img = new Image("com/company/res/fan_up.png");
                 playerCollisionSideForReaction = Sides.BOTTOM;
                 break;
             case 180:
                 playerCollisionSideForReaction = Sides.RIGHT;
-                img = new Image("res/fan_left.png");
+                img = new Image("com/company/res/fan_left.png");
                 break;
         }
     }

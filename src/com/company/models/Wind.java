@@ -11,7 +11,7 @@ public class Wind extends ElectricityFuel implements HintOnHover {
 
     public Wind(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/wind.png");
+        img = new Image("com/company/res/wind.png");
     }
 
     @Override

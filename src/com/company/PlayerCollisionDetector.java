@@ -9,7 +9,7 @@ public class PlayerCollisionDetector {
 
     private LevelModel levelModel;
     private Player player;
-    private PlayerCollisionHandler playerCollisionHandler = new PlayerCollisionHandler();
+    private final PlayerCollisionHandler playerCollisionHandler = new PlayerCollisionHandler();
     private boolean started = false;
 
     public void setLevelModel(@NotNull LevelModel levelModel) {

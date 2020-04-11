@@ -1,7 +1,6 @@
 package com.company.models;
 
 import com.company.interfaces.HintOnHover;
-import com.company.models.ElectricitySource;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -10,7 +9,7 @@ public class WindTurbine extends ElectricitySource implements HintOnHover {
 
     public WindTurbine(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/wind_turbine.png");
+        img = new Image("com/company/res/wind_turbine.png");
     }
 
 

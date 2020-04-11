@@ -10,7 +10,7 @@ public class Finish extends ObjectOnScreen implements HintOnHover {
     private Sides finishPlayerSide = Sides.BOTTOM;
     public Finish(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/finish.png");
+        img = new Image("com/company/res/finish.png");
 
     }
 

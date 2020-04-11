@@ -9,7 +9,7 @@ public class SolarPanel extends ElectricitySource implements HintOnHover {
 
     public SolarPanel(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/solar_panel.png");
+        img = new Image("com/company/res/solar_panel.png");
     }
 
     @Override

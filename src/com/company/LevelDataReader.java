@@ -7,15 +7,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class LevelDataReader {
 
     private GameObjectsFactory factory;
     private JsonObject fileData;
-    private static final String RELATIVE_PATH_LEVELS_DATA = "/src/res/levelsData.json";
 
     public LevelDataReader(@NotNull GameObjectsFactory factory) {
         this.fileData = getFileData();
@@ -25,10 +23,13 @@ public class LevelDataReader {
     private JsonObject getFileData() {
         JsonObject data = null;
         try {
-
-            String path = new File("").getAbsolutePath();
-            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
-            FileReader fileReader = new FileReader(newPath);
+            InputStream initialStream = getClass().getResourceAsStream("levelsData.json");
+            byte[] buffer = new byte[initialStream.available()];
+            initialStream.read(buffer);
+            File targetFile = new File("targetFile.tmp");
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(buffer);
+            FileReader fileReader = new FileReader(targetFile);
             data = JsonParser.parseReader(fileReader).getAsJsonObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,9 +79,9 @@ public class LevelDataReader {
         JsonObject data = null;
         try {
             String path = new File("").getAbsolutePath();
-            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
-            FileReader fileReader = new FileReader(newPath);
-            data = JsonParser.parseReader(fileReader).getAsJsonObject();
+            //  String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
+            //   FileReader fileReader = new FileReader(newPath);
+            //    data = JsonParser.parseReader(fileReader).getAsJsonObject();
         } catch (Exception e) {
             e.printStackTrace();
         }
