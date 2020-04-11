@@ -1,5 +1,5 @@
 package com.company.interfaces;
 
-public interface IElectricityReaction {
+public interface IPlayerReaction {
     void execute();
 }

@@ -3,7 +3,7 @@ package com.company.interfaces;
 import com.company.models.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class MovePlayerRight implements IElectricityReaction {
+public class MovePlayerRight implements IPlayerReaction {
 
     private Player player;
 

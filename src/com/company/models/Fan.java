@@ -1,19 +1,17 @@
 package com.company.models;
 
-import com.company.Sides;
-import com.company.interfaces.MovePlayerLeft;
-import com.company.interfaces.MovePlayerRight;
-import com.company.interfaces.MovePlayerUp;
+import com.company.interfaces.HintOnHover;
+import com.company.interfaces.Rotating;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Fan extends ReactiveObject implements Rotating {
+public class Fan extends ElectricObject implements Rotating, HintOnHover {
     private int currentRotation = 0;
+    public static final String HINT = "Use key A to rotate it and push the player. Remember it needs electricity to function";
 
     public Fan(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
         img = new Image("fan_right.png");
-        setElectricityReaction(new MovePlayerRight(Player.getInstance()));
         playerCollisionSideForReaction = Sides.LEFT;
 
     }
@@ -31,20 +29,22 @@ public class Fan extends ReactiveObject implements Rotating {
          */
         switch (currentRotation) {
             case 0:
-                img = new Image("res/fan_right.png");
-                setElectricityReaction(new MovePlayerRight(Player.getInstance()));
+                img = new Image("res/images/fan_right.png");
                 playerCollisionSideForReaction = Sides.LEFT;
                 break;
             case 90:
-                setElectricityReaction(new MovePlayerUp(Player.getInstance()));
-                img = new Image("res/fan_up.png");
+                img = new Image("res/images/fan_up.png");
                 playerCollisionSideForReaction = Sides.BOTTOM;
                 break;
             case 180:
-                setElectricityReaction(new MovePlayerLeft(Player.getInstance()));
                 playerCollisionSideForReaction = Sides.RIGHT;
-                img = new Image("res/fan_left.png");
+                img = new Image("res/images/fan_left.png");
                 break;
         }
+    }
+
+    @Override
+    public String getHint() {
+        return HINT;
     }
 }

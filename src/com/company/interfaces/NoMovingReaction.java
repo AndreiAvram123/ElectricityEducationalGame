@@ -1,6 +1,6 @@
 package com.company.interfaces;
 
-public class NoMovingReaction implements IElectricityReaction {
+public class NoMovingReaction implements IPlayerReaction {
 
     @Override
     public void execute() {

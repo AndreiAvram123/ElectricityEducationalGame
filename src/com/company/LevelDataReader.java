@@ -1,35 +1,46 @@
 package com.company;
 
-import com.company.models.GameObject;
+import com.company.interfaces.IFactory;
 import com.company.models.ObjectOnScreen;
+import com.company.models.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Class used for reading data related to level
+ */
 public class LevelDataReader {
 
-    private GameObjectsFactory factory;
+    private IFactory factory;
     private JsonObject fileData;
-    private static final String RELATIVE_PATH_LEVELS_DATA = "/src/res/levelsData.json";
 
-    public LevelDataReader(@NotNull GraphicsContext graphicsContext) {
-        this.factory = new GameObjectsFactory(graphicsContext);
+    /**
+     * Main constructor for the class
+     *
+     * @param factory - a factory needed in order to create the
+     *                objects
+     */
+    public LevelDataReader(@NotNull IFactory factory) {
         this.fileData = getFileData();
+        this.factory = factory;
     }
 
     private JsonObject getFileData() {
         JsonObject data = null;
         try {
-
-            String path = new File("").getAbsolutePath();
-            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
-            FileReader fileReader = new FileReader(newPath);
+            InputStream initialStream = getClass().getResourceAsStream("levelsData.json");
+            byte[] buffer = new byte[initialStream.available()];
+            initialStream.read(buffer);
+            File targetFile = new File("targetFile.tmp");
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(buffer);
+            FileReader fileReader = new FileReader(targetFile);
             data = JsonParser.parseReader(fileReader).getAsJsonObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,7 +49,15 @@ public class LevelDataReader {
     }
 
 
-    public ArrayList<ObjectOnScreen> getObjectsArrayFromJsonFile(int levelNumber, String arrayName) {
+    /**
+     * Method used in order to read an array from the levels Data file
+     *
+     * @param levelNumber - the level number
+     * @param arrayName   - the name of the array that should be read
+     * @return
+     */
+    @NotNull
+    public ArrayList<ObjectOnScreen> getObjectsArrayFromJsonFile(int levelNumber, @NotNull String arrayName) {
         ArrayList<ObjectOnScreen> dataToReturn = new ArrayList<>();
         if (fileData != null) {
             JsonObject levelData = fileData.getAsJsonObject(Integer.toString(levelNumber));
@@ -51,19 +70,39 @@ public class LevelDataReader {
     }
 
 
-    private ObjectOnScreen mapToGameObject(JsonObject jsonElement) {
+    /**
+     * Method used to map a Json Object to a game object
+     *
+     * @param jsonElement - the JsonObject representing the data
+     * @return
+     */
+    @NotNull
+    private ObjectOnScreen mapToGameObject(@NotNull JsonObject jsonElement) {
         String className = jsonElement.get("class").getAsString();
         double x = jsonElement.get("x").getAsDouble();
         double y = jsonElement.get("y").getAsDouble();
-        boolean hasDragEnabled = jsonElement.get("hasDragEnabled").getAsBoolean();
-        return factory.createObject(className, x, y, hasDragEnabled);
+        return factory.createObject(className, x, y);
     }
 
+    /**
+     * Get the String text representing the hint before the start
+     *
+     * @param levelNumber
+     * @return
+     */
+    @NotNull
     public String getHintBeforeStart(int levelNumber) {
         JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
         return levelData.get("hintBefore").getAsString();
     }
 
+    /**
+     * Get the String text representing the hint after finish
+     *
+     * @param levelNumber
+     * @return
+     */
+    @NotNull
     public String getHintAfterFinish(int levelNumber) {
         JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
         return levelData.get("hintAfter").getAsString();
@@ -76,19 +115,21 @@ public class LevelDataReader {
      *
      * @return
      */
-    public static int getNumberOfLevels() {
-        JsonObject data = null;
-        try {
-            String path = new File("").getAbsolutePath();
-            String newPath = path.concat(RELATIVE_PATH_LEVELS_DATA);
-            FileReader fileReader = new FileReader(newPath);
-            data = JsonParser.parseReader(fileReader).getAsJsonObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (data != null) {
-            return data.get("numberOfLevels").getAsInt();
+    public int getNumberOfLevels() {
+        if (fileData != null) {
+            return fileData.get("numberOfLevels").getAsInt();
         }
         return 0;
+    }
+
+    /**
+     * Return a player Object from teh
+     *
+     * @param levelNumber
+     * @return
+     */
+    public Player getPlayerFromJsonFile(int levelNumber) {
+        JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
+        return (Player) mapToGameObject(levelData.get("player").getAsJsonObject());
     }
 }

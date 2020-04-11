@@ -1,21 +1,19 @@
 package com.company.models;
 
-import com.company.Sides;
-import com.company.interfaces.IElectricityReaction;
+import com.company.interfaces.IPlayerReaction;
 import com.company.interfaces.NoMovingReaction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-public class ReactiveObject extends ObjectOnScreen {
-    private IElectricityReaction electricityReaction;
+public class ElectricObject extends ObjectOnScreen {
+    private IPlayerReaction electricityReaction = new NoMovingReaction();
     private boolean isUnderElectricity = false;
     protected Color color = Color.GREY;
     protected Sides playerCollisionSideForReaction = Sides.BOTTOM;
 
-    public ReactiveObject(double x, double y, GraphicsContext gc) {
+    public ElectricObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        electricityReaction = new NoMovingReaction();
     }
 
     public void setUnderElectricity(boolean underElectricity) {
@@ -26,7 +24,7 @@ public class ReactiveObject extends ObjectOnScreen {
         return isUnderElectricity;
     }
 
-    public void setElectricityReaction(@NotNull IElectricityReaction electricityReaction) {
+    public void setPlayerReaction(@NotNull IPlayerReaction electricityReaction) {
         this.electricityReaction = electricityReaction;
     }
 
@@ -36,5 +34,7 @@ public class ReactiveObject extends ObjectOnScreen {
         }
     }
 
-
+    public Sides getPlayerCollisionSideForReaction() {
+        return playerCollisionSideForReaction;
+    }
 }

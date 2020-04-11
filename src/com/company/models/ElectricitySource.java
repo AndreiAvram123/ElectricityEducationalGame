@@ -2,7 +2,7 @@ package com.company.models;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class ElectricitySource extends ObjectOnScreen {
+public abstract class ElectricitySource extends ObjectOnScreen {
 
     private boolean isElectricityEnabled = false;
 
@@ -17,4 +17,6 @@ public class ElectricitySource extends ObjectOnScreen {
     public boolean isElectricityEnabled() {
         return isElectricityEnabled;
     }
+
+    public abstract boolean isPoweredBy(EnergyFactor energyFactor);
 }

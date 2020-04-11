@@ -1,82 +1,89 @@
 package com.company;
 
 import com.company.models.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
+/**
+ * Class used to enable or disable electricity on elements on the screen
+ * Call the update() method each frame to update
+ * elements
+ */
 public class ElectricityHandler {
 
-    private ArrayList<ObjectOnScreen> objectsOnGameScreen;
-    private boolean isStarted = false;
+    private LevelModel levelModel;
 
-    public ElectricityHandler(ArrayList<ObjectOnScreen> objectsOnGameScreen) {
-        this.objectsOnGameScreen = objectsOnGameScreen;
+    public void setLevelModel(@NotNull LevelModel levelModel) {
+        this.levelModel = levelModel;
     }
 
 
-    public void startElectricityHandler() {
-        isStarted = true;
-    }
-
+    /**
+     * Method that needs to be called each frame
+     * It updates the electricity state of each object on the
+     * screen
+     * There is a dependency between objects : An energy factor objects in combination with
+     * an electricity source can produce electricity. All the neighbours of an electricity source that is
+     * currently producing electricity are powered. Moreover all the neighbours of those neighbours are powered
+     * as well
+     */
     public void update() {
-        if (isStarted) {
-            objectsOnGameScreen.forEach(gameObject -> {
-                if (gameObject instanceof ElectricitySource && ((ElectricitySource) gameObject).isElectricityEnabled()) {
-                    enableElectricityOnNeighbours(gameObject);
+        if (levelModel != null) {
+            //each time we call update we need to reset the state of the objects
+            resetObjectsState();
+            //process the objects on screen
+            levelModel.getObjectsOnGameScreen().forEach(objectOnScreen -> {
+                //for all objects around an electricity source object enable electricity
+                if (objectOnScreen instanceof ElectricitySource && ((ElectricitySource) objectOnScreen).isElectricityEnabled()) {
+                    enableElectricityOnNeighbours(objectOnScreen);
                 }
-                if (gameObject instanceof ElectricityFuel) {
-                    enableElectricitySources((ElectricityFuel) gameObject);
+
+                //start producing energy for electricity sources around an energy factor object
+                if (objectOnScreen instanceof EnergyFactor) {
+                    enableElectricitySources((EnergyFactor) objectOnScreen);
                 }
 
             });
         }
     }
 
-    private void enableElectricitySources(ElectricityFuel electricityFuel) {
-
-        objectsOnGameScreen.forEach(gameObject -> {
-            if (gameObject instanceof WindTurbine && electricityFuel instanceof Wind) {
-                ElectricitySource electricitySource = (ElectricitySource) gameObject;
-
-                startElectricitySource(electricityFuel, electricitySource);
+    /**
+     * Method used to reset the  state of objects on the screen
+     */
+    private void resetObjectsState() {
+        levelModel.getObjectsOnGameScreen().forEach(objectOnScreen -> {
+            if (objectOnScreen instanceof ElectricObject) {
+                ((ElectricObject) objectOnScreen).setUnderElectricity(false);
             }
-            if (gameObject instanceof SolarPanel && electricityFuel instanceof Sun) {
-                SolarPanel solarPanel = (SolarPanel) gameObject;
-                //check weather the sun is on top of the solar panel
+            if (objectOnScreen instanceof ElectricitySource) {
+                ((ElectricitySource) objectOnScreen).setElectricityEnabled(false);
+            }
+        });
+    }
 
-                if (solarPanel.isNeighbourBottom(electricityFuel)) {
-                    solarPanel.setElectricityEnabled(true);
+    private void enableElectricitySources(@NotNull EnergyFactor energyFactor) {
+
+        levelModel.getObjectsOnGameScreen().forEach(objectOnScreen -> {
+
+            if (objectOnScreen instanceof ElectricitySource) {
+                ElectricitySource electricitySource = (ElectricitySource) objectOnScreen;
+                if (electricitySource.isPoweredBy(energyFactor) && energyFactor.isPositionValidToGiveEnergy(electricitySource)) {
+                    electricitySource.setElectricityEnabled(true);
                 }
-
-
             }
         });
 
     }
 
-    private void startElectricitySource(ElectricityFuel electricityFuel, ElectricitySource electricitySource) {
-        if (!electricitySource.isElectricityEnabled()) {
-            if (areObjectsNeighboursHorizontally(electricityFuel, electricitySource)) {
-                electricitySource.setElectricityEnabled(true);
-            }
-            if (areObjectsNeighboursVertically(electricityFuel, electricitySource)) {
-                electricitySource.setElectricityEnabled(true);
-            }
-        }
-    }
 
     private void enableElectricityOnNeighbours(ObjectOnScreen object) {
-        for (ObjectOnScreen loopObject : objectsOnGameScreen) {
-            if (loopObject instanceof ReactiveObject) {
-                ReactiveObject reactiveObject = (ReactiveObject) loopObject;
+        for (ObjectOnScreen loopObject : levelModel.getObjectsOnGameScreen()) {
+            if (loopObject instanceof ElectricObject) {
+                ElectricObject electricObject = (ElectricObject) loopObject;
                 //no need to go to a node that is already traversed
-                if (!reactiveObject.isUnderElectricity()) {
-                    if (areObjectsNeighboursVertically(object, loopObject)) {
-                        reactiveObject.setUnderElectricity(true);
-                        enableElectricityOnNeighbours(loopObject);
-                    }
-                    if (areObjectsNeighboursHorizontally(object, loopObject)) {
-                        reactiveObject.setUnderElectricity(true);
+                if (!electricObject.isUnderElectricity()) {
+                    if (areObjectsNeighboursVertically(object, loopObject)
+                            || areObjectsNeighboursHorizontally(object, loopObject)) {
+                        electricObject.setUnderElectricity(true);
                         enableElectricityOnNeighbours(loopObject);
                     }
                 }
@@ -87,7 +94,6 @@ public class ElectricityHandler {
     private boolean areObjectsNeighboursVertically(ObjectOnScreen object1, ObjectOnScreen object2) {
         return object1.isNeighbourTop(object2) || object1.isNeighbourBottom(object2);
     }
-
 
     private boolean areObjectsNeighboursHorizontally(ObjectOnScreen object1, ObjectOnScreen object2) {
         return object1.isNeighbourRight(object2) || object1.isNeighbourLeft(object2);

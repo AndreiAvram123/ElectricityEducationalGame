@@ -1,30 +1,27 @@
 package com.company.models;
 
 import com.company.interfaces.HintOnHover;
-import com.company.interfaces.MovePlayerRight;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class Rectangle extends ReactiveObject implements HintOnHover{
-    private String hintMessage = "this is a rectangle,treat it accordingly";
+public class Rectangle extends ElectricObject implements HintOnHover {
+    private final String hintMessage = "This component can move the player right.It needs electricity to function";
 
     public Rectangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        //todo
-        //maybe refactor this
-        //strategy means that you apply different behaviour depending
-        //on the context
-        setElectricityReaction(new MovePlayerRight(Player.getInstance()));
-
     }
 
 
     @Override
     public void setUnderElectricity(boolean underElectricity) {
         super.setUnderElectricity(underElectricity);
-        if (underElectricity && img == null) {
-            img = new Image("res/thunder.png");
+        if (underElectricity) {
+            if (img == null) {
+                img = new Image("com/company/res/images/thunder.png");
+            }
+        } else {
+            img = null;
         }
     }
 

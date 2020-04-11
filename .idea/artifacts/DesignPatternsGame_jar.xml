@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="DesignPatternsGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DesignPatternsGame_jar</output-path>
+    <root id="archive" name="DesignPatternsGame.jar">
+      <element id="module-output" name="DesignPatternsGame" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/18.0.0/annotations-18.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/levelsData.json" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/bulb.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/fan_left.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/fan_right.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/fan_up.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/finish.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/sounds/notification.mp3" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/solar_panel.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/start.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/sun.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/thunder.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/wind.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/com/company/res/images/wind_turbine.png" />
+    </root>
+  </artifact>
+</component>

@@ -2,7 +2,7 @@ package com.company.interfaces;
 
 import com.company.models.Player;
 
-public class MovePlayerDiagonallyDownRight implements IElectricityReaction{
+public class MovePlayerDiagonallyDownRight implements IPlayerReaction {
 
     private Player player;
 

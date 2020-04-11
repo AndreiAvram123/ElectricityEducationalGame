@@ -1,6 +1,5 @@
 package com.company.models;
 
-import com.company.Sides;
 import com.company.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -10,7 +9,7 @@ public class Finish extends ObjectOnScreen implements HintOnHover {
     private Sides finishPlayerSide = Sides.BOTTOM;
     public Finish(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("res/finish.png");
+        img = new Image("com/company/res/images/finish.png");
 
     }
 

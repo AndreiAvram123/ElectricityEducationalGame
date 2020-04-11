@@ -1,39 +1,43 @@
 package com.company;
 
-import com.company.models.Level;
+import com.company.UI.LevelView;
+import com.company.UI.TextPanel;
 import com.sun.istack.internal.NotNull;
 import javafx.scene.layout.Pane;
 
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Game manager is an observer responsible for switching between two layers : the level layer ( the visual
+ * part that represents the actual game ) and the textPanel ( the visual part that represents hints before and after the
+ * level)
+ * This observer gets notified when each level is completed by the  LevelController
+ */
 public class GameManager implements Observer {
-
-    private static GameManager instance;
-    private final Pane root;
-    private TextPanel textPanel;
-    private Level currentLevel;
-    private int numberOfLevels = LevelDataReader.getNumberOfLevels();
+    private final TextPanel textPanel;
+    private final LevelController levelController;
 
 
     public GameManager(@NotNull Pane root) {
-        this.root = root;
         textPanel = new TextPanel(root);
         AudioManager.getInstance().playBackgroundMusic();
+        levelController = new LevelController(new LevelView(root));
+        levelController.addObserver(this);
         attachListenerToPanel();
+
     }
 
-    public void startFirstLevel() {
-        currentLevel = new Level(root, 1);
+    /**
+     * Call this method to start the game
+     */
+    public void startGame() {
         displayHintBeforeLevel();
     }
 
-
     private void attachListenerToPanel() {
         textPanel.getNextButton().setOnMouseClicked(event -> {
-
-            currentLevel.showLevel();
-            currentLevel.addObserver(this);
+            levelController.showLevel();
             textPanel.hidePanel();
         });
     }
@@ -41,28 +45,35 @@ public class GameManager implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof Level) {
-//            AudioManager.getInstance().playLevelFinishedSound();
-//            displayLevelFinishedHint();
-//            if (numberOfLevels < (int) arg + 1) {
-//                textPanel.getNextButton().setText("Restart");
-//                currentLevel = new Level(root, 1);
-//            } else {
-//                //increase the level number
-//                textPanel.getNextButton().setText("Next");
-//                currentLevel = new Level(root, (int) arg + 1);
-//            }
+        if (o instanceof LevelController) {
+            displayLevelFinishedHint();
+            int nextLevel = (int) arg + 1;
+            if (levelController.getNumberOfLevels() < nextLevel) {
+                textPanel.getNextButton().setText("Play again");
+
+            } else {
+                //increase the level number
+                textPanel.getNextButton().setText("Next");
+                levelController.goToNextLevel();
+            }
         }
 
     }
 
+    /**
+     * This method is used to display a hint to the user
+     * after each level finishes
+     */
     private void displayLevelFinishedHint() {
-        currentLevel.hide();
-        textPanel.showPanel(currentLevel.getHintAfterFinish());
+        levelController.hideLevel();
+        textPanel.showPanel(levelController.getControllerLevelModel().getHintAfterFinish());
     }
 
-    private void displayHintBeforeLevel() {
-
-        textPanel.showPanel(currentLevel.getHintBeforeStart());
+    /**
+     * This method is used to display a hint to the user
+     * before each level begins
+     */
+    public void displayHintBeforeLevel() {
+        textPanel.showPanel(levelController.getControllerLevelModel().getHintBeforeStart());
     }
 }
