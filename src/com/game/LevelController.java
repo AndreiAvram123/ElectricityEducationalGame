@@ -2,8 +2,8 @@ package com.game;
 
 import com.game.UI.LevelView;
 import com.game.collision.PlayerCollisionDetector;
-import com.game.interfaces.MovePlayerRight;
-import com.game.models.ElectricObject;
+import com.game.interfaces.MovePlayer;
+import com.game.models.Fan;
 import com.game.models.LevelModel;
 import com.game.models.ObjectOnScreen;
 import com.game.models.Rectangle;
@@ -222,8 +222,13 @@ public class LevelController extends Observable implements EventHandler<Event> {
      */
     private void updateObjectsStrategies(@NotNull ArrayList<ObjectOnScreen> objects) {
         objects.forEach(gameObject -> {
-            if (gameObject instanceof ElectricObject) {
-                ((Rectangle) gameObject).setPlayerReaction(new MovePlayerRight(levelModel.getPlayer()));
+            if (gameObject instanceof Rectangle) {
+                ((Rectangle) gameObject).setPlayerReaction(new MovePlayer(levelModel.getPlayer(), Directions.RIGHT));
+            }
+            if (gameObject instanceof Fan) {
+                MovePlayer reaction = new MovePlayer(levelModel.getPlayer(), Directions.RIGHT);
+                reaction.setCustomDistance(400);
+                ((Fan) gameObject).setPlayerReaction(reaction);
             }
         });
     }

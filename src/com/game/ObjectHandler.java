@@ -1,7 +1,9 @@
 package com.game;
 
 import com.game.UI.HintWindow;
-import com.game.interfaces.*;
+import com.game.interfaces.HintOnHover;
+import com.game.interfaces.MovePlayer;
+import com.game.interfaces.Rotating;
 import com.game.models.*;
 import javafx.scene.canvas.Canvas;
 import org.jetbrains.annotations.NotNull;
@@ -116,19 +118,29 @@ public class ObjectHandler {
 
     public void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
         if (objectOnScreen instanceof ElectricObject) {
+
             ElectricObject electricObject = (ElectricObject) objectOnScreen;
+            MovePlayer movePlayer;
             switch (electricObject.getPlayerCollisionSideForReaction()) {
                 case LEFT:
-                    electricObject.setPlayerReaction(new MovePlayerRight(player));
+                    movePlayer = new MovePlayer(player, Directions.RIGHT);
+                    ;
                     break;
                 case RIGHT:
-                    electricObject.setPlayerReaction(new MovePlayerLeft(player));
+                    movePlayer = new MovePlayer(player, Directions.LEFT);
+
                     break;
 
-                case BOTTOM:
-                    electricObject.setPlayerReaction(new MovePlayerUp(player));
+                default:
+                    BOTTOM:
+                    movePlayer = new MovePlayer(player, Directions.UP);
                     break;
             }
+            if (objectOnScreen instanceof Fan) {
+                movePlayer.setCustomDistance(400);
+            }
+            electricObject.setPlayerReaction(movePlayer);
+
         }
 
     }

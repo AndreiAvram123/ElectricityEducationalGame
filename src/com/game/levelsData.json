@@ -1,5 +1,5 @@
 {
-  "numberOfLevels": 2,
+  "numberOfLevels": 3,
   "2": {
     "player": {
       "class": "player",
@@ -223,6 +223,351 @@
         "class": "wind",
         "x": 550,
         "y": 750
+      }
+    ]
+  },
+  "3": {
+    "player": {
+      "class": "player",
+      "x": 200,
+      "y": 100
+    },
+    "hintBefore": "Not set yet",
+    "hintAfter": "Wonderful",
+    "staticObjects": [
+      {
+        "class" :  "slope",
+         "x" : 200,
+        "y" : 200
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 150,
+        "y" : 250
+      },
+      {
+        "class" :  "fan",
+        "x" : 200,
+        "y" : 250
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 250,
+        "y" : 300
+      },
+
+      {
+        "class" :  "rectangle",
+        "x" : 300,
+        "y" : 300
+      },
+
+      {
+        "class" :  "rectangle",
+        "x" : 350,
+        "y" : 300
+      },
+
+      {
+        "class" :  "rectangle",
+        "x" : 400,
+        "y" : 300
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 450,
+        "y" : 300
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 500,
+        "y" : 300
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 550,
+        "y" : 300
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 600,
+        "y" : 300
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 650,
+        "y" : 450
+      },
+
+      {
+        "class" :  "rectangle",
+        "x" : 750,
+        "y" : 400
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 800,
+        "y" : 400
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 850,
+        "y" : 400
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 600,
+        "y" : 450
+      },{
+        "class" :  "rectangle",
+        "x" : 550,
+        "y" : 450
+      },   {
+        "class" :  "rectangle",
+        "x" : 500,
+        "y" : 450
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 450,
+        "y" : 450
+      },
+      {
+        "class" :  "rectangle",
+        "x" : 400,
+        "y" : 450
+      },{
+        "class" :  "rectangle",
+        "x" : 350,
+        "y" : 450
+      },{
+        "class" :  "rectangle",
+        "x" : 300,
+        "y" : 450
+      },{
+        "class" :  "finish",
+        "x" : 250,
+        "y" : 550
+      },
+
+
+
+
+
+
+
+
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 0
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 50
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 100
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 150
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 200
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 250
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 300
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 350
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 400
+      }, {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 450
+      }, {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 500
+      },
+      {
+        "class" : "wind_turbine",
+        "x" : 100,
+        "y" : 550
+      },{
+        "class" : "wind",
+        "x" : 50,
+        "y" : 550
+      },
+
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 0
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 50
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 100
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 150
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 200
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 250
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 300
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 350
+      },
+      {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 400
+      }, {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 450
+      }, {
+        "class" : "rectangle",
+        "x" : 100,
+        "y" : 500
+      },
+      {
+        "class" : "wind_turbine",
+        "x" : 100,
+        "y" : 550
+      },{
+        "class" : "wind",
+        "x" : 50,
+        "y" : 550
+      },
+
+
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 0
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 50
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 100
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 150
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 200
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 250
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 300
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 350
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 400
+      }, {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 450
+      }, {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 500
+      },
+      {
+        "class" : "rectangle",
+        "x" : 900,
+        "y" : 550
+      }, {
+        "class" : "rectangle",
+        "x" : 950,
+        "y" : 550
+      },
+      {
+        "class" : "rectangle",
+        "x" : 1000,
+        "y" : 550
+      },{
+        "class" : "solar_panel",
+        "x" : 1000,
+        "y" : 500
+      },
+      {
+        "class" : "sun",
+        "x" : 1000,
+        "y" : 450
+      }
+
+
+    ],
+    "draggableObjects": [
+      {
+        "class" :  "fan",
+        "x" : 550,
+        "y" : 750
       }
     ]
   }

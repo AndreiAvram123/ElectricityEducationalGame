@@ -11,7 +11,7 @@ public class Fan extends ElectricObject implements Rotating, HintOnHover {
 
     public Fan(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        img = new Image("fan_right.png");
+        img = new Image("images/fan_right.png");
         playerCollisionSideForReaction = Sides.LEFT;
 
     }
