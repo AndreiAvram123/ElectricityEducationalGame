@@ -1,0 +1,229 @@
+{
+  "numberOfLevels": 2,
+  "2": {
+    "player": {
+      "class": "player",
+      "x": 100,
+      "y": 150
+    },
+    "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. Hover the mouse on different screen objects to see a hint",
+    "hintAfter": "Did you know there is  enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
+    "staticObjects": [
+      {
+        "class": "finish",
+        "x": 750,
+        "y": 600
+      },
+      {
+        "class": "sun",
+        "x": 50,
+        "y": 150
+      },
+      {
+        "class": "slope",
+        "x": 250,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 150,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 250
+      },
+      {
+        "class": "slope",
+        "x": 350,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300
+      },
+      {
+        "class": "slope",
+        "x": 400,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 550,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 600,
+        "y": 450
+      },
+      {
+        "class": "slope",
+        "x": 650,
+        "y": 500
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 700,
+        "y": 550
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "solar_panel",
+        "x": 550,
+        "y": 750
+      }
+    ]
+  },
+  "1": {
+    "player": {
+      "class": "player",
+      "x": 200,
+      "y": 150
+    },
+    "hintBefore": "A ",
+    "hintAfter": "You won this game boy",
+    "staticObjects": [
+      {
+        "class": "wind",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "wind_turbine",
+        "x": 150,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 200
+      },
+      {
+        "class": "slope",
+        "x": 500,
+        "y": 200
+      },
+      {
+        "class": "wind_turbine",
+        "x": 500,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 700,
+        "y": 400
+      },
+      {
+        "class": "finish",
+        "x": 750,
+        "y": 400
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "wind",
+        "x": 550,
+        "y": 750
+      }
+    ]
+  }
+}
