@@ -6,9 +6,6 @@ import com.game.interfaces.Movable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Player extends ObjectOnScreen implements Movable, HintOnHover, Gravity {
     private double moveOnX;
     private double moveOnY;
@@ -17,47 +14,39 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover, Grav
 
     public Player(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
-        initializeMovingAnimation();
         setHasDragEnabled(false);
     }
 
-    private void initializeMovingAnimation() {
+    private void movePlayer() {
+        applyGravity();
 
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                applyGravity();
-
-                if (moveOnX < 0) {
-                    x--;
-                    moveOnX++;
-                } else {
-                    if (moveOnX > 0) {
-                        x++;
-                        moveOnX--;
-                    }
-                }
-
-                if (moveOnY < 0) {
-                    y--;
-                    moveOnY++;
-                } else {
-                    if (moveOnY > 0) {
-                        y++;
-                        moveOnY--;
-                    }
-                }
+        double speedPerFrame = 1;
+        if (moveOnX < 0) {
+            x -= speedPerFrame;
+            moveOnX += speedPerFrame;
+        } else {
+            if (moveOnX > 0) {
+                x += speedPerFrame;
+                moveOnX -= speedPerFrame;
             }
+        }
 
-        };
-        timer.scheduleAtFixedRate(timerTask, 0, 20);
+        if (moveOnY < 0) {
+            y -= speedPerFrame;
+            moveOnY += speedPerFrame;
+        } else {
+            if (moveOnY > 0) {
+                y += speedPerFrame;
+                moveOnY -= speedPerFrame;
+            }
+        }
     }
 
     @Override
     public void update() {
         gc.setFill(Color.WHITE);
         gc.fillOval(x, y, 50, 50);
+        movePlayer();
     }
 
     @Override
@@ -89,13 +78,9 @@ public class Player extends ObjectOnScreen implements Movable, HintOnHover, Grav
     }
 
     public boolean isMoving() {
-
         return moveOnX != 0 || moveOnY != 0;
 
     }
 
-    public GraphicsContext getGc() {
-        return gc;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.game;
 import com.game.UI.HintWindow;
 import com.game.interfaces.HintOnHover;
 import com.game.interfaces.MovePlayer;
+import com.game.interfaces.NoMovingReaction;
 import com.game.interfaces.Rotating;
 import com.game.models.*;
 import javafx.scene.canvas.Canvas;
@@ -124,22 +125,22 @@ public class ObjectHandler {
             switch (electricObject.getPlayerCollisionSideForReaction()) {
                 case LEFT:
                     movePlayer = new MovePlayer(player, Directions.RIGHT);
-                    ;
                     break;
                 case RIGHT:
                     movePlayer = new MovePlayer(player, Directions.LEFT);
-
                     break;
 
                 default:
-                    BOTTOM:
                     movePlayer = new MovePlayer(player, Directions.UP);
                     break;
             }
-            if (objectOnScreen instanceof Fan) {
-                movePlayer.setCustomDistance(400);
+            if (electricObject.getPlayerPush() == 0) {
+                electricObject.setPlayerReaction(new NoMovingReaction());
+            } else {
+                movePlayer.setDistance(electricObject.getPlayerPush());
+                electricObject.setPlayerReaction(movePlayer);
             }
-            electricObject.setPlayerReaction(movePlayer);
+
 
         }
 

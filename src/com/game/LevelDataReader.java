@@ -1,6 +1,7 @@
 package com.game;
 
 import com.game.interfaces.IFactory;
+import com.game.models.ElectricObject;
 import com.game.models.ObjectOnScreen;
 import com.game.models.Player;
 import com.google.gson.JsonArray;
@@ -80,7 +81,11 @@ public class LevelDataReader {
         String className = jsonElement.get("class").getAsString();
         double x = jsonElement.get("x").getAsDouble();
         double y = jsonElement.get("y").getAsDouble();
-        return factory.createObject(className, x, y);
+        ObjectOnScreen objectOnScreen = factory.createObject(className, x, y);
+        if (jsonElement.has("customPush")) {
+            ((ElectricObject) objectOnScreen).setPlayerPush(jsonElement.get("customPush").getAsDouble());
+        }
+        return objectOnScreen;
     }
 
     /**

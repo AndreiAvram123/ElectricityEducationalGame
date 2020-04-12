@@ -47,4 +47,6 @@ public class Fan extends ElectricObject implements Rotating, HintOnHover {
     public String getHint() {
         return HINT;
     }
+
+
 }

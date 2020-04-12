@@ -11,6 +11,7 @@ public class ElectricObject extends ObjectOnScreen {
     private boolean isUnderElectricity = false;
     protected Color color = Color.GREY;
     protected Sides playerCollisionSideForReaction = Sides.BOTTOM;
+    private double playerPush = 50;
 
     public ElectricObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
@@ -36,5 +37,13 @@ public class ElectricObject extends ObjectOnScreen {
 
     public Sides getPlayerCollisionSideForReaction() {
         return playerCollisionSideForReaction;
+    }
+
+    public double getPlayerPush() {
+        return playerPush;
+    }
+
+    public void setPlayerPush(double playerPush) {
+        this.playerPush = playerPush;
     }
 }

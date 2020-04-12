@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class MovePlayer implements IPlayerReaction {
 
     private Player player;
-    private double distance = 50;
+    private double distance;
     private Directions direction;
 
     public MovePlayer(@NotNull Player player, Directions direction) {
@@ -30,7 +30,7 @@ public class MovePlayer implements IPlayerReaction {
         }
     }
 
-    public void setCustomDistance(double distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

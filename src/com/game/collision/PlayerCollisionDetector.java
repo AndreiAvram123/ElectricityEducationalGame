@@ -20,10 +20,11 @@ public class PlayerCollisionDetector {
         playerCollisionHandler.reset();
     }
 
-    public void start(){
+    public void start() {
         started = true;
     }
-    public void stop(){
+
+    public void stop() {
         started = false;
     }
 
@@ -39,8 +40,10 @@ public class PlayerCollisionDetector {
                     if (collisionSide == Sides.BOTTOM) {
                         enableGravity = false;
                     }
-                    Collision collision = new Collision(objectOnScreen, player, collisionSide);
-                    playerCollisionHandler.handleCollision(collision);
+                    if (collisionSide != Sides.NONE) {
+                        Collision collision = new Collision(objectOnScreen, player, collisionSide);
+                        playerCollisionHandler.handleCollision(collision);
+                    }
                 }
                 player.setGravityEnabled(enableGravity);
             }

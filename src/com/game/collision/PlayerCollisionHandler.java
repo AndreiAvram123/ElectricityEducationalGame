@@ -8,11 +8,10 @@ public class PlayerCollisionHandler {
 
 
     public void handleCollision(Collision collision) {
-        System.out.println();
+
         ObjectOnScreen objectCollided = collision.getCollisionObject();
 
-        if (objectCollided instanceof Finish && ((Finish) objectCollided).getFinishPlayerSide()
-                == collision.getCollisionSidePlayer()) {
+        if (objectCollided instanceof Finish) {
             isLevelCompleted = true;
         }
 

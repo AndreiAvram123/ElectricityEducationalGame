@@ -3,10 +3,10 @@ package com.game;
 import com.game.UI.LevelView;
 import com.game.collision.PlayerCollisionDetector;
 import com.game.interfaces.MovePlayer;
-import com.game.models.Fan;
+import com.game.interfaces.NoMovingReaction;
+import com.game.models.ElectricObject;
 import com.game.models.LevelModel;
 import com.game.models.ObjectOnScreen;
-import com.game.models.Rectangle;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -33,6 +33,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
     private final int numberOfLevels;
     private final LevelDataReader levelDataReader;
     private State currentState = State.STOPPED;
+    private AnimationTimer animationTimer;
 
     public LevelController(@NotNull LevelView levelView) {
         this.levelView = levelView;
@@ -41,13 +42,14 @@ public class LevelController extends Observable implements EventHandler<Event> {
         electricityHandler = new ElectricityHandler();
         objectHandler = new ObjectHandler(this.levelView.getCanvas(), levelView.getHintWindow(), electricityHandler);
         this.numberOfLevels = levelDataReader.getNumberOfLevels();
+        animationTimer = getAnimationTimer();
         getNextLevelModel();
         initializeLevel();
         attachEvents();
     }
 
     private void initializeLevel() {
-        getAnimationTimer().start();
+        animationTimer.start();
         playerCollisionDetector.stop();
         objectHandler.start();
         levelView.getStartButton().setText("Start");
@@ -221,14 +223,19 @@ public class LevelController extends Observable implements EventHandler<Event> {
      * @param objects
      */
     private void updateObjectsStrategies(@NotNull ArrayList<ObjectOnScreen> objects) {
-        objects.forEach(gameObject -> {
-            if (gameObject instanceof Rectangle) {
-                ((Rectangle) gameObject).setPlayerReaction(new MovePlayer(levelModel.getPlayer(), Directions.RIGHT));
-            }
-            if (gameObject instanceof Fan) {
-                MovePlayer reaction = new MovePlayer(levelModel.getPlayer(), Directions.RIGHT);
-                reaction.setCustomDistance(400);
-                ((Fan) gameObject).setPlayerReaction(reaction);
+        objects.forEach(object -> {
+            if (object instanceof ElectricObject) {
+                ElectricObject electricObject = (ElectricObject) object;
+                if (electricObject.getPlayerPush() == 0) {
+                    electricObject.setPlayerReaction(new NoMovingReaction());
+                } else {
+                    MovePlayer movePlayer = new MovePlayer(levelModel.getPlayer(), Directions.RIGHT);
+                    movePlayer.setDistance(electricObject.getPlayerPush());
+                    electricObject.setPlayerReaction(movePlayer);
+
+                }
+
+
             }
         });
     }
