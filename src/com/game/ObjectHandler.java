@@ -1,9 +1,8 @@
 package com.game;
 
 import com.game.UI.HintWindow;
-import com.game.interfaces.HintOnHover;
 import com.game.interfaces.MovePlayer;
-import com.game.interfaces.NoMovingReaction;
+import com.game.interfaces.NoMovingPlayerBehaviour;
 import com.game.interfaces.Rotating;
 import com.game.models.*;
 import javafx.scene.canvas.Canvas;
@@ -19,8 +18,8 @@ public class ObjectHandler {
 
     private final Canvas canvas;
     private final ElectricityHandler electricityHandler;
-    private ObjectOnScreen currentlyDraggedObject;
-    private ObjectOnScreen currentlyMouseOverObject;
+    private ScreenObject currentlyDraggedObject;
+    private ScreenObject currentlyMouseOverObject;
     private final GridSystem gridSystem;
     private Point lastObjectPosition;
     private final HintWindow hintWindow;
@@ -52,40 +51,12 @@ public class ObjectHandler {
     }
 
     private void attachListenersOnCanvas() {
-        canvas.setOnMouseMoved(event -> {
-            if (shouldDisplayHint) {
-                ObjectOnScreen gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
-                if (gameObject instanceof HintOnHover) {
-                    if (currentlyMouseOverObject != gameObject) {
-                        currentlyMouseOverObject = gameObject;
-                        hintWindow.showHint(((HintOnHover) gameObject).getHint(), gameObject.getX() + 50, gameObject.getY());
-                    }
-                } else {
-                    hintWindow.hide();
-                    currentlyMouseOverObject = null;
-                }
-            }
-        });
+        addMouseMovedListener();
+        addMouseDraggedListener();
+        addMouseReleasedListener();
+    }
 
-
-        //listen to weather the mouse has been dragged or not
-        canvas.setOnMouseDragged(event -> {
-            if (isDragStarted) {
-                shouldDisplayHint = false;
-                hintWindow.hide();
-                if (currentlyDraggedObject == null) {
-                    currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
-                } else {
-                    if (lastObjectPosition == null) {
-                        lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
-                    }
-                    currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
-
-                }
-            }
-        });
-
-
+    private void addMouseReleasedListener() {
         canvas.setOnMouseReleased(event -> {
             if (isDragStarted) {
                 shouldDisplayHint = true;
@@ -105,6 +76,42 @@ public class ObjectHandler {
         });
     }
 
+    private void addMouseDraggedListener() {
+        //listen to weather the mouse has been dragged or not
+        canvas.setOnMouseDragged(event -> {
+            if (isDragStarted) {
+                shouldDisplayHint = false;
+                hintWindow.hide();
+                if (currentlyDraggedObject == null) {
+                    currentlyDraggedObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
+                } else {
+                    if (lastObjectPosition == null) {
+                        lastObjectPosition = new Point(currentlyDraggedObject.getX(), currentlyDraggedObject.getY());
+                    }
+                    currentlyDraggedObject.setNewCenter(event.getX(), event.getY());
+
+                }
+            }
+        });
+    }
+
+    private void addMouseMovedListener() {
+        canvas.setOnMouseMoved(event -> {
+            if (shouldDisplayHint) {
+                ScreenObject gameObject = gridSystem.getObjectMouseOver(event.getX(), event.getY());
+                if (gameObject != null) {
+                    if (currentlyMouseOverObject != gameObject) {
+                        currentlyMouseOverObject = gameObject;
+                        hintWindow.showHint(gameObject.getHint(), gameObject.getX() + 50, gameObject.getY());
+                    }
+                } else {
+                    hintWindow.hide();
+                    currentlyMouseOverObject = null;
+                }
+            }
+        });
+    }
+
     /**
      * Method used to rotate an object and also to
      * call the method updateStrategy in order to update the player reaction
@@ -117,10 +124,10 @@ public class ObjectHandler {
         }
     }
 
-    public void updateStrategy(@NotNull Player player, @NotNull ObjectOnScreen objectOnScreen) {
-        if (objectOnScreen instanceof ElectricObject) {
+    public void updateStrategy(@NotNull Player player, @NotNull ScreenObject screenObject) {
+        if (screenObject instanceof ElectricObject) {
 
-            ElectricObject electricObject = (ElectricObject) objectOnScreen;
+            ElectricObject electricObject = (ElectricObject) screenObject;
             MovePlayer movePlayer;
             switch (electricObject.getPlayerCollisionSideForReaction()) {
                 case LEFT:
@@ -134,10 +141,10 @@ public class ObjectHandler {
                     movePlayer = new MovePlayer(player, Directions.UP);
                     break;
             }
-            if (electricObject.getPlayerPush() == 0) {
-                electricObject.setPlayerReaction(new NoMovingReaction());
+            if (electricObject.getPlayerPushForce() == 0) {
+                electricObject.setPlayerReaction(new NoMovingPlayerBehaviour());
             } else {
-                movePlayer.setDistance(electricObject.getPlayerPush());
+                movePlayer.setDistance(electricObject.getPlayerPushForce());
                 electricObject.setPlayerReaction(movePlayer);
             }
 

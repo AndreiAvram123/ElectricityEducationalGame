@@ -3,10 +3,12 @@ package com.game;
 import com.game.UI.LevelView;
 import com.game.collision.PlayerCollisionDetector;
 import com.game.interfaces.MovePlayer;
-import com.game.interfaces.NoMovingReaction;
+import com.game.interfaces.MovePlayerDiagonallyDown;
+import com.game.interfaces.NoMovingPlayerBehaviour;
 import com.game.models.ElectricObject;
 import com.game.models.LevelModel;
-import com.game.models.ObjectOnScreen;
+import com.game.models.ScreenObject;
+import com.game.models.Slope;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,11 +26,11 @@ import java.util.Observable;
  */
 public class LevelController extends Observable implements EventHandler<Event> {
 
-    private final LevelView levelView;
+    private LevelView levelView;
     private LevelModel levelModel;
-    private final ObjectHandler objectHandler;
-    private final ElectricityHandler electricityHandler;
-    private final PlayerCollisionDetector playerCollisionDetector;
+    private ObjectHandler objectHandler;
+    private ElectricityHandler electricityHandler;
+    private PlayerCollisionDetector playerCollisionDetector;
     private boolean shouldNotifyObserverOnFinish = true;
     private final int numberOfLevels;
     private final LevelDataReader levelDataReader;
@@ -65,7 +67,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
 
     private void attachEvents() {
         this.levelView.getStartButton().setOnMouseClicked(this);
-        this.levelView.getCurrentLayer().setOnKeyPressed(this);
+        this.levelView.getLayout().setOnKeyPressed(this);
         this.levelView.getStartButton().setOnMouseEntered(this);
     }
 
@@ -92,7 +94,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
                         notifyObservers(levelModel.getLevelNumber());
                     }
                 }
-                levelView.update();
+                levelView.updateView();
             }
         };
     }
@@ -133,8 +135,8 @@ public class LevelController extends Observable implements EventHandler<Event> {
      * Public method used to show the level to the
      * user
      */
-    public void showLevel() {
-        this.levelView.getCurrentLayer().setVisible(true);
+    public void showLevelView() {
+        this.levelView.getLayout().setVisible(true);
         shouldNotifyObserverOnFinish = true;
         objectHandler.start();
 
@@ -170,8 +172,8 @@ public class LevelController extends Observable implements EventHandler<Event> {
      * This method is used to hide the level from the user
      * The method is not affected by the current state of the level
      */
-    public void hideLevel() {
-        this.levelView.getCurrentLayer().setVisible(false);
+    public void hideLevelView() {
+        this.levelView.getLayout().setVisible(false);
     }
 
 
@@ -197,23 +199,8 @@ public class LevelController extends Observable implements EventHandler<Event> {
         if (currentLevel > numberOfLevels) {
             currentLevel = 1;
         }
-        ArrayList<ObjectOnScreen> staticObjects =
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "staticObjects");
-        ArrayList<ObjectOnScreen> draggableObjects =
-                levelDataReader.getObjectsArrayFromJsonFile(currentLevel, "draggableObjects");
-        draggableObjects.forEach(objectOnScreen -> objectOnScreen.setHasDragEnabled(true));
-        ArrayList<ObjectOnScreen> allObjects = new ArrayList<>();
-        allObjects.addAll(staticObjects);
-        allObjects.addAll(draggableObjects);
+        levelModel = levelDataReader.getLevelModel(currentLevel);
 
-
-        levelModel = new LevelModel(
-                allObjects,
-                levelDataReader.getPlayerFromJsonFile(currentLevel),
-                levelDataReader.getHintAfterFinish(currentLevel),
-                levelDataReader.getHintBeforeStart(currentLevel),
-                currentLevel
-        );
     }
 
     /**
@@ -222,20 +209,22 @@ public class LevelController extends Observable implements EventHandler<Event> {
      *
      * @param objects
      */
-    private void updateObjectsStrategies(@NotNull ArrayList<ObjectOnScreen> objects) {
+    private void updateObjectsStrategies(@NotNull ArrayList<ScreenObject> objects) {
         objects.forEach(object -> {
             if (object instanceof ElectricObject) {
                 ElectricObject electricObject = (ElectricObject) object;
-                if (electricObject.getPlayerPush() == 0) {
-                    electricObject.setPlayerReaction(new NoMovingReaction());
+                if (electricObject.getPlayerPushForce() == 0) {
+                    electricObject.setPlayerReaction(new NoMovingPlayerBehaviour());
                 } else {
                     MovePlayer movePlayer = new MovePlayer(levelModel.getPlayer(), Directions.RIGHT);
-                    movePlayer.setDistance(electricObject.getPlayerPush());
+                    movePlayer.setDistance(electricObject.getPlayerPushForce());
                     electricObject.setPlayerReaction(movePlayer);
 
                 }
-
-
+            }else{
+                if(object instanceof Slope){
+                    ((Slope) object).setPlayerReaction(new MovePlayerDiagonallyDown(levelModel.getPlayer()));
+                }
             }
         });
     }

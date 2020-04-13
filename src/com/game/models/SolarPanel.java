@@ -1,10 +1,9 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class SolarPanel extends ElectricitySource implements HintOnHover {
+public class SolarPanel extends ElectricitySource  {
     private static final String HINT = "A solar panel can produce electricity. All you need is the sun.";
     private static final String poweredBy = Sun.class.getSimpleName();
 

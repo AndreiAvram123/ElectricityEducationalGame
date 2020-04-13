@@ -1,10 +1,9 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class WindTurbine extends ElectricitySource implements HintOnHover {
+public class WindTurbine extends ElectricitySource {
     private static final String HINT = "A wind turbine can produce electricity by wind";
     private static final String[] poweredBy = new String[]{Wind.class.getSimpleName()};
 

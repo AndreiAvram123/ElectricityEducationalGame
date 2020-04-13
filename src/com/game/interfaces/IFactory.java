@@ -1,8 +1,8 @@
 package com.game.interfaces;
 
-import com.game.models.ObjectOnScreen;
+import com.game.models.ScreenObject;
 
 public interface IFactory {
 
-  ObjectOnScreen createObject(String type, double x, double y);
+  ScreenObject createObject(String type, double x, double y);
 }

@@ -18,20 +18,21 @@ public class GameObjectsFactory implements IFactory {
 
     /**
      * Call this method to create an instance of an ObjectOnScreen
+     *
      * @param type - the name of the object to create
-     * @param x - the x position of the object
-     * @param y = the y position of the object
+     * @param x    - the x position of the object
+     * @param y    = the y position of the object
      * @return - the new Instance of the object
      */
     @Override
-    public ObjectOnScreen createObject(@NotNull String type, double x, double y) {
+    public ScreenObject createObject(@NotNull String type, double x, double y) {
         switch (type) {
             case "finish":
                 return new Finish(x, y, graphicsContext);
             case "player":
                 return new Player(x, y, graphicsContext);
             case "rectangle":
-                return new Rectangle(x, y, graphicsContext);
+                return new ElectricRectangle(x, y, graphicsContext);
             case "slope":
                 return new Slope(x, y, graphicsContext);
             case "wind_turbine":
@@ -46,7 +47,7 @@ public class GameObjectsFactory implements IFactory {
                 return new Fan(x, y, graphicsContext);
 
             default:
-                return new NullObject(x, y, graphicsContext);
+                return null;
         }
 
     }

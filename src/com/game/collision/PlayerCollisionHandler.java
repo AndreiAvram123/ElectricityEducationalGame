@@ -1,15 +1,19 @@
 package com.game.collision;
 
 
-import com.game.models.*;
+import com.game.models.ElectricObject;
+import com.game.models.Finish;
+import com.game.models.ScreenObject;
+import com.game.models.Slope;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerCollisionHandler {
     private boolean isLevelCompleted = false;
 
 
-    public void handleCollision(Collision collision) {
+    public void handleCollision(@NotNull Collision collision) {
 
-        ObjectOnScreen objectCollided = collision.getCollisionObject();
+        ScreenObject objectCollided = collision.getCollisionObject();
 
         if (objectCollided instanceof Finish) {
             isLevelCompleted = true;
@@ -17,11 +21,10 @@ public class PlayerCollisionHandler {
 
         if (objectCollided instanceof ElectricObject) {
 
-            ((ElectricObject) objectCollided).executeElectricityReaction(collision.getCollisionSidePlayer());
+            ((ElectricObject) objectCollided).executePlayerReaction(collision.getCollisionSidePlayer());
         }
-        if (objectCollided instanceof Slope && collision.getCollisionSidePlayer() == Sides.BOTTOM) {
-            collision.getPlayer().moveOnX(50);
-            collision.getPlayer().moveOnY(50);
+        if (objectCollided instanceof Slope) {
+            ((Slope) objectCollided).executeReaction(collision.getCollisionSidePlayer());
         }
 
 

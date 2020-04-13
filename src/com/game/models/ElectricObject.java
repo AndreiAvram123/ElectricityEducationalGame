@@ -1,17 +1,17 @@
 package com.game.models;
 
 import com.game.interfaces.IPlayerReaction;
-import com.game.interfaces.NoMovingReaction;
+import com.game.interfaces.NoMovingPlayerBehaviour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-public class ElectricObject extends ObjectOnScreen {
-    private IPlayerReaction electricityReaction = new NoMovingReaction();
+public abstract class ElectricObject extends ScreenObject {
+    private IPlayerReaction playerReaction = new NoMovingPlayerBehaviour();
     private boolean isUnderElectricity = false;
     protected Color color = Color.GREY;
     protected Sides playerCollisionSideForReaction = Sides.BOTTOM;
-    private double playerPush = 50;
+    private double playerPushForce = 50;
 
     public ElectricObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
@@ -25,13 +25,13 @@ public class ElectricObject extends ObjectOnScreen {
         return isUnderElectricity;
     }
 
-    public void setPlayerReaction(@NotNull IPlayerReaction electricityReaction) {
-        this.electricityReaction = electricityReaction;
+    public void setPlayerReaction(@NotNull IPlayerReaction playerReaction) {
+        this.playerReaction = playerReaction;
     }
 
-    public void executeElectricityReaction(Sides collisionSide) {
+    public void executePlayerReaction(Sides collisionSide) {
         if (isUnderElectricity && playerCollisionSideForReaction == collisionSide) {
-            this.electricityReaction.execute();
+            this.playerReaction.execute();
         }
     }
 
@@ -39,11 +39,11 @@ public class ElectricObject extends ObjectOnScreen {
         return playerCollisionSideForReaction;
     }
 
-    public double getPlayerPush() {
-        return playerPush;
+    public double getPlayerPushForce() {
+        return playerPushForce;
     }
 
-    public void setPlayerPush(double playerPush) {
-        this.playerPush = playerPush;
+    public void setPlayerPushForce(double playerPushForce) {
+        this.playerPushForce = playerPushForce;
     }
 }

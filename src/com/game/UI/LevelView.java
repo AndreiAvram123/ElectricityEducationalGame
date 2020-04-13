@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class LevelView {
 
     private LevelModel levelModel;
-    private final Pane currentLayer;
+    private final Pane layout;
     private final Canvas canvas;
     private final GraphicsContext graphicsContext;
     private final HintWindow hintWindow;
@@ -25,17 +25,17 @@ public class LevelView {
     private final double gridWidth = AppConstants.SCREEN_WIDTH;
     private boolean gridLinesEnabled = true;
 
-    public LevelView(@NotNull Pane root) {
-        this.currentLayer = new Pane();
-        this.currentLayer.setMinHeight(root.getHeight());
-        this.currentLayer.setMinWidth(root.getWidth());
+    public LevelView(@NotNull Pane layout) {
+        this.layout = new Pane();
+        this.layout.setMinHeight(layout.getHeight());
+        this.layout.setMinWidth(layout.getWidth());
         this.canvas = new Canvas(AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.hintWindow = new HintWindow();
         initializeStartRestartButton();
-        currentLayer.getChildren().addAll(canvas, startButton, hintWindow.getLayout());
-        root.getChildren().add(currentLayer);
-        this.currentLayer.setVisible(false);
+        this.layout.getChildren().addAll(canvas, startButton, hintWindow.getLayout());
+        layout.getChildren().add(this.layout);
+        this.layout.setVisible(false);
     }
 
     public void setGridLinesEnabled(boolean gridLinesEnabled) {
@@ -68,7 +68,7 @@ public class LevelView {
     /**
      * Method that needs to be called each frame to update the objects on the screen
      */
-    public void update() {
+    public void updateView() {
         if (levelModel != null) {
             drawGrid();
             drawSelectorPane();
@@ -123,8 +123,8 @@ public class LevelView {
         return startButton;
     }
 
-    public Pane getCurrentLayer() {
-        return currentLayer;
+    public Pane getLayout() {
+        return layout;
     }
 
 

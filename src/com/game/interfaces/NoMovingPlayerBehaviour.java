@@ -1,6 +1,6 @@
 package com.game.interfaces;
 
-public class NoMovingReaction implements IPlayerReaction {
+public class NoMovingPlayerBehaviour implements IPlayerReaction {
 
     @Override
     public void execute() {

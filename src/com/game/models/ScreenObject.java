@@ -1,32 +1,33 @@
 package com.game.models;
 
 import com.game.interfaces.Draggable;
+import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import org.jetbrains.annotations.NotNull;
 
-public class ObjectOnScreen extends GameObject implements Draggable {
+ public abstract class ScreenObject extends GameObject implements Draggable, HintOnHover {
 
     private boolean hasDragEnabled = false;
     protected double width = 50;
     protected double height = 50;
 
-    public ObjectOnScreen(double x, double y, GraphicsContext gc) {
+    public ScreenObject(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
     }
 
-    public boolean isNeighbourBottom(@NotNull ObjectOnScreen object) {
+    public boolean isNeighbourBottomWith(@NotNull ScreenObject object) {
         return object.getX() == this.x && object.getY() + object.getHeight() == this.getY();
     }
 
-    public boolean isNeighbourTop(@NotNull ObjectOnScreen object) {
+    public boolean isNeighbourTopWith(@NotNull ScreenObject object) {
         return object.getX() == this.getX() && object.getY() == this.getY() + this.getHeight();
     }
 
-    public boolean isNeighbourRight(@NotNull ObjectOnScreen object) {
+    public boolean isNeighbourRightWith(@NotNull ScreenObject object) {
         return object.getY() == this.getY() && object.getX() + object.getWidth() == this.getX();
     }
 
-    public boolean isNeighbourLeft(@NotNull ObjectOnScreen object) {
+    public boolean isNeighbourLeftWith(@NotNull ScreenObject object) {
         return object.getY() == this.getY() && object.getX() == this.getX() + this.getWidth();
     }
 

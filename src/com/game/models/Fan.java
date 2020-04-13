@@ -1,11 +1,10 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import com.game.interfaces.Rotating;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Fan extends ElectricObject implements Rotating, HintOnHover {
+public class Fan extends ElectricObject implements Rotating {
     private int currentRotation = 0;
     public static final String HINT = "Use key A to rotate it and push the player. Remember it needs electricity to function";
 

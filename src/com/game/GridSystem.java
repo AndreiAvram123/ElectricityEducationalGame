@@ -1,7 +1,7 @@
 package com.game;
 
 import com.game.models.LevelModel;
-import com.game.models.ObjectOnScreen;
+import com.game.models.ScreenObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,11 +26,11 @@ public class GridSystem {
      * @param mouseY - the mouse y position
      */
     @Nullable
-    public ObjectOnScreen getObjectMouseOver(double mouseX, double mouseY) {
-        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
-            if (objectOnScreen.getX() < mouseX && objectOnScreen.getX() + objectOnScreen.getWidth() > mouseX
-                    && objectOnScreen.getY() < mouseY && objectOnScreen.getY() + objectOnScreen.getHeight() > mouseY) {
-                return objectOnScreen;
+    public ScreenObject getObjectMouseOver(double mouseX, double mouseY) {
+        for (ScreenObject screenObject : levelModel.getObjectsOnGameScreen()) {
+            if (screenObject.getX() < mouseX && screenObject.getX() + screenObject.getWidth() > mouseX
+                    && screenObject.getY() < mouseY && screenObject.getY() + screenObject.getHeight() > mouseY) {
+                return screenObject;
             }
         }
         return null;
@@ -44,9 +44,9 @@ public class GridSystem {
      * @param object
      * @return
      */
-    public boolean isObjectOverAnother(@NotNull ObjectOnScreen object) {
-        for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
-            if (objectOnScreen != object && objectOnScreen.getX() == object.getX() && object.getY() == objectOnScreen.getY()) {
+    public boolean isObjectOverAnother(@NotNull ScreenObject object) {
+        for (ScreenObject screenObject : levelModel.getObjectsOnGameScreen()) {
+            if (screenObject != object && screenObject.getX() == object.getX() && object.getY() == screenObject.getY()) {
                 return true;
             }
         }
@@ -58,18 +58,18 @@ public class GridSystem {
     /**
      * Method used in order to snap an object on the grid
      *
-     * @param objectOnScreen
+     * @param screenObject
      */
-    public void snapOnGrid(@NotNull ObjectOnScreen objectOnScreen) {
+    public void snapOnGrid(@NotNull ScreenObject screenObject) {
         //get the center of the object
-        double oldCenterX = objectOnScreen.getX() + objectOnScreen.getWidth() / 2;
-        double oldCenterY = objectOnScreen.getY() + objectOnScreen.getHeight() / 2;
+        double oldCenterX = screenObject.getX() + screenObject.getWidth() / 2;
+        double oldCenterY = screenObject.getY() + screenObject.getHeight() / 2;
 
 
         double newX = ((int) (oldCenterX / 50)) * 50;
         double newY = ((int) (oldCenterY / 50)) * 50;
-        objectOnScreen.setX(newX);
-        objectOnScreen.setY(newY);
+        screenObject.setX(newX);
+        screenObject.setY(newY);
     }
 
 }

@@ -1,10 +1,9 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Sun extends EnergyFactor implements HintOnHover {
+public class Sun extends EnergyFactor  {
     private static final String HINT = "Without it our lives would not exist. Great in combination with a solar panel to produce green energy";
 
     public Sun(double x, double y, GraphicsContext gc) {
@@ -14,7 +13,7 @@ public class Sun extends EnergyFactor implements HintOnHover {
 
     @Override
     public boolean isPositionValidToGiveEnergy(ElectricitySource electricitySource) {
-        return this.isNeighbourTop(electricitySource);
+        return this.isNeighbourTopWith(electricitySource);
     }
 
     @Override
