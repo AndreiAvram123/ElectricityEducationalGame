@@ -37,7 +37,7 @@ public class GameManager implements Observer {
 
     private void attachListenerToPanel() {
         textPanel.getNextButton().setOnMouseClicked(event -> {
-            levelController.showLevel();
+            levelController.showLevelView();
             textPanel.hidePanel();
         });
     }
@@ -65,7 +65,7 @@ public class GameManager implements Observer {
      * after each level finishes
      */
     private void displayLevelFinishedHint() {
-        levelController.hideLevel();
+        levelController.hideLevelView();
         textPanel.showPanel(levelController.getControllerLevelModel().getHintAfterFinish());
     }
 

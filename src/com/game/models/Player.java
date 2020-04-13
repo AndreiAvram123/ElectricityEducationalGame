@@ -1,12 +1,11 @@
 package com.game.models;
 
 import com.game.interfaces.Gravity;
-import com.game.interfaces.HintOnHover;
 import com.game.interfaces.Movable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Player extends ObjectOnScreen implements Movable, HintOnHover, Gravity {
+public class Player extends ScreenObject implements Movable, Gravity {
     private double moveOnX;
     private double moveOnY;
     private static final String HINT = "This is the player dummy";

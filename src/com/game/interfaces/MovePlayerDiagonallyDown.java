@@ -1,12 +1,13 @@
 package com.game.interfaces;
 
 import com.game.models.Player;
+import org.jetbrains.annotations.NotNull;
 
-public class MovePlayerDiagonallyDownRight implements IPlayerReaction {
+public class MovePlayerDiagonallyDown implements IPlayerReaction {
 
     private Player player;
 
-    public MovePlayerDiagonallyDownRight(Player player) {
+    public MovePlayerDiagonallyDown(@NotNull Player player) {
         this.player = player;
     }
 

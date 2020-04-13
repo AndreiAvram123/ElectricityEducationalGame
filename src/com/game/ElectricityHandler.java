@@ -77,8 +77,8 @@ public class ElectricityHandler {
     }
 
 
-    private void enableElectricityOnNeighbours(ObjectOnScreen object) {
-        for (ObjectOnScreen loopObject : levelModel.getObjectsOnGameScreen()) {
+    private void enableElectricityOnNeighbours(ScreenObject object) {
+        for (ScreenObject loopObject : levelModel.getObjectsOnGameScreen()) {
             if (loopObject instanceof ElectricObject) {
                 ElectricObject electricObject = (ElectricObject) loopObject;
                 //no need to go to a node that is already traversed
@@ -93,12 +93,12 @@ public class ElectricityHandler {
         }
     }
 
-    private boolean areObjectsNeighboursVertically(ObjectOnScreen object1, ObjectOnScreen object2) {
-        return object1.isNeighbourTop(object2) || object1.isNeighbourBottom(object2);
+    private boolean areObjectsNeighboursVertically(ScreenObject object1, ScreenObject object2) {
+        return object1.isNeighbourTopWith(object2) || object1.isNeighbourBottomWith(object2);
     }
 
-    private boolean areObjectsNeighboursHorizontally(ObjectOnScreen object1, ObjectOnScreen object2) {
-        return object1.isNeighbourRight(object2) || object1.isNeighbourLeft(object2);
+    private boolean areObjectsNeighboursHorizontally(ScreenObject object1, ScreenObject object2) {
+        return object1.isNeighbourRightWith(object2) || object1.isNeighbourLeftWith(object2);
     }
 
 }

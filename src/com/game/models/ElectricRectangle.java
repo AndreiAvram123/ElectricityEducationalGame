@@ -1,14 +1,13 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-public class Rectangle extends ElectricObject implements HintOnHover {
+public class ElectricRectangle extends ElectricObject{
     private final String hintMessage = "This component can move the player right.It needs electricity to function";
 
-    public Rectangle(double x, double y, GraphicsContext gc) {
+    public ElectricRectangle(double x, double y, GraphicsContext gc) {
         super(x, y, gc);
     }
 

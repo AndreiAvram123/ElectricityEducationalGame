@@ -1,10 +1,9 @@
 package com.game.models;
 
-import com.game.interfaces.HintOnHover;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Wind extends EnergyFactor implements HintOnHover {
+public class Wind extends EnergyFactor {
     private static final String HINT = "Wind can be used to power up a wind turbine";
 
 
@@ -15,7 +14,7 @@ public class Wind extends EnergyFactor implements HintOnHover {
 
     @Override
     public boolean isPositionValidToGiveEnergy(ElectricitySource electricitySource) {
-        return this.isNeighbourLeft(electricitySource) || this.isNeighbourRight(electricitySource);
+        return this.isNeighbourLeftWith(electricitySource) || this.isNeighbourRightWith(electricitySource);
     }
 
     @Override

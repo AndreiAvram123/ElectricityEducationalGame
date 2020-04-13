@@ -1,8 +1,8 @@
 package com.game.collision;
 
 import com.game.models.LevelModel;
-import com.game.models.ObjectOnScreen;
 import com.game.models.Player;
+import com.game.models.ScreenObject;
 import com.game.models.Sides;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,13 +35,13 @@ public class PlayerCollisionDetector {
                 //we enable gravity only if the player has not collided with an
                 //object at the bottom
                 boolean enableGravity = true;
-                for (ObjectOnScreen objectOnScreen : levelModel.getObjectsOnGameScreen()) {
-                    Sides collisionSide = getCollisionSide(objectOnScreen);
+                for (ScreenObject screenObject : levelModel.getObjectsOnGameScreen()) {
+                    Sides collisionSide = getCollisionSide(screenObject);
                     if (collisionSide == Sides.BOTTOM) {
                         enableGravity = false;
                     }
                     if (collisionSide != Sides.NONE) {
-                        Collision collision = new Collision(objectOnScreen, player, collisionSide);
+                        Collision collision = new Collision(screenObject, player, collisionSide);
                         playerCollisionHandler.handleCollision(collision);
                     }
                 }
@@ -58,17 +58,17 @@ public class PlayerCollisionDetector {
      *
      * @return
      */
-    private Sides getCollisionSide(@NotNull ObjectOnScreen objectOnScreen) {
-        if (player.isNeighbourTop(objectOnScreen)) {
+    private Sides getCollisionSide(@NotNull ScreenObject screenObject) {
+        if (player.isNeighbourTopWith(screenObject)) {
             return Sides.BOTTOM;
         }
-        if (player.isNeighbourBottom(objectOnScreen)) {
+        if (player.isNeighbourBottomWith(screenObject)) {
             return Sides.TOP;
         }
-        if (player.isNeighbourLeft(objectOnScreen)) {
+        if (player.isNeighbourLeftWith(screenObject)) {
             return Sides.RIGHT;
         }
-        if (player.isNeighbourRight(objectOnScreen)) {
+        if (player.isNeighbourRightWith(screenObject)) {
             return Sides.LEFT;
         }
         return Sides.NONE;
