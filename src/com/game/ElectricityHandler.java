@@ -1,7 +1,6 @@
 package com.game;
 
 import com.game.models.*;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Class used to enable or disable electricity on elements on the screen
@@ -12,7 +11,7 @@ public class ElectricityHandler {
 
     private LevelModel levelModel;
 
-    public void setLevelModel(@NotNull LevelModel levelModel) {
+    public void setLevelModel( LevelModel levelModel) {
         this.levelModel = levelModel;
     }
 
@@ -62,7 +61,7 @@ public class ElectricityHandler {
         });
     }
 
-    private void enableElectricitySources(@NotNull EnergyFactor energyFactor) {
+    private void enableElectricitySources( EnergyFactor energyFactor) {
 
         levelModel.getObjectsOnGameScreen().forEach(objectOnScreen -> {
 

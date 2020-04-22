@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 
 public class Main extends Application {
 
@@ -14,7 +13,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(@NotNull Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
         Pane root = new Pane();
         Scene startScene = new Scene(root, AppConstants.SCREEN_WIDTH, AppConstants.SCREEN_HEIGHT);
         primaryStage.setScene(startScene);

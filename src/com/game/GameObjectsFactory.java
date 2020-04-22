@@ -25,7 +25,7 @@ public class GameObjectsFactory implements IFactory {
      * @return - the new Instance of the object
      */
     @Override
-    public ScreenObject createObject(@NotNull String type, double x, double y) {
+    public ScreenObject createObject(String type, double x, double y) {
         switch (type) {
             case "finish":
                 return new Finish(x, y, graphicsContext);

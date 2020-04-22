@@ -15,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -37,7 +36,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
     private State currentState = State.STOPPED;
     private AnimationTimer animationTimer;
 
-    public LevelController(@NotNull LevelView levelView) {
+    public LevelController( LevelView levelView) {
         this.levelView = levelView;
         levelDataReader = new LevelDataReader(new GameObjectsFactory(levelView.getGraphicsContext()));
         playerCollisionDetector = new PlayerCollisionDetector();
@@ -76,7 +75,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
      * @return An animation timer responsible for updating the UI each frame
      * Inside the handle() method it makes relevant calls to objects such as grid system
      */
-    @NotNull
+   
     private AnimationTimer getAnimationTimer() {
         return new AnimationTimer() {
             @Override
@@ -209,7 +208,7 @@ public class LevelController extends Observable implements EventHandler<Event> {
      *
      * @param objects
      */
-    private void updateObjectsStrategies(@NotNull ArrayList<ScreenObject> objects) {
+    private void updateObjectsStrategies(ArrayList<ScreenObject> objects) {
         objects.forEach(object -> {
             if (object instanceof ElectricObject) {
                 ElectricObject electricObject = (ElectricObject) object;

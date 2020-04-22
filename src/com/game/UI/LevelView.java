@@ -8,6 +8,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,11 +49,12 @@ public class LevelView {
         //difference between the screen height and the grid system height
         double buttonHeight = AppConstants.SCREEN_HEIGHT - AppConstants.GRID_HEIGHT;
         startButton = new Button();
-
         startButton.setMinSize(150, buttonHeight);
         startButton.setLayoutX(AppConstants.SCREEN_WIDTH / 2 - 100);
         startButton.setLayoutY(AppConstants.GRID_HEIGHT);
         startButton.setText("Start");
+        startButton.setStyle("-fx-background-color: #EB540F; -fx-text-fill: white");
+        startButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
 
 
     }
@@ -100,7 +103,7 @@ public class LevelView {
      * has a lightBlue color
      */
     private void drawSelectorPane() {
-        graphicsContext.setFill(Color.LIGHTBLUE);
+        graphicsContext.setFill(Color.web("#006DB8"));
         graphicsContext.fillRect(0, gridHeight - 100, gridWidth, 100);
     }
 

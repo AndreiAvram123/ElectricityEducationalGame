@@ -17,7 +17,7 @@ import java.util.Observer;
 public class GameManager implements Observer {
     private final TextPanel textPanel;
     private final LevelController levelController;
-
+    private boolean shouldDisplayHintBeforeLevel = true;
 
     public GameManager(@NotNull Pane root) {
         textPanel = new TextPanel(root);
@@ -33,12 +33,17 @@ public class GameManager implements Observer {
      */
     public void startGame() {
         displayHintBeforeLevel();
+
     }
 
     private void attachListenerToPanel() {
         textPanel.getNextButton().setOnMouseClicked(event -> {
-            levelController.showLevelView();
-            textPanel.hidePanel();
+            if(shouldDisplayHintBeforeLevel) {
+              displayHintBeforeLevel();
+            }else {
+                levelController.showLevelView();
+                textPanel.hidePanel();
+            }
         });
     }
 
@@ -51,7 +56,6 @@ public class GameManager implements Observer {
             levelController.goToNextLevel();
             if (levelController.getNumberOfLevels() < nextLevel) {
                 textPanel.getNextButton().setText("Play again");
-
             } else {
                 //increase the level number
                 textPanel.getNextButton().setText("Next");
@@ -67,6 +71,7 @@ public class GameManager implements Observer {
     private void displayLevelFinishedHint() {
         levelController.hideLevelView();
         textPanel.showPanel(levelController.getControllerLevelModel().getHintAfterFinish());
+        shouldDisplayHintBeforeLevel = true;
     }
 
     /**
@@ -75,5 +80,6 @@ public class GameManager implements Observer {
      */
     public void displayHintBeforeLevel() {
         textPanel.showPanel(levelController.getControllerLevelModel().getHintBeforeStart());
+        shouldDisplayHintBeforeLevel = false;
     }
 }

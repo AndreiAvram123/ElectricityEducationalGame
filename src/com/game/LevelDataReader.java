@@ -8,7 +8,6 @@ import com.game.models.ScreenObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -28,7 +27,7 @@ public class LevelDataReader {
      * @param factory - a factory needed in order to create the
      *                objects
      */
-    public LevelDataReader(@NotNull IFactory factory) {
+    public LevelDataReader(IFactory factory) {
         this.fileData = getDataFromFile();
         this.factory = factory;
     }
@@ -50,11 +49,11 @@ public class LevelDataReader {
      * Method used in order to read an array from the levels Data file
      *
      * @param levelNumber - the level number
-     * @param listName   - the name of the array that should be read
+     * @param listName    - the name of the array that should be read
      * @return
      */
-    @NotNull
-    private ArrayList<ScreenObject> getObjectsListForLevel(int levelNumber, @NotNull String listName) {
+
+    private ArrayList<ScreenObject> getObjectsListForLevel(int levelNumber, String listName) {
         ArrayList<ScreenObject> dataToReturn = new ArrayList<>();
         if (fileData != null) {
             JsonObject levelData = fileData.getAsJsonObject(Integer.toString(levelNumber));
@@ -73,8 +72,8 @@ public class LevelDataReader {
      * @param jsonElement - the JsonObject representing the data
      * @return
      */
-    @NotNull
-    private ScreenObject mapToScreen(@NotNull JsonObject jsonElement) {
+
+    private ScreenObject mapToScreen(JsonObject jsonElement) {
         String className = jsonElement.get("class").getAsString();
         double x = jsonElement.get("x").getAsDouble();
         double y = jsonElement.get("y").getAsDouble();
@@ -91,7 +90,7 @@ public class LevelDataReader {
      * @param levelNumber
      * @return
      */
-    @NotNull
+
     private String getHintBeforeLevel(int levelNumber) {
         JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
         return levelData.get("hintBefore").getAsString();
@@ -103,7 +102,7 @@ public class LevelDataReader {
      * @param levelNumber
      * @return
      */
-    @NotNull
+
     private String getHintAfterLevel(int levelNumber) {
         JsonObject levelData = fileData.get(Integer.toString(levelNumber)).getAsJsonObject();
         return levelData.get("hintAfter").getAsString();
@@ -134,7 +133,7 @@ public class LevelDataReader {
         return (Player) mapToScreen(levelData.get("player").getAsJsonObject());
     }
 
-    @NotNull
+
     public LevelModel getLevelModel(int level) {
         ArrayList<ScreenObject> staticObjects = getObjectsListForLevel(level, "staticObjects");
         ArrayList<ScreenObject> draggableObjects = getObjectsListForLevel(level, "draggableObjects");

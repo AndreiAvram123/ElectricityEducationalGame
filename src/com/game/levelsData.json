@@ -6,8 +6,8 @@
       "x": 200,
       "y": 150
     },
-    "hintBefore": "A ",
-    "hintAfter": "You won this game boy",
+    "hintBefore": "In order to win this game you need to move the ball using electricity to the finish point. You will receive a visual indication whether certain elements are under electricity such as a rectangle. Level hint: A wind turbine can produce electricity if wind is present.",
+    "hintAfter": " Windmills have been in use since 2000 B.C. and were first developed in Persia and China. Ancient mariners sailed to distant lands by making use of winds. Farmers used wind power to pump water and for grinding grains. Today the most popular use of wind energy is converting it to electrical energy to meet the critical energy needs of the planet.",
     "staticObjects": [
       {
         "class": "wind",
@@ -99,8 +99,8 @@
       "x": 100,
       "y": 150
     },
-    "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. Hover the mouse on different screen objects to see a hint",
-    "hintAfter": "Did you know there is  enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
+    "hintBefore": "Solar power is a green way of producing energy. All you need is the sun and a solar panel.",
+    "hintAfter": "Did you know there is enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
     "staticObjects": [
       {
         "class": "finish",
@@ -232,8 +232,8 @@
       "x": 200,
       "y": 100
     },
-    "hintBefore": "Not set yet",
-    "hintAfter": "Wonderful",
+    "hintBefore": "A fan can push the player in a specific direction if the fan has electricity. Rotate the fan using the A key",
+    "hintAfter": "As you have seen, solar and wind power work really well together. Did you know that Solar panel costs fall 99% since 1977 and that,nowadays you can even buy your own wind turbine?",
     "staticObjects": [
       {
         "class": "slope",
@@ -572,8 +572,8 @@
     ]
   },
   "4": {
-    "hintBefore": "haha",
-    "hintAfter": "hahah",
+    "hintBefore": "This level is particularly difficult, so pay special attention to details!",
+    "hintAfter": "See how powerful these fans are? They are electrical devices that generate mechanical force from electricity. The more electrical power they have, the more mechanical power they generate. This is the basic principle behind electric vehicles as well.",
     "player": {
       "class": "player",
       "x": 200,

@@ -6,7 +6,6 @@ import com.game.interfaces.NoMovingPlayerBehaviour;
 import com.game.interfaces.Rotating;
 import com.game.models.*;
 import javafx.scene.canvas.Canvas;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Class used to handle interactions with objects on the
@@ -27,9 +26,9 @@ public class ObjectHandler {
     private boolean isDragStarted = false;
 
 
-    public ObjectHandler(@NotNull Canvas canvas,
-                         @NotNull HintWindow hintWindow,
-                         @NotNull ElectricityHandler electricityHandler) {
+    public ObjectHandler( Canvas canvas,
+                          HintWindow hintWindow,
+                          ElectricityHandler electricityHandler) {
         this.canvas = canvas;
         this.gridSystem = new GridSystem();
         this.hintWindow = hintWindow;
@@ -37,7 +36,7 @@ public class ObjectHandler {
         attachListenersOnCanvas();
     }
 
-    public void setLevelModel(@NotNull LevelModel levelModel) {
+    public void setLevelModel(LevelModel levelModel) {
         gridSystem.setLevelModel(levelModel);
     }
 
@@ -117,14 +116,14 @@ public class ObjectHandler {
      * call the method updateStrategy in order to update the player reaction
      * strategy of that object
      */
-    public void rotateObjectCurrentlyDraggedObject(@NotNull Player player) {
+    public void rotateObjectCurrentlyDraggedObject( Player player) {
         if (currentlyDraggedObject != null && currentlyDraggedObject instanceof Rotating) {
             ((Rotating) currentlyDraggedObject).rotate();
             updateStrategy(player, currentlyDraggedObject);
         }
     }
 
-    public void updateStrategy(@NotNull Player player, @NotNull ScreenObject screenObject) {
+    public void updateStrategy( Player player,  ScreenObject screenObject) {
         if (screenObject instanceof ElectricObject) {
 
             ElectricObject electricObject = (ElectricObject) screenObject;
