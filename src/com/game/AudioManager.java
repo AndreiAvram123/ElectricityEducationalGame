@@ -10,11 +10,10 @@ import javafx.scene.media.MediaPlayer;
  *
  */
 public class AudioManager {
-    private static AudioManager instance;
     private AudioClip mouseHoverSound;
     private MediaPlayer mediaPlayer;
     private Media backgroundMusic;
-
+    private static AudioManager instance;
     public static AudioManager getInstance() {
         if (instance == null) {
             instance = new AudioManager();

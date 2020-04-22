@@ -8,7 +8,7 @@ package com.game.collision;
 import com.game.models.Player;
 import com.game.models.ScreenObject;
 import com.game.models.Sides;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class Collision {
     //the object with which the player collided

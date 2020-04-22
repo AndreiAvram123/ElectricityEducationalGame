@@ -1,7 +1,7 @@
 package com.game.interfaces;
 
 import com.game.models.Player;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class MovePlayerDiagonallyDown implements IPlayerReaction {
 

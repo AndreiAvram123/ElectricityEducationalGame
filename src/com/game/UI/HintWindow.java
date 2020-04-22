@@ -1,9 +1,9 @@
 package com.game.UI;
 
+import com.sun.istack.internal.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A small window that is used to display a hint to the screen

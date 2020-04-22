@@ -2,8 +2,6 @@ package com.game;
 
 import com.game.models.LevelModel;
 import com.game.models.ScreenObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The grid system that appears on the screen
@@ -13,7 +11,7 @@ public class GridSystem {
 
     private LevelModel levelModel;
 
-    public void setLevelModel(@NotNull LevelModel levelModel) {
+    public void setLevelModel(LevelModel levelModel) {
         this.levelModel = levelModel;
     }
 
@@ -25,7 +23,7 @@ public class GridSystem {
      * @param mouseX - the mouse x position
      * @param mouseY - the mouse y position
      */
-    @Nullable
+   
     public ScreenObject getObjectMouseOver(double mouseX, double mouseY) {
         for (ScreenObject screenObject : levelModel.getObjectsOnGameScreen()) {
             if (screenObject.getX() < mouseX && screenObject.getX() + screenObject.getWidth() > mouseX
@@ -44,7 +42,7 @@ public class GridSystem {
      * @param object
      * @return
      */
-    public boolean isObjectOverAnother(@NotNull ScreenObject object) {
+    public boolean isObjectOverAnother( ScreenObject object) {
         for (ScreenObject screenObject : levelModel.getObjectsOnGameScreen()) {
             if (screenObject != object && screenObject.getX() == object.getX() && object.getY() == screenObject.getY()) {
                 return true;
@@ -60,7 +58,7 @@ public class GridSystem {
      *
      * @param screenObject
      */
-    public void snapOnGrid(@NotNull ScreenObject screenObject) {
+    public void snapOnGrid( ScreenObject screenObject) {
         //get the center of the object
         double oldCenterX = screenObject.getX() + screenObject.getWidth() / 2;
         double oldCenterY = screenObject.getY() + screenObject.getHeight() / 2;

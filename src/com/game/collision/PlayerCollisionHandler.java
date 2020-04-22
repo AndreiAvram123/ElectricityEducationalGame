@@ -5,7 +5,7 @@ import com.game.models.ElectricObject;
 import com.game.models.Finish;
 import com.game.models.ScreenObject;
 import com.game.models.Slope;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class PlayerCollisionHandler {
     private boolean isLevelCompleted = false;

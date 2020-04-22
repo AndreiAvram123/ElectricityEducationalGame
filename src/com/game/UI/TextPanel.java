@@ -2,12 +2,10 @@ package com.game.UI;
 
 import com.game.AppConstants;
 import com.game.AudioManager;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
-import org.jetbrains.annotations.NotNull;
+import javafx.scene.text.*;
 
 /**
  * Panel used to display a message to the user
@@ -22,6 +20,7 @@ public class TextPanel {
 
     public TextPanel(@NotNull Pane root) {
         this.layer = new Pane();
+        this.layer.setStyle("-fx-background-color : #006DB8");
         this.layer.setVisible(false);
         this.layer.setMinWidth(root.getWidth());
         this.layer.setPrefHeight(root.getHeight());
@@ -65,13 +64,17 @@ public class TextPanel {
     }
 
     private Button initializeButton() {
-        double width = 300;
+        double width = 500;
+        double height = 120;
         nextButton = new Button();
         nextButton.setText("Alright");
+        nextButton.setStyle("-fx-background-color: #EB540F; -fx-text-fill: white");
+        nextButton.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
         //position the button in the middle
         nextButton.setLayoutY(textFlow.getLayoutY() + textFlow.getMaxHeight());
         nextButton.setLayoutX(AppConstants.SCREEN_WIDTH / 2 - width / 2);
         nextButton.setPrefWidth(width);
+        nextButton.setPrefHeight(height);
         return nextButton;
     }
 
@@ -82,7 +85,7 @@ public class TextPanel {
     @NotNull
     private Text getTextNode() {
         Text text = new Text();
-        text.setStyle("-fx-font: 32 arial;");
+        text.setFont(Font.font("Helvetica", FontWeight.MEDIUM, 32));
         return text;
     }
 

@@ -1,0 +1,849 @@
+{
+  "numberOfLevels": 4,
+  "1": {
+    "player": {
+      "class": "player",
+      "x": 200,
+      "y": 150
+    },
+    "hintBefore": "A ",
+    "hintAfter": "You won this game boy",
+    "staticObjects": [
+      {
+        "class": "wind",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "wind_turbine",
+        "x": 150,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 200
+      },
+      {
+        "class": "slope",
+        "x": 500,
+        "y": 200
+      },
+      {
+        "class": "wind_turbine",
+        "x": 500,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 700,
+        "y": 400
+      },
+      {
+        "class": "finish",
+        "x": 750,
+        "y": 400
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "wind",
+        "x": 550,
+        "y": 750
+      }
+    ]
+  },
+  "2": {
+    "player": {
+      "class": "player",
+      "x": 100,
+      "y": 150
+    },
+    "hintBefore": "In order to win this game, you have to make the ball go on top of the finish point. Use different electricity components can help you move it. Hover the mouse on different screen objects to see a hint",
+    "hintAfter": "Did you know there is  enough solar energy hitting the Earth every hour to meet all of humanity's power needs for an entire year?",
+    "staticObjects": [
+      {
+        "class": "finish",
+        "x": 750,
+        "y": 600
+      },
+      {
+        "class": "sun",
+        "x": 50,
+        "y": 150
+      },
+      {
+        "class": "slope",
+        "x": 250,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 150,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 250
+      },
+      {
+        "class": "slope",
+        "x": 350,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300
+      },
+      {
+        "class": "slope",
+        "x": 400,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 550,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 600,
+        "y": 450
+      },
+      {
+        "class": "slope",
+        "x": 650,
+        "y": 500
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 350
+      },
+      {
+        "class": "slope",
+        "x": 700,
+        "y": 550
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "solar_panel",
+        "x": 550,
+        "y": 750
+      }
+    ]
+  },
+  "3": {
+    "player": {
+      "class": "player",
+      "x": 200,
+      "y": 100
+    },
+    "hintBefore": "Not set yet",
+    "hintAfter": "Wonderful",
+    "staticObjects": [
+      {
+        "class": "slope",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 150,
+        "y": 250
+      },
+      {
+        "class": "fan",
+        "x": 200,
+        "y": 250,
+        "customPush": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 750,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 800,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 450
+      },
+      {
+        "class": "finish",
+        "x": 250,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 0
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 50
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 500
+      },
+      {
+        "class": "wind_turbine",
+        "x": 100,
+        "y": 550
+      },
+      {
+        "class": "wind",
+        "x": 50,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 0
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 50
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 500
+      },
+      {
+        "class": "wind_turbine",
+        "x": 100,
+        "y": 550
+      },
+      {
+        "class": "wind",
+        "x": 50,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 0
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 50
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 500
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 950,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 1000,
+        "y": 550
+      },
+      {
+        "class": "solar_panel",
+        "x": 1000,
+        "y": 500
+      },
+      {
+        "class": "sun",
+        "x": 1000,
+        "y": 450
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "fan",
+        "x": 550,
+        "y": 750,
+        "customPush": 400
+      }
+    ]
+  },
+  "4": {
+    "hintBefore": "haha",
+    "hintAfter": "hahah",
+    "player": {
+      "class": "player",
+      "x": 200,
+      "y": 50
+    },
+    "staticObjects": [
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 250,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 300,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 350,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 700,
+        "y": 100
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 150
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 900,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 950,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 500
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 550
+      },
+      {
+        "class": "rectangle",
+        "x": 850,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 800,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 750,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 700,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 650,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 600,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 550,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 500,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 450,
+        "y": 600
+      },
+      {
+        "class": "rectangle",
+        "x": 400,
+        "y": 600
+      },
+      {
+        "class": "finish",
+        "x": 350,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 150,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 100,
+        "y": 200
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 250
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 300
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 350
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 400
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 450
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 500
+      },
+      {
+        "class": "rectangle",
+        "x": 200,
+        "y": 550
+      }
+    ],
+    "draggableObjects": [
+      {
+        "class": "wind",
+        "x": 350,
+        "y": 750
+      },
+      {
+        "class": "wind_turbine",
+        "x": 550,
+        "y": 750
+      },
+      {
+        "class": "fan",
+        "x": 450,
+        "y": 750,
+        "customPush": 400
+      },
+      {
+        "class": "sun",
+        "x": 650,
+        "y": 750
+      },
+      {
+        "class": "solar_panel",
+        "x": 750,
+        "y": 750
+      },
+      {
+        "class": "fan",
+        "x": 850,
+        "y": 750,
+        "customPush": 400
+      }
+    ]
+  }
+}
