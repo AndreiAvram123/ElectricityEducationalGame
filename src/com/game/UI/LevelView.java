@@ -3,6 +3,7 @@ package com.game.UI;
 import com.game.AppConstants;
 import com.game.models.GameObject;
 import com.game.models.LevelModel;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -10,7 +11,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The class representing the view for the levels

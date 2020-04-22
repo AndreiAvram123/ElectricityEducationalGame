@@ -2,11 +2,11 @@ package com.game.UI;
 
 import com.game.AppConstants;
 import com.game.AudioManager;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The screen that appears when the user launches the game

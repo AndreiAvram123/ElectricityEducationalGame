@@ -4,7 +4,7 @@ import com.game.models.LevelModel;
 import com.game.models.Player;
 import com.game.models.ScreenObject;
 import com.game.models.Sides;
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class PlayerCollisionDetector {
 

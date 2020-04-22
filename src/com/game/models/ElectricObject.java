@@ -2,9 +2,9 @@ package com.game.models;
 
 import com.game.interfaces.IPlayerReaction;
 import com.game.interfaces.NoMovingPlayerBehaviour;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class ElectricObject extends ScreenObject {
     private IPlayerReaction playerReaction = new NoMovingPlayerBehaviour();

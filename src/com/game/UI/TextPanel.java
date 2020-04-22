@@ -2,10 +2,10 @@ package com.game.UI;
 
 import com.game.AppConstants;
 import com.game.AudioManager;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.*;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Panel used to display a message to the user

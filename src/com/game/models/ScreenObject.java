@@ -2,8 +2,8 @@ package com.game.models;
 
 import com.game.interfaces.Draggable;
 import com.game.interfaces.HintOnHover;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.canvas.GraphicsContext;
-import org.jetbrains.annotations.NotNull;
 
  public abstract class ScreenObject extends GameObject implements Draggable, HintOnHover {
 
